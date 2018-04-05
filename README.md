@@ -4,9 +4,10 @@
 Git este un tool, github este o platforma care-ti permite sa folosesti acel tool online. Adica sa-ti salvezi repozitoriile locale la ei pe site, sa faci managing mai optim, plus e si un loc pentru backup-uri.
 
 Linkuri utile pentru lenesi:
-- https://www.youtube.com/watch?v=OqmSzXDrJBk (4m)
-- https://www.youtube.com/watch?v=Y9XZQO1n_7c (20m)
-- https://gist.github.com/jedmao/5053440 (text)
+- [What is Git - A Quick Introduction to the Git Version Control System](https://www.youtube.com/watch?v=OqmSzXDrJBk) (4m)
+- [Learn Git in 20 Minutes](https://www.youtube.com/watch?v=Y9XZQO1n_7c) (20m)
+- [Common git commands in a day-to-day workflow](https://gist.github.com/jedmao/5053440) (text)
+- [Creating a pull request](https://help.github.com/articles/creating-a-pull-request/) (text)
 
 Terminologie:
     - **branch**: o ramura o proiectului, independenta de celelalte branch-uri, pe care se poate face development. Branch-urile pot fi reunite, sterse, salvate fara a interfera cu celelalte. Ne va permite sa lucram independent, dar in acelasi timp sa putem uni tot ce am facut. Branch-ul principal, pe care va exista proiectul final testat si frumos se numeste **master**. Acolo ajung features finisate si testate. https://git-scm.com/book/en/v1/Git-Branching-What-a-Branch-Is
