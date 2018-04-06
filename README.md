@@ -1,6 +1,56 @@
 # HOWTO
 
-# Github
+# Cuprins:
+
+1. <a href="#teams">Teams</a>
+	1. <a href="#frontend">FrontEnd</a>
+	2. <a href="#backend">Backend</a>
+	3. <a href="#qa">QA</a>
+	4. <a href="#administrare">Administrare</a>
+2. <a href="#github">Github</a>
+3. <a href="#trello">Trello</a>
+
+<h1 id="teams">Teams</h1>
+<h4 id="frontend">FrontEnd</h4>
+Responsabilitati:
+
+1. Responsive layout
+2. Acelasi design si stil pe toate paginile
+3. Crearea paginilor statice 
+4. Testarea daca e responsive
+5. Folosirea elementelor HTML5 (section, article, etc)
+6. Sa fie comod design-ul
+
+<h4 id="backend">BackEnd</h4>
+Responsabilitati:
+
+1. Crearea logicii pe server pentru fiecare pagina
+2. Templating pentru datele oferite de server (se va folosi template engnine default din laravel)
+3. Legatura cu baza de date, baza de date in sine
+4. Comunicarea cu QA pentru crearea testelor
+
+<h4 id="qa">QA</h4>
+Responsabilitati:
+
+1. HTML/CSS validare
+2. Validare automata HTML/CSS
+3. Testare de cod, posibil prin framework-uri de testare
+4. Integrare continua (vezi Travis)
+
+<h4 id="administrare">Administrare</h4>
+Responsabilitati:
+
+1. Merge conflicts
+2. Pull requests review 
+3. Intrebarile echipei
+4. Decizii referitor la colaborari intre echipe
+5. Organizarea repo-ului
+
+
+
+
+
+<h1 id="github">Github</h1>
 Git este un tool, github este o platforma care-ti permite sa folosesti acel tool online. Adica sa-ti salvezi repozitoriile locale la ei pe site, sa faci managing mai optim, plus e si un loc pentru backup-uri.
 
 Linkuri utile pentru lenesi:
@@ -37,6 +87,24 @@ Terminologie:
 - `git commit -m "Am adaugat tutorial pentru github"`. Commit inseamna salvarea finala in repositoriu a schimbarilor. "Povestea" unui repo se zice in commituri. Autor, data, ce schimbari s-a facut. Add+Commit se face dupa orice schimbare considerabila care functioneaza.
 - `git push origin readme_edit` Trimit schimbarile catre _origin_ (este repositoriul remote de pe github) pe branch-ul _readme_edit_. Dupa aceasta comanda, toata echipa poate vedea ca acest branch exista (pana acum era doar local) si ce schimbari s-au facut.
 - Fac **pull request** si astept aprobare de la colegi.
+
+<h1 id="trello">Trello</h1>
+
+Trello este o platforma de colaborare pe care membrii echipelor isi pot organiza task-urile, pentru a vedea cu usurinta ce elemente se afla in proces de dezvoltare, cine lucreaza la o anumita componenta si in ce stadiu se afla acel task.
+
+##### Cum folosim aceasta platforma?
+
+- **Add another list**: pentru adaugarea unei noi categorii de task-uri.
+- **Add another card**: pentru adaugarea unui nou task din cadrul unei categorii de task-uri.
+
+##### Optiunile din cadrul unui task
+
+- **Members**: adaugarea membrilor ce fac parte din acel task.
+- **Labels**: asa cum a fost configurat proiectul pe pagina de Trello, vom folosi aceste etichete pentru a evidentia stadiul in care se afla acel task; spre exemplu, in momentul scrierii acestui tutorial, task-ul `Tutorial Trello` este setat pe Label-ul `PRIORITY` (verde deschis), iar dupa finalizare, va fi setat pe `DONE` (verde inchis). Daca doriti sa adaugati noi Label-uri, luati mai intai legatura cu unul dintre administratori pentru aprobare.
+- **Checklist**: se creeaza o lista de tip checklist, in care putem adauga mai multe iteme care, dupa finalizare, le vom putea marca. Spre exemplu, am creat in cadrul task-ului `Tutorial Trello` un element de tip Checklist ce contine doua iteme: `Started Trello tutorial` si `Finished Trello tutorial`. Primul este bifat, iar al doilea nu. Bara de deasupra ne spune in ce stadiu se afla task-ul respectiv (la 50% pentru exemplul dat).
+- **Due Date**: asa cum ii spune si numele, putem seta data pana la care trebuie sa fie gata acel task.
+- **Attachment**: putem incarca diferite fisiere.
+- **Add Comment**: putem adauga comentarii la acel task. Pentru a da `tag` unei persoane, folosim caracterul `@` urmat de numele/username-ul acelei persoane. Se pot adauga, de asemenea, fisiere, emoji-uri sau link-uri catre alte task-uri din cadrul proiectului.
 
 # XAMPP
 
