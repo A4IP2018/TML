@@ -9,6 +9,8 @@
 	4. <a href="#administrare">Administrare</a>
 2. <a href="#github">Github</a>
 3. <a href="#trello">Trello</a>
+3. <a href="#xampp">XAMPP</a>
+3. <a href="#laravel">Laravel</a>
 
 <h1 id="teams">Teams</h1>
 <h4 id="frontend">FrontEnd</h4>
@@ -106,7 +108,7 @@ Trello este o platforma de colaborare pe care membrii echipelor isi pot organiza
 - **Attachment**: putem incarca diferite fisiere.
 - **Add Comment**: putem adauga comentarii la acel task. Pentru a da `tag` unei persoane, folosim caracterul `@` urmat de numele/username-ul acelei persoane. Se pot adauga, de asemenea, fisiere, emoji-uri sau link-uri catre alte task-uri din cadrul proiectului.
 
-# XAMPP
+<h1 id="xampp">XAMPP</h1>
 
 ##### Descriere
 
@@ -121,7 +123,7 @@ Trello este o platforma de colaborare pe care membrii echipelor isi pot organiza
 - Dupa instalarea aplicatiei, un fisier **C:\xampp\htdocs** va aparea. Din motive pur conventionale, vom avea proiectul nostru in acest fisier **htdocs**(**H**yper**T**ext **Doc**uments). Aici putem rula comanda `git clone https://github.com/A4IP2018/HomeworkManager.git` pentru a aduce proiectul.
 - Ca serverul Apache sa pointeze catre proiectul nostru, trebuie sa ii schimbam putin configurarea: Deschizand **XAMP**, putem schimba configurarile de baza ale serverului Apache ducandu-ne la **Config** (in dreptul Apache) si deschizand fisierul **httpd.conf** ( http://prntscr.com/j1oiv5 ). In acest fisier, trebuie sa cautam (ctrl + F) **DocumentRoot** si sa schimbam calea default **C:/xampp/htdocs** in **C:/xampp/htdocs/HomeworkManager** ( http://prntscr.com/j1oksk).
 
-# LARAVEL
+<h1 id="laravel">LARAVEL</h1>
 
 ##### Descriere
 
