@@ -118,11 +118,12 @@ Trello este o platforma de colaborare pe care membrii echipelor isi pot organiza
 ##### Instalare/Configurare
 
 - Se poate downloada o versiune XAMPP aici: https://www.apachefriends.org/download.html
-- Pentru acest proiect, se va downloada si instala versiunea 5.6.34 care va instala aceeasi versiune PHP.
-- La instalarea aplicatiei putem instala doar componentele **Apache**/**MySQL**/**PHP**/**phpMyAdmin**. Orice alta componenta instalata reprezinta un risc in buna functionare a aplicatiei, din cauza porturilor folosite. Trebuie mare grija.
+- Pentru acest proiect, se va downloada si instala versiunea 5.6.34 care vine cu PHP inclus.
+- La instalarea aplicatiei putem alege doar componentele **Apache**/**MySQL**/**PHP**/**phpMyAdmin**. Orice alta componenta instalata reprezinta un risc in buna functionare a aplicatiei, din cauza porturilor folosite. Trebuie mare grija.
 - Directorul default de instalare este **C:\xampp**. Acesta poate ramane asa.
 - Dupa instalarea aplicatiei, un fisier **C:\xampp\htdocs** va aparea. Din motive pur conventionale, vom avea proiectul nostru in acest fisier **htdocs**(**H**yper**T**ext **Doc**uments). Aici putem rula comanda `git clone https://github.com/A4IP2018/HomeworkManager.git` pentru a aduce proiectul.
-- Ca serverul Apache sa pointeze catre proiectul nostru, trebuie sa ii schimbam putin configurarea: Deschizand **XAMP**, putem schimba configurarile de baza ale serverului Apache ducandu-ne la **Config** (in dreptul Apache) si deschizand fisierul **httpd.conf** ( http://prntscr.com/j1oiv5 ). In acest fisier, trebuie sa cautam (ctrl + F) **DocumentRoot** si sa schimbam calea default **C:/xampp/htdocs** in **C:/xampp/htdocs/HomeworkManager** ( http://prntscr.com/j1oksk).
+- Ca serverul Apache sa pointeze catre proiectul nostru, trebuie sa ii schimbam putin configurarea: Deschizand **XAMP**, putem schimba configurarile de baza ale serverului Apache ducandu-ne la **Config** (in dreptul Apache) si deschizand fisierul **httpd.conf** ( http://prntscr.com/j1oiv5 ). In acest fisier, trebuie sa cautam (ctrl + F) **DocumentRoot** si sa schimbam calea default **C:/xampp/htdocs** in **C:/xampp/htdocs/HomeworkManager/public** ( http://prntscr.com/j1oksk).
+- Daca serverul Apace nu merge pornit si aveti o eroare, consultati https://stackoverflow.com/questions/18300377/xampp-apache-error-apache-shutdown-unexpectedly
 
 <h1 id="laravel">LARAVEL</h1>
 
