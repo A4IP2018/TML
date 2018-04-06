@@ -1,6 +1,55 @@
 # HOWTO
 
-# Github
+# Cuprins:
+
+1. <a href="#teams">Teams</a>
+	1. <a href="#frontend">FrontEnd</a>
+	2. <a href="#backend">Backend</a>
+	3. <a href="#qa">QA</a>
+	4. <a href="#administrare">Administrare</a>
+2. <a href="#github">Github</a>
+
+<h1 id="teams">Teams</h1>
+<h4 id="frontend">FrontEnd</h4>
+Responsabilitati:
+
+1. Responsive layout
+2. Acelasi design si stil pe toate paginile
+3. Crearea paginilor statice 
+4. Testarea daca e responsive
+5. Folosirea elementelor HTML5 (section, article, etc)
+6. Sa fie comod design-ul
+
+<h4 id="backend">BackEnd</h4>
+Responsabilitati:
+
+1. Crearea logicii pe server pentru fiecare pagina
+2. Templating pentru datele oferite de server (se va folosi template engnine default din laravel)
+3. Legatura cu baza de date, baza de date in sine
+4. Comunicarea cu QA pentru crearea testelor
+
+<h4 id="qa">QA</h4>
+Responsabilitati:
+
+1. HTML/CSS validare
+2. Validare automata HTML/CSS
+3. Testare de cod, posibil prin framework-uri de testare
+4. Integrare continua (vezi Travis)
+
+<h4 id="administrare">Administrare</h4>
+Responsabilitati:
+
+1. Merge conflicts
+2. Pull requests review 
+3. Intrebarile echipei
+4. Decizii referitor la colaborari intre echipe
+5. Organizarea repo-ului
+
+
+
+
+
+<h1 id="github">Github</h1>
 Git este un tool, github este o platforma care-ti permite sa folosesti acel tool online. Adica sa-ti salvezi repozitoriile locale la ei pe site, sa faci managing mai optim, plus e si un loc pentru backup-uri.
 
 Linkuri utile pentru lenesi:
