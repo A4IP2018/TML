@@ -1,5 +1,3 @@
-# HOWTO
-
 # Cuprins:
 
 1. <a href=https://github.com/A4IP2018/HomeworkManager/wiki/Teams>Teams</a>
