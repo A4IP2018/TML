@@ -90,6 +90,7 @@ Terminologie:
 - `git push origin readme_edit` Trimit schimbarile catre _origin_ (este repositoriul remote de pe github) pe branch-ul _readme_edit_. Dupa aceasta comanda, toata echipa poate vedea ca acest branch exista (pana acum era doar local) si ce schimbari s-au facut.
 - Fac **pull request** si astept aprobare de la colegi.
 
+
 <h1 id="trello">Trello</h1>
 
 Trello este o platforma de colaborare pe care membrii echipelor isi pot organiza task-urile, pentru a vedea cu usurinta ce elemente se afla in proces de dezvoltare, cine lucreaza la o anumita componenta si in ce stadiu se afla acel task.
