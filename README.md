@@ -38,4 +38,31 @@ Terminologie:
 - `git push origin readme_edit` Trimit schimbarile catre _origin_ (este repositoriul remote de pe github) pe branch-ul _readme_edit_. Dupa aceasta comanda, toata echipa poate vedea ca acest branch exista (pana acum era doar local) si ce schimbari s-au facut.
 - Fac **pull request** si astept aprobare de la colegi.
 
+# XAMPP
 
+##### Descriere
+
+- XAMPP este o distributie Apache gratuita folosita pentru crearea serverelor web locale.
+
+##### Instalare/Configurare
+
+- Se poate downloada o versiune XAMPP aici: https://www.apachefriends.org/download.html
+- Pentru acest proiect, se va downloada si instala versiunea 5.6.34 care va instala aceeasi versiune PHP.
+- La instalarea aplicatiei putem instala doar componentele **Apache**/**MySQL**/**PHP**/**phpMyAdmin**. Orice alta componenta instalata reprezinta un risc in buna functionare a aplicatiei, din cauza porturilor folosite. Trebuie mare grija.
+- Directorul default de instalare este **C:\xampp**. Acesta poate ramane asa.
+- Dupa instalarea aplicatiei, un fisier **C:\xampp\htdocs** va aparea. Din motive pur conventionale, vom avea proiectul nostru in acest fisier **htdocs**(**H**yper**T**ext **Doc**uments). Aici putem rula comanda `git clone https://github.com/A4IP2018/HomeworkManager.git` pentru a aduce proiectul.
+- Ca serverul Apache sa pointeze catre proiectul nostru, trebuie sa ii schimbam putin configurarea: Deschizand **XAMP**, putem schimba configurarile de baza ale serverului Apache ducandu-ne la **Config** (in dreptul Apache) si deschizand fisierul **httpd.conf** ( http://prntscr.com/j1oiv5 ). In acest fisier, trebuie sa cautam (ctrl + F) **DocumentRoot** si sa schimbam calea default **C:/xampp/htdocs** in **C:/xampp/htdocs/HomeworkManager** ( http://prntscr.com/j1oksk).
+
+# LARAVEL
+
+##### Descriere
+
+- Laravel este un framework PHP gratis si open-source bazat pe arhitecura **MVC**(Model-View-Controller)
+- Pentru acest proiect, se va folosii versiunea 5.4 ( https://laravel.com/docs/5.4 )
+
+##### Configurare
+
+- Atunci cand cineva introduce o noua dependenta via composer, trebuie ca toata lumea, din folderul proiectului, sa ruleze comanda `composer install`, ceea ce v-a instala local toate dependentele adaugate. Exista si comanda `composer update` pe care o putem folosii, dar nu este indicata deoarece pe langa instalarea dependentelor, le si updateaza la versiuni mai noi, astfel lasand loc pentru buguri. Aceasta comanda, `composer install` **TREBUIE** rulata si la aducerea initiala a proiectului.
+- **.env** este fisierul de configurare al aplicatiei, tot ceea ce inseamna parole secrete sau configurari se vor pune aici.
+- Atunci cand se aduce prima data proiectul, sau cineva face o modificare in **.env.example**, acest fisier **TREBUIE** copiat si pus in directorul proiectului sub numele de **.env**. Acest fisier **.env** NU se va comite, el este doar pentru configurarea locala.
+- Atunci cand cineva modifica **.env** si adauga o noua variabila, **TREBUIE** sa o adauge si in **.env.example**, **FARA** a specifica valoarea acelei variabile, deoarece **.env.example** este fisierul care se va comite pe server, **.env** este fisierul care ramane local.
