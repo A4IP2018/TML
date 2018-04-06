@@ -9,8 +9,8 @@
 	4. <a href="#administrare">Administrare</a>
 2. <a href="#github">Github</a>
 3. <a href="#trello">Trello</a>
-3. <a href="#xampp">XAMPP</a>
-3. <a href="#laravel">Laravel</a>
+4. <a href="#xampp">XAMPP</a>
+5. <a href="#laravel">Laravel</a>
 
 <h1 id="teams">Teams</h1>
 <h4 id="frontend">FrontEnd</h4>
