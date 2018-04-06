@@ -8,6 +8,7 @@
 	3. <a href="#qa">QA</a>
 	4. <a href="#administrare">Administrare</a>
 2. <a href="#github">Github</a>
+3. <a href="#trello">Trello</a>
 
 <h1 id="teams">Teams</h1>
 <h4 id="frontend">FrontEnd</h4>
@@ -86,5 +87,26 @@ Terminologie:
 - `git commit -m "Am adaugat tutorial pentru github"`. Commit inseamna salvarea finala in repositoriu a schimbarilor. "Povestea" unui repo se zice in commituri. Autor, data, ce schimbari s-a facut. Add+Commit se face dupa orice schimbare considerabila care functioneaza.
 - `git push origin readme_edit` Trimit schimbarile catre _origin_ (este repositoriul remote de pe github) pe branch-ul _readme_edit_. Dupa aceasta comanda, toata echipa poate vedea ca acest branch exista (pana acum era doar local) si ce schimbari s-au facut.
 - Fac **pull request** si astept aprobare de la colegi.
+
+<h1 id="trello">Trello</h1>
+
+Trello este o platforma de colaborare pe care membrii echipelor isi pot organiza task-urile, pentru a vedea cu usurinta ce elemente se afla in proces de dezvoltare, cine lucreaza la o anumita componenta si in ce stadiu se afla acel task.
+
+##### Cum folosim aceasta platforma?
+
+- **Add another list**: pentru adaugarea unei noi categorii de task-uri.
+- **Add another card**: pentru adaugarea unui nou task din cadrul unei categorii de task-uri.
+
+##### Optiunile din cadrul unui task
+
+- **Members**: adaugarea membrilor ce fac parte din acel task.
+- **Labels**: asa cum a fost configurat proiectul pe pagina de Trello, vom folosi aceste etichete pentru a evidentia stadiul in care se afla acel task; spre exemplu, in momentul scrierii acestui tutorial, task-ul `Tutorial Trello` este setat pe Label-ul `PRIORITY` (verde deschis), iar dupa finalizare, va fi setat pe `DONE` (verde inchis). Daca doriti sa adaugati noi Label-uri, luati mai intai legatura cu unul dintre administratori pentru aprobare.
+- **Checklist**: se creeaza o lista de tip checklist, in care putem adauga mai multe iteme care, dupa finalizare, le vom putea marca. Spre exemplu, am creat in cadrul task-ului `Tutorial Trello` un element de tip Checklist ce contine doua iteme: `Started Trello tutorial` si `Finished Trello tutorial`. Primul este bifat, iar al doilea nu. Bara de deasupra ne spune in ce stadiu se afla task-ul respectiv (la 50% pentru exemplul dat).
+- **Due Date**: asa cum ii spune si numele, putem seta data pana la care trebuie sa fie gata acel task.
+- **Attachment**: putem incarca diferite fisiere.
+- **Add Comment**: putem adauga comentarii la acel task. Pentru a da `tag` unei persoane, folosim caracterul `@` urmat de numele/username-ul acelei persoane. Se pot adauga, de asemenea, fisiere, emoji-uri sau link-uri catre alte task-uri din cadrul proiectului.
+
+
+
 
 
