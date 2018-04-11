@@ -9,14 +9,14 @@
 
 ### Distributia rolurilor de baza
                     
-|  Front - end        | Back - end               | QA                  | Administratie| 
-| :------------:      |:---------------:         |:-----:              |:---:|
-| **Andra Oica**      | **Dominte Teodor**       | **Agape Stefan**    | Bocsan Andrei
-| Bejinariu Anca      | Milea Mihai              | Duduman Adina       | Rozimovschii Denis
-| Timcu Teodora       | Tabarcea Augustus        | Georgiana Anca      | Mihnea Bigu
-| Esanu Andra         | Roibu Radu               |                     |
-| Macovei Gabriela    | Dominte Delia            |                     |
-| Liana Andreea       | Vlad Ciprian             |                     |
-| Stefana Waldorf     | Ioana Nicoleta           |                     |
-| Delia Cirnu         |                          |                     |
+|  Front - end            | Back - end                     | QA                       | Administratie| 
+| :------------:          |:---------------:               |:-----:                   |:---:|
+| **Oică Andra-Maria**    | **Dominte Teodor-Alexandrin**  | **Agape Ionut-Stefan**   | Bocsan Andrei-Florin
+| Bejinariu Anca-Eugenia  | Milea Mihai-Cristian           | Duduman Rodica-Adina     | Rozimovschii Denis
+| Timcu Teodora Elena     | Tabarcea Augustus-Vasile       | Bălăiță Anca-Georgiana   | Bigu Mihnea
+| Eșanu Andra-Georgiana   | Roibu Radu Marian              |                          |
+| Macovei Gabriela        | Dominte Delia                  |                          |
+| Liana Andreea           | Romila Vlad-Ciprian            |                          |
+| Ciobanu Stefana         | Bacaoanu Nicoleta-Ioana        |                          |
+| Cirnu Delia-Elena       |                                |                          |
 
