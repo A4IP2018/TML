@@ -13,7 +13,7 @@
 | :------------:          |:---------------:               |:-----:                   |:---:|
 | **Oică Andra-Maria**    | **Dominte Teodor-Alexandrin**  | **Agape Ionut-Stefan**   | Bocsan Andrei-Florin
 | Bejinariu Anca-Eugenia  | Milea Mihai-Cristian           | Duduman Rodica-Adina     | Rozimovschii Denis
-| Timcu Teodora Elena     | Tabarcea Augustus-Vasile       | Bălăiță Anca-Georgiana   | Mihnea Bigu
+| Timcu Teodora Elena     | Tabarcea Augustus-Vasile       | Bălăiță Anca-Georgiana   | Bigu Mihnea
 | Eșanu Andra-Georgiana   | Roibu Radu Marian              |                          |
 | Macovei Gabriela        | Dominte Delia                  |                          |
 | Liana Andreea           | Romila Vlad-Ciprian            |                          |
