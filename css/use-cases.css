@@ -1,0 +1,43 @@
+
+
+.use-cases-display img {
+    max-width: 100%;
+    border: 1px solid #eeee;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+
+
+.presentation-image {
+    transition: transform .2s;
+    cursor: pointer;
+}
+
+.modal-dialog {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    max-width: unset;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 90%;
+    max-width: 800px;
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+}
+
+button.close {
+    color: white;
+    font-size: 45px;
+    cursor: pointer;
+}
