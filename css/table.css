@@ -16,7 +16,7 @@
   height: 55px;
 }
 
-.checktable tr:first-of-type td {
+.checktable thead tr:first-of-type td {
   font-weight: 400;
   font-style: italic;
   width: 150px;
@@ -31,6 +31,7 @@
   padding-right: 20px;
   text-align: right;
   min-width: 230px;
+  font-style: italic;
 }
 
 .checkrow > td:first-of-type {
