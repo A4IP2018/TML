@@ -1,8 +1,15 @@
+
+.checktable {
+  width: 100%;
+  margin-top: 70px;
+  table-layout: fixed;
+}
 .checktable thead {
   -webkit-box-shadow: 1px 6px 37px 2px rgba(0,0,0,0.47);
   -moz-box-shadow: 1px 6px 37px 2px rgba(0,0,0,0.47);
   box-shadow: 1px 6px 37px 2px rgba(0,0,0,0.47);
 }
+
 
 .checktable thead td:first-of-type {
   font-weight: bold;
@@ -19,7 +26,6 @@
 .checktable thead tr:first-of-type td {
   font-weight: 400;
   font-style: italic;
-  width: 150px;
 }
 
 .checktable tr > td {
@@ -30,8 +36,7 @@
 .checktable td:first-of-type {
   padding-right: 20px;
   text-align: right;
-  min-width: 230px;
-  font-style: italic;
+  width: 300px;
 }
 
 .checkrow > td:first-of-type {
