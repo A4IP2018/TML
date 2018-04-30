@@ -1,4 +1,8 @@
 
+.content-table {
+  overflow: scroll;
+}
+
 .checktable {
   min-width: 1000px;
   width: 100%;
