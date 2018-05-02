@@ -2,10 +2,10 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Category extends Model
 {
     use Notifiable;
 
@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'updated_at'
+        'name', 'user_id', 'updated_at'
     ];
 
     /**
@@ -34,17 +34,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'remember_token'
     ];
 
     /**
-     * User -> category relationship
+     * Category -> users relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function category() {
-        return $this->belongsTo('App\Category');
+    public function users() {
+        return $this->hasMany('App\User');
     }
-
 
 }
