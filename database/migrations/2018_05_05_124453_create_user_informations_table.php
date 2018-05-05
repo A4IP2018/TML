@@ -15,10 +15,11 @@ class CreateUserInformationsTable extends Migration
     {
         Schema::create('user_informations', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('phone_number');
             $table->string('street_name');
             $table->string('street_number');
-            $table->string('email')->unique();
+            $table->string('email');//->unique();
             $table->rememberToken();
             $table->timestamps();
         });

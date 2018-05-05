@@ -15,6 +15,8 @@ class CreateTeacherInformationGroupsTable extends Migration
     {
         Schema::create('teacher_information_groups', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('group_id');
+            $table->integer('teacher_information_id');
             $table->rememberToken();
             $table->timestamps();
         });
