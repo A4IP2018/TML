@@ -51,7 +51,7 @@ class Teacher_Information_Group extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function groups() {
+    /* public function groups() {
         return $this->hasMany('App\Group');
-    }
+    } /*
 }
