@@ -19,7 +19,7 @@ class CreateComparisonsTable extends Migration
             $table->integer('homework_id_2');
             $table->integer('plagiarism_degree');
             $table->integer('user_id');
-            $table->enum('type');
+            $table->enum('type',['manual','automatic']);
             $table->rememberToken();
             $table->timestamps();
         });
