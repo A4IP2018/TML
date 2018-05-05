@@ -46,5 +46,13 @@ class User extends Authenticatable
         return $this->belongsTo('App\Category');
     }
 
+    /**
+     * User -> Group relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function group(){
+        return $this->belongsTo('App\Group');
+    }
 
 }
