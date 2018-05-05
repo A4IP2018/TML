@@ -1,10 +1,10 @@
 <?php
 
 namespace App;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Message extends Authenticatable
 {
     use Notifiable;
     /**
@@ -13,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'updated_at'
+        'user_id_sender', 'user_id_receiver', 'subject', 'context' , 'updated_at'
     ];
     /**
      * The attributes that are not mass assignable.
@@ -29,22 +29,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'remember_token'
     ];
     /**
      * User -> category relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category() {
-        return $this->belongsTo('App\Category');
-    }
-    /**
-     * User -> Group relationship
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function group(){
-        return $this->belongsTo('App\Group');
-    }
 }
