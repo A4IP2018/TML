@@ -43,6 +43,14 @@ class Group extends Model
         'remember_token'
     ];
 
+    /**
+     * Group->Student_information relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function student_information() {
+        return $this->belongsTo('App\Student_Information');
+    }
 //    /**
 //     * Groups -> TeacherInformations relationship
 //     *

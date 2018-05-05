@@ -13,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'updated_at'
+        'name', 'email', 'password','role_id', 'updated_at'
     ];
     /**
      * The attributes that are not mass assignable.
@@ -46,5 +46,21 @@ class User extends Authenticatable
      */
     public function group(){
         return $this->belongsTo('App\Group');
+    }
+    /**
+     * User -> role relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function roles() {
+        return $this->hasMany('App\Role','role_id');
+    }
+    /**
+     * User->Student_informationrelationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function student_information() {
+        return $this->belongsTo('App\Student_Information');
     }
 }
