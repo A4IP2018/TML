@@ -44,20 +44,20 @@ class Group extends Model
     ];
 
 //    /**
-//     * Groups -> Teacher_Informations relationship
+//     * Groups -> TeacherInformations relationship
 //     *
 //     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 //     */
 //    public function teacher_informations(){
-//        return $this->belongsToMany('App\Teacher_Information');
+//        return $this->belongsToMany('App\TeacherInformation');
 //    }
 //
 //    /**
-//     * Group -> Student_Informations relationship
+//     * Group -> StudentInformations relationship
 //     *
 //     * @return \Illuminate\Database\Eloquent\Relations\HasMany
 //     */
 //    public function student_informations(){
-//        return $this->hasMany('App\Student_Information');
+//        return $this->hasMany('App\StudentInformation');
 //    }
 }

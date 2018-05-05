@@ -21,7 +21,7 @@ class Comparison extends Model
      * @var array
      */
     protected $fillable = [
-        'homework_id_1', 'homework_id_2', 'user_id', 'updated_at'
+        'homework_id_1', 'homework_id_2', 'plagiarism_degree', 'user_id', 'updated_at'
     ];
 
     /**
@@ -30,7 +30,7 @@ class Comparison extends Model
      * @var array
      */
     protected $guarded = [
-        'íd', 'created_at', 'plagiarism_degree'
+        'íd', 'created_at'
     ];
 
 
@@ -61,11 +61,11 @@ class Comparison extends Model
 //        return $this->hasMany('App\Homework','homework_id_2',);
 //    }
 //
-//    /**
-//     * Comparison -> Users relationship
-//     *
-//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-//     */
+    /**
+     * Comparison -> Users relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function users(){
         return $this->hasMany('App\User');
     }
