@@ -42,10 +42,11 @@ class Teacher_Information_Group extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function teacher_informations() {
+    public function teacher_informations()
+    {
         return $this->hasMany('App\Teacher_Information');
     }
-
+}
     /**
      * Teacher_Information_Group -> groups relationship
      *
@@ -55,3 +56,4 @@ class Teacher_Information_Group extends Model
         return $this->hasMany('App\Group');
     } /*
 }
+

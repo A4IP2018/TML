@@ -13,11 +13,10 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Grade::class, function (Faker $faker) {
     return [
-        'nr_matricol' => str_random(18),
-        'username' => $faker->userName,
-        'password' => bcrypt(str_random(10)),
-        'role_id' => $faker->randomElement(\App\Role::pluck('id')->toArray()),
+        'grade' => $faker->numberBetween(1,10),
+        'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray()),
+        'homework_id' => $faker->randomElement(\App\Homework::pluck('id')->toArray())
     ];
 });

@@ -13,11 +13,10 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\User_Example::class, function (Faker $faker) {
     return [
-        'nr_matricol' => str_random(18),
-        'username' => $faker->userName,
         'password' => bcrypt(str_random(10)),
-        'role_id' => $faker->randomElement(\App\Role::pluck('id')->toArray()),
+        'name' => $faker->name,
+        'email' => $faker->email,
     ];
 });

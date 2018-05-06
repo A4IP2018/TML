@@ -13,11 +13,9 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Report::class, function (Faker $faker) {
     return [
-        'nr_matricol' => str_random(18),
-        'username' => $faker->userName,
-        'password' => bcrypt(str_random(10)),
-        'role_id' => $faker->randomElement(\App\Role::pluck('id')->toArray()),
+        'description' => $faker->text(500),
+        'report_type_id' => $faker->randomElement(\App\Report_type::pluck('id')->toArray())
     ];
 });
