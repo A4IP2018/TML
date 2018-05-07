@@ -13,7 +13,7 @@ class CreateTeacherInformationGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('teacher_information_group', function (Blueprint $table) {
+        Schema::create('teacher_information_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('group_id');
             $table->integer('teacher_information_id');
@@ -29,6 +29,6 @@ class CreateTeacherInformationGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teacher_information_group');
+        Schema::dropIfExists('teacher_information_groups');
     }
 }

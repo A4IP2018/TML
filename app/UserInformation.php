@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Report extends Model
+class UserInformation extends Model
 {
     use Notifiable;
 
@@ -15,7 +15,7 @@ class Report extends Model
      * @var array
      */
     protected $fillable = [
-        'description', 'report_type_id', 'updated_at'
+        'user_id', 'phone_number', 'street_name', 'street_number', 'email', 'updated_at'
     ];
 
     /**
@@ -24,8 +24,9 @@ class Report extends Model
      * @var array
      */
     protected $guarded = [
-        'íd', 'created_at'
+        'id', 'created_at'
     ];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -36,13 +37,5 @@ class Report extends Model
         'remember_token'
     ];
 
-    /**
-     * Report -> Report_type relationship
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function report_types() {
-        return $this->hasMany('App\ReportType');
-    }
 
 }

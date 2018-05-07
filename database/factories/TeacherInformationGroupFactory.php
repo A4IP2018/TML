@@ -13,9 +13,9 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Teacher_Information_Group::class, function (Faker $faker) {
+$factory->define(App\TeacherInformationGroup::class, function (Faker $faker) {
     return [
         'group_id' => $faker->randomElement(\App\Group::pluck('id')->toArray()),
-        'teacher_information_id' => $faker->randomElement(\App\Teacher_Information::pluck('id')->toArray())
+        'teacher_information_id' => $faker->randomElement(\App\TeacherInformation::pluck('id')->toArray())
     ];
 });

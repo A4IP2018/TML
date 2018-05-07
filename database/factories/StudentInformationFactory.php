@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Student_information::class, function (Faker $faker) {
+$factory->define(App\StudentInformation::class, function (Faker $faker) {
     return [
         'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray()),
         'an' => $faker->randomElement([1,2,3]),

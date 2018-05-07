@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Message extends Authenticatable
+class Message extends Model
 {
     use Notifiable;
     /**
@@ -32,9 +32,13 @@ class Message extends Authenticatable
     protected $hidden = [
         'remember_token'
     ];
+
     /**
-     * User -> category relationship
+     * Message -> User relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function user() {
+        return $this->hasMany('App\User','user_id');
+    }
 }

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Student_information extends Model
+class TeacherInformationGroup extends Model
 {
     use Notifiable;
 
@@ -15,7 +15,7 @@ class Student_information extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'an','group_id', 'updated_at'
+        'group_id', 'teacher_information_id', 'updated_at'
     ];
 
     /**
@@ -24,7 +24,7 @@ class Student_information extends Model
      * @var array
      */
     protected $guarded = [
-        'íd', 'created_at'
+        'id', 'created_at'
     ];
 
 
@@ -37,22 +37,23 @@ class Student_information extends Model
         'remember_token'
     ];
 
-
     /**
-     * Student_information -> User relationship
+     * Teacher_Information_Group -> teacher_informations relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function users() {
-        return $this->hasMany('App\User','user_id');
+    public function teacher_informations()
+    {
+        return $this->hasMany('App\TeacherInformation');
     }
+
     /**
-     * Student_information -> Group relationship
+     * Teacher_Information_Group -> groups relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function groups() {
-        return $this->hasMany('App\Group','group_id');
-    }
-
+    /* public function groups() {
+        return $this->hasMany('App\Group');
+    } */
 }
+

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Teacher_Information extends Model
+class TeacherInformation extends Model
 {
     use Notifiable;
 
@@ -43,7 +43,7 @@ class Teacher_Information extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function teacher_information_group() {
-        return $this->belongsTo('App\Teacher_Information_Group');
+        return $this->belongsTo('App\TeacherInformationGroup');
     }
 
 }

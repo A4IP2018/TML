@@ -61,6 +61,16 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function student_information() {
-        return $this->belongsTo('App\Student_Information');
+        return $this->belongsTo('App\StudentInformation');
     }
+
+    /**
+     * User->Message relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function message(){
+        return $this->belongsTo('App\Message');
+    }
+
 }

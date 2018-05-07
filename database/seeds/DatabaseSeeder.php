@@ -17,19 +17,17 @@ class DatabaseSeeder extends Seeder
 
         factory(App\User::class, 50)->create();
 
-        //factory(App\User_Example::class,50)->create();
-
         factory(App\Category::class, 50)->create();
 
-        //factory(App\Teacher_Information::class, 50)->create();
+        factory(App\TeacherInformation::class, 50)->create();
 
-        factory(App\Report_type::class, 50)->create();
+        factory(App\ReportType::class, 50)->create();
 
         factory(App\Report::class, 50)->create();
 
         factory(App\Group::class, 50)->create();
 
-        factory(App\Student_information::class,50)->create();
+        factory(App\StudentInformation::class,50)->create();
 
         factory(App\Homework::class,50)->create();
 
@@ -37,14 +35,11 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Comparison::class,50)->create();
 
-        //factory(App\Teacher_Information_Group::class,50)->create();
+        factory(App\TeacherInformationGroup::class,50)->create();
 
-        //factory(App\User_Information::class,50)->create();
+        factory(App\UserInformation::class,50)->create();
 
-        //factory(App\Password_reset::class,50)->create();
-
-        //factory(App\Message::class, 50)->create();
-
+        factory(App\Message::class, 50)->create();
 
     }
 }

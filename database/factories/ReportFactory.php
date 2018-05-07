@@ -16,6 +16,6 @@ use Faker\Generator as Faker;
 $factory->define(App\Report::class, function (Faker $faker) {
     return [
         'description' => $faker->text(500),
-        'report_type_id' => $faker->randomElement(\App\Report_type::pluck('id')->toArray())
+        'report_type_id' => $faker->randomElement(\App\ReportType::pluck('id')->toArray())
     ];
 });

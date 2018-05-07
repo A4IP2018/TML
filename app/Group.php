@@ -49,7 +49,7 @@ class Group extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function student_information() {
-        return $this->belongsTo('App\Student_Information');
+        return $this->belongsTo('App\StudentInformation');
     }
 //    /**
 //     * Groups -> TeacherInformations relationship

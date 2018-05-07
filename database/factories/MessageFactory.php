@@ -15,9 +15,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Message::class, function (Faker $faker) {
     return [
-        'user_id_receiver' => $faker->randomElement(\App\User::pluck('id')->toArray()),
         'user_id_sender' => $faker->randomElement(\App\User::pluck('id')->toArray()),
-        'content' => $faker->text(500),
-        'subject' => $faker->text(50)
+        'user_id_receiver' => $faker->randomElement(\App\User::pluck('id')->toArray()),
+        'subject' => $faker->text(50),
+        'content' => $faker->text(500)
+
     ];
 });

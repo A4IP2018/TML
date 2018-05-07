@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User_Information::class, function (Faker $faker) {
+$factory->define(App\UserInformation::class, function (Faker $faker) {
     return [
         'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray()),
         'phone_number' => $faker->phoneNumber,

@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Report_type::class, function (Faker $faker) {
+$factory->define(App\ReportType::class, function (Faker $faker) {
     return [
         'name' => str_random(10)
     ];

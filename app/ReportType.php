@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class User_Information extends Model
+class ReportType extends Model
 {
     use Notifiable;
 
@@ -15,7 +15,7 @@ class User_Information extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'phone_number', 'street_name', 'street_number', 'email', 'updated_at'
+        'name', 'updated_at'
     ];
 
     /**
@@ -37,5 +37,13 @@ class User_Information extends Model
         'remember_token'
     ];
 
+    /**
+     * Report_type-> Report relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function reports() {
+        return $this->belongsTo('App\Report');
+    }
 
 }
