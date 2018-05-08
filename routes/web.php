@@ -12,9 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/upload', function () {
     return view('upload');
 });
+
+Route::get('/messages', function() {
+    return view('messages');
+});
+
+Route::get('/homework', function() {
+    return view('homework');
+});
+
