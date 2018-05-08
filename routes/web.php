@@ -18,6 +18,16 @@ Route::get('/', function () {
 Route::get('/upload', function () {
     return view('upload');
 });
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/login', 'LoginController@index')->name('login');
+Route::post('/login-action', 'LoginController@authenticate')->name('login-action');
+
+Route::get('/logout', 'LoginController@logout')->name('logout');
+
+
+Route::get('register', 'RegisterController@index')->name('register');
+
+Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
