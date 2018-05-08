@@ -155,10 +155,14 @@
                             </div>
                         </form>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-                    </li>
+
+                    @if (Auth::check())
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/logout') }}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+                    @else
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Register</a></li>
+                    @endif
+
                 </ul>
             </div>
         </nav>
