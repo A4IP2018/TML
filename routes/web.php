@@ -12,13 +12,33 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
-Auth::routes();
+Route::get('/upload-hw', function () {
+    return view('upload-hw');
+});
+
+Route::get('/messages', function() {
+    return view('messages');
+});
+
+Route::get('/homework', function() {
+    return view('homework');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/upload', function () {
     return view('upload');
 });
+
+Route::get('/login', 'LoginController@index')->name('login');
+Route::post('/login-action', 'LoginController@authenticate')->name('login-action');
+
+Route::get('/logout', 'LoginController@logout')->name('logout');
+
+
+Route::get('register', 'RegisterController@index')->name('register');
+
+Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
