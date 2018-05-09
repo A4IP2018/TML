@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                        <a class="nav-link" href="{{ url('/upload') }}">
+                        <a class="nav-link" href="{{ url('/upload-hw') }}">
                             <i class="fa fa-fw fa-file"></i>
                             <span class="nav-link-text">Upload</span>
                         </a>

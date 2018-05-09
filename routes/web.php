@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/upload', function () {
-    return view('upload');
+Route::get('/upload-hw', function () {
+    return view('upload-hw');
 });
 
 Route::get('/messages', function() {
