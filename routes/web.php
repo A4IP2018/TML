@@ -31,6 +31,10 @@ Route::get('/course-sg', function() {
     return view('course-sg');
 });
 
+Route::get('/compare', function () {
+    return view('compare');
+});
+
 Route::get('/new-homework', function () {
     return view('new-homework');
 });

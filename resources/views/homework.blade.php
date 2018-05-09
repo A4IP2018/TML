@@ -25,6 +25,7 @@
     </div>
 
     <br><a href="{{ url('/new-homework') }}" class="btn btn-primary btn-lg btn-block">New Homework</a>
+    <a href="{{ url('/compare') }}" class="btn btn-secondary btn-lg btn-block">Compare</a>
 
       <div class="mb-0 mt-4">
 
