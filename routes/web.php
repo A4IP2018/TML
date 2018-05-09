@@ -15,16 +15,32 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/upload', function () {
+    return view('upload');
+});
+
 Route::get('/upload-hw', function () {
     return view('upload-hw');
+});
+
+Route::get('/courses', function() {
+    return view('courses');
+});
+
+Route::get('/homework', function() {
+    return view('homework');
+});
+
+Route::get('/homework-sg', function () {
+    return view('homework-sg');
 });
 
 Route::get('/messages', function() {
     return view('messages');
 });
 
-Route::get('/homework', function() {
-    return view('homework');
+Route::get('/reviews', function() {
+    return view('reviews');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

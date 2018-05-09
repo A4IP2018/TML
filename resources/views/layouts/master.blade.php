@@ -97,7 +97,7 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="{{ url('/messages') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-envelope"></i>
                             <span class="d-lg-none">Messages
                                 <span class="badge badge-pill badge-primary">12 New</span>
@@ -142,18 +142,6 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item small" href="#">View all alerts</a>
                         </div>
-                    </li>
-                    <li class="nav-item">
-                        <form class="form-inline my-2 my-lg-0 mr-lg-2">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Search for...">
-                                <span class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                      <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </form>
                     </li>
 
                     @if (Auth::check())

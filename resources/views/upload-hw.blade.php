@@ -5,6 +5,13 @@
 
   <div class="content-wrapper">
     <div class="container-fluid">
+    <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="#">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Upload</li>
+  </ol>
       <div class="row">
         <div class="col-12">
             <form action="/upload" method="post" enctype="multipart/form-data">
