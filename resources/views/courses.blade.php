@@ -31,7 +31,7 @@
         <i class="fa fa-newspaper-o"></i> ...</div>
         <hr class="mt-2">
         <div class="card-columns">
-        <!-- Example Homework Card-->
+        <!-- Example Course Card-->
           <div class="card mb-3">
             <div class="card-header bg-transparent border">Materie</div>
             <div class="card-body text">
@@ -42,6 +42,7 @@
             <a href="{{ url('/course-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
+            <a href="{{ url('/edit-course') }}" class="btn btn-secondary">Edit</a>
           </div>
         </div>
 

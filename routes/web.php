@@ -19,6 +19,10 @@ Route::get('/upload', function () {
     return view('upload');
 });
 
+Route::get('/edit-course', function () {
+    return view('edit-course');
+});
+
 Route::get('/new-course', function () {
     return view('new-course');
 });
@@ -37,6 +41,10 @@ Route::get('/compare', function () {
 
 Route::get('/new-homework', function () {
     return view('new-homework');
+});
+
+Route::get('/edit-homework', function () {
+    return view('edit-homework');
 });
 
 Route::get('/homework', function() {

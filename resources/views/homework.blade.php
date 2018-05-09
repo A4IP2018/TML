@@ -42,10 +42,11 @@
             <div class="card-footer bg-transparent border">Format: </div>
             <div class="card-footer bg-transparent border">Deadline: </div>
             <div class="card-footer bg-transparent border">
-            <a href="{{ url('/upload') }}"><button type="button" class="btn btn-primary">Upload</button></a>
-            <a href="{{ url('/homework-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
+            <a href="{{ url('/upload') }}" class="btn btn-primary">Upload</a>
+            <a href="{{ url('/homework-sg') }}" class="btn btn-info">Detalii</a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
+            <a href="{{ url('/edit-homework') }}" class="btn btn-secondary">Edit</a>
           </div>
         </div>
 
@@ -59,10 +60,11 @@
             <div class="card-footer bg-transparent border">Format: </div>
             <div class="card-footer bg-transparent border">Deadline: </div>
             <div class="card-footer bg-transparent border">
-            <a href="{{ url('/upload') }}"><button type="button" class="btn btn-primary">Upload</button></a>
-            <a href="{{ url('/homework-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
+            <a href="{{ url('/upload') }}" class="btn btn-primary">Upload</a>
+            <a href="{{ url('/homework-sg') }}" class="btn btn-info">Detalii</a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
+            <a href="{{ url('/edit-homework') }}" class="btn btn-secondary">Edit</a>
           </div>
         </div>
 
@@ -76,10 +78,11 @@
             <div class="card-footer bg-transparent border">Format: </div>
             <div class="card-footer bg-transparent border">Deadline: </div>
             <div class="card-footer bg-transparent border">
-            <a href="{{ url('/upload') }}"><button type="button" class="btn btn-primary">Upload</button></a>
-            <a href="{{ url('/homework-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
+            <a href="{{ url('/upload') }}" class="btn btn-primary">Upload</a>
+            <a href="{{ url('/homework-sg') }}" class="btn btn-info">Detalii</a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
+            <a href="{{ url('/edit-homework') }}" class="btn btn-secondary">Edit</a>
           </div>
         </div>
 
