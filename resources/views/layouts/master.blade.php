@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Description">
         <meta name="author" content="HomeworkManager Team">
-        <title>Title</title>
+        <title>HomeworkManager</title>
 
         <!-- Bootstrap core CSS-->
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                        <a class="nav-link" href="{{ url('/upload-hw') }}">
+                        <a class="nav-link" href="{{ url('/upload') }}">
                             <i class="fa fa-fw fa-file"></i>
                             <span class="nav-link-text">Upload</span>
                         </a>

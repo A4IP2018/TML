@@ -24,14 +24,16 @@
       </span>
     </div>
 
+    <br><a href="{{ url('/new-homework') }}" class="btn btn-primary btn-lg btn-block">New Homework</a>
+
       <div class="mb-0 mt-4">
 
-        <i class="fa fa-newspaper-o"></i> Homework</div>
+        <i class="fa fa-newspaper-o"></i> Homework feed</div>
         <hr class="mt-2">
         <div class="card-columns">
         <!-- Example Homework Card-->
           <div class="card mb-3">
-            <div class="card-header bg-transparent border">Materie</div>
+            <div class="card-header bg-transparent border"><a href="{{ url('/course-sg') }}">Materie<a></div>
             <div class="card-body text">
               <h5 class="card-title">Tema</h5>
               <p class="card-text">Descriere Tema</p>
@@ -39,7 +41,7 @@
             <div class="card-footer bg-transparent border">Format: </div>
             <div class="card-footer bg-transparent border">Deadline: </div>
             <div class="card-footer bg-transparent border">
-            <a href="{{ url('/upload-hw') }}"><button type="button" class="btn btn-primary">Upload</button></a>
+            <a href="{{ url('/upload') }}"><button type="button" class="btn btn-primary">Upload</button></a>
             <a href="{{ url('/homework-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
@@ -48,7 +50,7 @@
 
         <!-- Example Homework Card-->
         <div class="card mb-3">
-            <div class="card-header bg-transparent border">Materie</div>
+            <div class="card-header bg-transparent border"><a href="{{ url('/course-sg') }}">Materie<a></div>
             <div class="card-body text">
               <h5 class="card-title">Tema</h5>
               <p class="card-text">Descriere Tema</p>
@@ -56,7 +58,7 @@
             <div class="card-footer bg-transparent border">Format: </div>
             <div class="card-footer bg-transparent border">Deadline: </div>
             <div class="card-footer bg-transparent border">
-            <a href="{{ url('/upload-hw') }}"><button type="button" class="btn btn-primary">Upload</button></a>
+            <a href="{{ url('/upload') }}"><button type="button" class="btn btn-primary">Upload</button></a>
             <a href="{{ url('/homework-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
@@ -65,7 +67,7 @@
 
         <!-- Example Homework Card-->
         <div class="card mb-3">
-            <div class="card-header bg-transparent border">Materie</div>
+            <div class="card-header bg-transparent border"><a href="{{ url('/course-sg') }}">Materie<a></div>
             <div class="card-body text">
               <h5 class="card-title">Tema</h5>
               <p class="card-text">Descriere Tema</p>
@@ -73,7 +75,7 @@
             <div class="card-footer bg-transparent border">Format: </div>
             <div class="card-footer bg-transparent border">Deadline: </div>
             <div class="card-footer bg-transparent border">
-            <a href="{{ url('/upload-hw') }}"><button type="button" class="btn btn-primary">Upload</button></a>
+            <a href="{{ url('/upload') }}"><button type="button" class="btn btn-primary">Upload</button></a>
             <a href="{{ url('/homework-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>

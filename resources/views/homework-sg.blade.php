@@ -21,7 +21,7 @@
         </div>
         <!--homework AUTHOR-->
         <div class="card text-center">
-        <div class="card-header">PSGBD</div>
+        <a href="{{ url('/course-sg') }}" class="card-header">PSGBD</a>
         <div class="card-body">
             <h5 class="card-title">Laboratorul 8</h5>
             <p class="card-text">1.) Creati o procedura stocata care sa exporte tabelele studenti si prieteni pentru utilizatorul curent intr-un format la alegere (mai putin SQL - adica fara sa generati inserturi care ar popula automat tabelele).</p>
@@ -29,8 +29,8 @@
             <hr><p class="card-text">Deadline: 25 Mai 2018</p>
             <hr><p class="card-text">Autor: Cosmin Varlan</p>
             <hr>
-            <a href="{{ url('/upload-hw') }}" class="btn btn-primary">Upload</a>
-            <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
+            <a href="{{ url('/upload') }}" class="btn btn-primary">Upload</a>
+            <a href="#" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
         </div>
         <div class="card-footer text-muted">

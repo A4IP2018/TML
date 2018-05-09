@@ -19,12 +19,20 @@ Route::get('/upload', function () {
     return view('upload');
 });
 
-Route::get('/upload-hw', function () {
-    return view('upload-hw');
+Route::get('/new-course', function () {
+    return view('new-course');
 });
 
 Route::get('/courses', function() {
     return view('courses');
+});
+
+Route::get('/course-sg', function() {
+    return view('course-sg');
+});
+
+Route::get('/new-homework', function () {
+    return view('new-homework');
 });
 
 Route::get('/homework', function() {

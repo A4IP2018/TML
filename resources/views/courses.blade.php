@@ -24,6 +24,8 @@
       </span>
     </div>
 
+      <br><a href="{{ url('/new-course') }}" class="btn btn-primary btn-lg btn-block">New Course</a>
+
       <div class="mb-0 mt-4">
 
         <i class="fa fa-newspaper-o"></i> ...</div>
@@ -37,7 +39,7 @@
               <p class="card-text">...</p>
             </div>
             <div class="card-footer bg-transparent border">
-            <a href="{{ url('/homework-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
+            <a href="{{ url('/course-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
             <a href="{{ url('/reviews') }}" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
           </div>
