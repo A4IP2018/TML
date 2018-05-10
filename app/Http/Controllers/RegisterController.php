@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\User;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -47,25 +48,40 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+//        return Validator::make($data, [
+//            'nr_matricol' => 'required|string|max:255',
+//            'username' => 'required|string|max:255',
+//            'password' => 'required|string|min:5|confirmed',
+//            'role_id' => 'required|string',
+//        ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * View instance
      *
-     * @param  array  $data
-     * @return \App\User
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function create(array $data)
+    protected function index()
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return view('register');
     }
+
+    /**
+     * Register user
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    protected function registerAction(Request $request)
+    {
+        User::create([
+            'username' => $request->input('username'),
+            'password' => bcrypt($request->input('password')),
+            'role_id' => 1,
+        ]);
+
+        return Redirect::to($this->redirectTo);
+    }
+
+
 }
