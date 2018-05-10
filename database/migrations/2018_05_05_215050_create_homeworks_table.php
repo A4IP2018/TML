@@ -16,8 +16,9 @@ class CreateHomeworksTable extends Migration
         Schema::create('homeworks', function (Blueprint $table) {
             $table->increments('id');
             $table->text('description');
+            $table->string('name');
+            $table->string('slug');
             $table->integer('category_id');
-            $table->string('path');
             $table->integer('user_id');
             $table->rememberToken();
             $table->timestamps();

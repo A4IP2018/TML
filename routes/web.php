@@ -65,6 +65,10 @@ Route::get('/reviews', function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/upload', function () {
+    return view('upload');
+});
+
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login-action', 'LoginController@authenticate')->name('login-action');
 
