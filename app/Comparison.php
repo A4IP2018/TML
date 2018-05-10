@@ -44,7 +44,7 @@ class Comparison extends Model
     ];
 
 //    /**
-//     * Comparison -> Homeworks relationship for the first Homework used in the Comparison.
+//     * Comparison -> Homework relationship for the first Homework used in the Comparison.
 //     *
 //     * @return \Illuminate\Database\Eloquent\Relations\HasMany
 //     */
@@ -53,7 +53,7 @@ class Comparison extends Model
 //    }
 //
 //    /**
-//     * Comparison -> Homeworks relationship for the second Homework used in the Comparison.
+//     * Comparison -> Homework relationship for the second Homework used in the Comparison.
 //     *
 //     * @return \Illuminate\Database\Eloquent\Relations\HasMany
 //     */
