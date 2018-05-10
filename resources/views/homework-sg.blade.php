@@ -24,7 +24,9 @@
         <a href="{{ url('/course-sg') }}" class="card-header">PSGBD</a>
         <div class="card-body">
             <h5 class="card-title">Laboratorul 8</h5>
-            <p class="card-text">1.) Creati o procedura stocata care sa exporte tabelele studenti si prieteni pentru utilizatorul curent intr-un format la alegere (mai putin SQL - adica fara sa generati inserturi care ar popula automat tabelele).</p>
+            <p class="card-text">
+               {{ $homework->description }}
+            </p>
             <hr><p class="card-text">Format: .zip</p>
             <hr><p class="card-text">Deadline: 25 Mai 2018</p>
             <hr><p class="card-text">Autor: Cosmin Varlan</p>
@@ -42,8 +44,43 @@
         </div>
     </div>
     </div>
+
+    <div class="comment-section">
+        <div class="container-fluid">
+
+            <form action="{{ \Illuminate\Support\Facades\URL::to('/comments-action') }}" method="POST">
+                {{ csrf_field() }}
+                <input name="homework-id" type="hidden" value="{{ $homework->id }}">
+                <textarea name="comments" id="" cols="30" rows="10"></textarea>
+
+                <button type="submit btn-primary">Submit</button>
+            </form>
+
+
+
+
+
+
+        </div>
+
+
+        <div class="comments-wrapper">
+            @foreach($comments as $comment)
+
+                {{ $comment->comment }}
+
+                <br><br>
+
+            @endforeach
+        </div>
+
     </div>
+
 </div>
+
+
+
+
 
 <!-- /.container-fluid-->
 <!-- /.content-wrapper-->

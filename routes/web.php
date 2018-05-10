@@ -51,9 +51,7 @@ Route::get('/homework', function() {
     return view('homework');
 });
 
-Route::get('/homework-sg', function () {
-    return view('homework-sg');
-});
+Route::resource('homework', 'HomeworkController');
 
 Route::get('/messages', function() {
     return view('messages');
@@ -78,3 +76,6 @@ Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('register', 'RegisterController@index')->name('register');
 
 Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
+
+
+Route::post('comments-action', 'HomeworkController@uploadComment');
