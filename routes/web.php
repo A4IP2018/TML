@@ -39,16 +39,8 @@ Route::get('/compare', function () {
     return view('compare');
 });
 
-Route::get('/new-homework', function () {
-    return view('new-homework');
-});
-
 Route::get('/edit-homework', function () {
     return view('edit-homework');
-});
-
-Route::get('/homework', function() {
-    return view('homework');
 });
 
 Route::resource('homework', 'HomeworkController');
