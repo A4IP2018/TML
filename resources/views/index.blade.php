@@ -3,13 +3,14 @@
 
 @section('content')
 
+<!--DASHBOARD PAGE-->
 
 <div class="content-wrapper">
 <div class="container-fluid">
   <!-- Breadcrumbs-->
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="#">Dashboard</a>
+      <a href="#">Bord</a>
   </ol>
   <!-- Icon Cards-->
   <div class="row">
@@ -19,10 +20,10 @@
           <div class="card-body-icon">
             <i class="fa fa-fw fa-comments"></i>
           </div>
-          <div class="mr-5">26 New Messages!</div>
+          <div class="mr-5">26 Mesaje noi!</div>
         </div>
         <a class="card-footer text-white clearfix small z-1" href="{{ url('/messages') }}">
-          <span class="float-left">View Details</span>
+          <span class="float-left">Citeste mai mult</span>
           <span class="float-right">
             <i class="fa fa-angle-right"></i>
           </span>
@@ -35,10 +36,10 @@
           <div class="card-body-icon">
             <i class="fa fa-fw fa-list"></i>
           </div>
-          <div class="mr-5">11 New Homework!</div>
+          <div class="mr-5">11 Teme noi!</div>
         </div>
         <a class="card-footer text-white clearfix small z-1" href="{{ url('/homework') }}">
-          <span class="float-left">View Details</span>
+          <span class="float-left">Citeste mai mult</span>
           <span class="float-right">
             <i class="fa fa-angle-right"></i>
           </span>
