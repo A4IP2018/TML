@@ -15,6 +15,13 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/profile', function () {
+    return view('profile');
+});
+
+Route::get('/upload', function () {
+    return view('upload');
+});
 
 Route::get('/edit-course', function () {
     return view('edit-course');
@@ -36,8 +43,8 @@ Route::get('/compare', function () {
     return view('compare');
 });
 
-Route::get('/new-homework', function () {
-    return view('new-homework');
+Route::get('/forum', function () {
+    return view('forum');
 });
 
 Route::get('/edit-homework', function () {
@@ -50,8 +57,16 @@ Route::get('/messages', function() {
     return view('messages');
 });
 
-Route::get('/reviews', function() {
-    return view('reviews');
+Route::get('/request', function () {
+    return view('request');
+});
+
+Route::get('/messages-sg', function() {
+    return view('messages-sg');
+});
+
+Route::get('/settings', function() {
+    return view('settings');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -61,6 +76,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action');
 
 Route::get('/upload/{slug}', 'HomeworkController@uploadView');
+
+Route::get('/stud-uploads', function () {
+    return view('stud-uploads');
+});
+
+Route::get('/stud-uploads-sg', function () {
+    return view('stud-uploads-sg');
+});
 
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login-action', 'LoginController@authenticate')->name('login-action');

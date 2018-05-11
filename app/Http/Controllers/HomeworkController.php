@@ -28,7 +28,7 @@ class HomeworkController extends Controller
      */
     public function create()
     {
-        //
+        return view('new-homework');
     }
 
     /**

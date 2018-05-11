@@ -14,10 +14,14 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\Homework::class, function (Faker $faker) {
+
+    $name = $faker->paragraph(1);
+
     return [
         'description' => $faker->text,
+        'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray()),
         'category_id' => $faker->randomElement(\App\Category::pluck('id')->toArray()),
-        'path' => $faker->text(10) . $faker->fileExtension ,
-        'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray())
+        'name' => $name,
+        'slug' => str_slug($name)
     ];
 });
