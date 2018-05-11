@@ -31,7 +31,7 @@
             <hr><p class="card-text">Deadline: 25 Mai 2018</p>
             <hr><p class="card-text">Autor: Cosmin Varlan</p>
             <hr>
-            <a href="{{ url('/upload') }}" class="btn btn-primary">Upload</a>
+            <a href="{{ url('/upload/'. $homework->slug ) }}" class="btn btn-primary">Upload</a>
             <a href="#" class="btn btn-primary">Reviews</a>
             <a href="#" class="btn btn-primary">Follow</a>
         </div>

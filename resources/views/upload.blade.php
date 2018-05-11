@@ -20,7 +20,9 @@
             <footer class="blockquote-footer">now or never</footer>
             </blockquote>
 
-            <form action="/upload" method="post" enctype="multipart/form-data">
+            <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="homework-id" value="{{ $homework->id }}">
                 Homework title:
                 <br />
                 <input type="text" class="form-control" id="hw-title" placeholder="Alege un titlu">
@@ -37,7 +39,7 @@
 
                 Homework files (can attach more than one):
                 <br />
-                <input type="file" name="homework[]" multiple />
+                <input type="file" name="fileToUpload" />
                 <br /><br />
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

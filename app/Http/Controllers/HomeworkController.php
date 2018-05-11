@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Homework;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\File\File;
 
 class HomeworkController extends Controller
 {
@@ -16,7 +18,7 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        //
+        return view('homework');
     }
 
     /**
@@ -89,6 +91,26 @@ class HomeworkController extends Controller
         //
     }
 
+
+    /**
+     * Upload view return
+     *
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function uploadView($slug)
+    {
+        $homework = Homework::where('slug', $slug)->first();
+
+        return view('upload', compact('homework'));
+    }
+
+    /**
+     * Upload comment
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function uploadComment(Request $request)
     {
         $comment = $request->input('comments');
@@ -102,5 +124,56 @@ class HomeworkController extends Controller
 
         return redirect()->back();
 
+    }
+
+
+    /**
+     * Upload homework functionality
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadHomework(Request $request)
+    {
+
+        $path = public_path(). '/files/';
+        $image =  $request->file('fileToUpload');
+
+        $filename = time() . '.' . $image->getClientOriginalName();
+        $uploadOk = 1;
+        $imageFileType = $request->file('fileToUpload')->getMimeType();
+        $imageFileExtension = $request->file('fileToUpload')->getExtension();
+
+
+        if ($request->file('fileToUpload')->getSize() > 500000) {
+            echo "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif" && $imageFileType != 'text/plain'
+            && $imageFileExtension != 'txt' && $imageFileExtension != 'jpg'
+            && $imageFileExtension != 'png' && $imageFileExtension != 'jpeg' && $imageFileExtension != 'gif') {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+
+        } else {
+            if ($image->move($path, $filename)) {
+
+                \App\File::create([
+                   'user_id' => Auth::id(),
+                   'homework_id' => $request->input('homework-id'),
+                   'file_name' =>  $filename
+                ]);
+
+                return redirect()->back();
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }
     }
 }
