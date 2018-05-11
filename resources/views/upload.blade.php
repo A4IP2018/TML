@@ -23,7 +23,9 @@
             <footer class="blockquote-footer">acum ori niciodata</footer>
             </blockquote>
 
-            <form action="/upload" method="post" enctype="multipart/form-data">
+            <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="homework-id" value="{{ $homework->id }}">
                 Titlu tema:
                 <br />
                 <input name="homework-title" type="text" class="form-control" id="hw-title" placeholder="Alege un titlu">
@@ -44,7 +46,7 @@
 
                 Fisiere tema (Poti atasa unul sau mai multe):
                 <br />
-                <input type="file" name="homework[]" multiple />
+                <input type="file" name="fileToUpload" />
                 <br /><br />
                 <button type="submit" class="btn btn-primary">Upload</button>
             </form>

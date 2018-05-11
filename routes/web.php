@@ -19,10 +19,6 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/upload', function () {
-    return view('upload');
-});
-
 Route::get('/edit-course', function () {
     return view('edit-course');
 });
@@ -71,9 +67,11 @@ Route::get('/settings', function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/upload', function () {
-    return view('upload');
-});
+
+
+Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action');
+
+Route::get('/upload/{slug}', 'HomeworkController@uploadView');
 
 Route::get('/stud-uploads', function () {
     return view('stud-uploads');
@@ -95,3 +93,7 @@ Route::post('register-action', 'RegisterController@registerAction')->name('regis
 
 
 Route::post('comments-action', 'HomeworkController@uploadComment');
+
+Route::get('/view-homework', 'AddHomeWorkController@insert_homework_form');
+Route::post('/add-homework', 'AddHomeWorkController@insert_new_homework');
+

@@ -44,12 +44,6 @@
                             <span class="nav-link-text">Teme</span>
                         </a>
                     </li>
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                        <a class="nav-link" href="{{ url('/upload') }}">
-                            <i class="fa fa-fw fa-file"></i>
-                            <span class="nav-link-text">Upload</span>
-                        </a>
-                    </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
                         <a class="nav-link" href="{{ url('/courses') }}">
                             <i class="fa fa-fw fa-sitemap"></i>

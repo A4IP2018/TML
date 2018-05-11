@@ -16,39 +16,26 @@
     <li class="breadcrumb-item active">Tema Noua</li>
   </ol>
 
+  <form action="/add-homework>" method="post">
     <div class="row">
       <div class="col-12">
-
         <div class="form-group">
-
           <label for="hw-title">Titlu:</label>
-
-          <!--Homework title-->
-          <input name="homework-title" type="text" class="form-control" id="hw-title" placeholder="Alege un titlu">
-
+          <input type="text" name="homework_title" class="form-control" id="hw-title" placeholder="Alege un titlu">
         </div>
         <div class="form-group">
 
           <label for="sel1">Curs:</label>
-
-          <!--Homework Course-->
-          <select name="course-title" class="form-control" id="hw-curssel">
-
+          <select class="form-control" name="homework_course" id="hw-curssel">
             <option>IP fara Patrut :(</option>
             <option>Curs 2</option>
             <option>Curs 3</option>
             <option>Curs 4</option>
-
           </select>
-
         </div>
         <div class="form-group">
-          
           <label for="hw-descr">Descriere:</label>
-          
-          <!--Homework description-->
-          <textarea class="form-control" rows="5" id="hw-descr" placeholder="Alege o descriere"></textarea>
-        
+          <textarea class="form-control" name="homework_description" rows="5" id="hw-descr" placeholder="Alege o descriere"></textarea>
         </div>
 
         <div class="form-group row">
@@ -57,7 +44,7 @@
 
         <!--Homework deadline-->
         <div class="col-10">
-          <input name="homework-deadline" class="form-control" type="date" value="2018-08-19" id="example-date-input">
+          <input class="form-control" name="homework_deadline" type="date" value="2018-08-19" id="example-date-input">
         </div>
         </div>
 
@@ -79,21 +66,11 @@
             <input name="format-check" type="checkbox" class="form-check-input" value="" disabled>disabled
           </label>
         </div>
-
         </p>
-
-
-
-
-
-        <!--Homework submit-->
         <button type="submit" class="btn btn-primary">Salveaza</button>
-
-
-
-
       </div>
     </div>
+	</form>
   </div>
 </div>
 <!-- /.container-fluid-->

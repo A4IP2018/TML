@@ -41,7 +41,7 @@
 
             <!--homework format-->
             <hr><p class="card-text">Format: .zip</p>
-
+            
             <!--homework deadline-->
             <hr><p class="card-text">Termen limita: 25 Mai 2018</p>
 
