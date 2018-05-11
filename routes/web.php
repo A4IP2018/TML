@@ -84,3 +84,7 @@ Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('register', 'RegisterController@index')->name('register');
 
 Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
+
+Route::get('/view-homework', 'AddHomeWorkController@insert_homework_form');
+Route::post('/add-homework', 'AddHomeWorkController@insert_new_homework');
+
