@@ -55,32 +55,15 @@
                             <i class="fa fa-fw fa-sitemap"></i>
                             <span class="nav-link-text">Cursuri</span>
                         </a>
-                        <ul class="sidenav-second-level collapse" id="collapseMulti">
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-                                <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
                     </li>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                        <a class="nav-link" href="{{ url('/settings') }}">
+                            <i class="fa fa-fw fa-wrench"></i>
+                            <span class="nav-link-text">Setari</span>
+                        </a>
+                    </li>
+
                 </ul>
                 <ul class="navbar-nav sidenav-toggler">
                     <li class="nav-item">

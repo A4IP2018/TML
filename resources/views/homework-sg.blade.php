@@ -51,8 +51,12 @@
             <!--upload to this homework-->
             <a href="{{ url('/upload') }}" class="btn btn-primary">Upload</a>
 
-            <!--follow this homework-->
-            <a href="#" class="btn btn-primary">Urmareste</a>
+            <!--add members to this homework <TEACHER>-->
+            <a href="#" class="btn btn-primary">Adauga membri</a>
+
+            
+            <!--student uploads for this homework <TEACHER>-->
+            <a href="{{ url('/stud-uploads') }}" class="btn btn-secondary">Uploads</a>
 
         </div>
         <!--date/time when posted-->

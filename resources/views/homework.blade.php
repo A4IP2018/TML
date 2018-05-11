@@ -73,13 +73,17 @@
             <!--go to homework page-->
             <a href="{{ url('/homework-sg') }}" class="btn btn-info">Detalii</a>
 
-            <!--Homework follow-->
-            <a href="#" class="btn btn-primary">Urmareste</a>
+            <!--go to request page-->
+            <a href="{{ url('/request') }}" class="btn btn-info">Cerere</a>
+
+            <!--Add member to homework <TEACHER>-->
+            <a href="#" class="btn btn-primary">Adauga membri</a>
 
             <!--Homework edit <TEACHER>-->
             <a href="{{ url('/edit-homework') }}" class="btn btn-secondary">Editeaza</a>
 
-
+            <!--student uploads for this homework <TEACHER>-->
+            <a href="{{ url('/stud-uploads') }}" class="btn btn-secondary">Uploads</a>
 
 
 

@@ -63,11 +63,13 @@
             <a href="{{ url('/course-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
 
             <!--press to follow course-->
-            <a href="#" class="btn btn-primary">Urmareste</a>
+            <a href="#" class="btn btn-primary">Adauga membri</a>
 
+            <!--Course edit <TEACHER>-->
             <a href="{{ url('/edit-course') }}" class="btn btn-secondary">Editeaza</a>
 
-
+            <!--go to this course's forum-->
+            <a href="{{ url('/forum') }}" class="btn btn-secondary">Forum</a>
 
 
 

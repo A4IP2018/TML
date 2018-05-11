@@ -43,6 +43,10 @@ Route::get('/compare', function () {
     return view('compare');
 });
 
+Route::get('/forum', function () {
+    return view('forum');
+});
+
 Route::get('/edit-homework', function () {
     return view('edit-homework');
 });
@@ -53,18 +57,30 @@ Route::get('/messages', function() {
     return view('messages');
 });
 
+Route::get('/request', function () {
+    return view('request');
+});
+
 Route::get('/messages-sg', function() {
     return view('messages-sg');
 });
 
-Route::get('/reviews', function() {
-    return view('reviews');
+Route::get('/settings', function() {
+    return view('settings');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/upload', function () {
     return view('upload');
+});
+
+Route::get('/stud-uploads', function () {
+    return view('stud-uploads');
+});
+
+Route::get('/stud-uploads-sg', function () {
+    return view('stud-uploads-sg');
 });
 
 Route::get('/login', 'LoginController@index')->name('login');

@@ -39,7 +39,7 @@
           <hr><p class="card-text">Profesori: Cosmin Varlan</p><hr>
 
           <!--follow course-->
-          <a href="#" class="btn btn-primary">Urmareste</a>
+          <a href="#" class="btn btn-primary">Adauga membri</a>
 
           <!--edit Course-->
           <a href="{{ url('/edit-course') }}" class="btn btn-secondary">Editeaza</a>
