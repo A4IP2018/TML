@@ -19,8 +19,16 @@
             <p class="mb-0">Upload</p>
             <footer class="blockquote-footer">now or never</footer>
             </blockquote>
-
+            @if (count($errors) > 0)
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
             <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
                 Homework title:
                 <br />
                 <input type="text" class="form-control" id="hw-title" placeholder="Alege un titlu">

@@ -15,9 +15,9 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/upload', function () {
-    return view('upload');
-});
+//Route::get('/upload', function () {
+//    return view('upload');
+//});
 
 Route::get('/edit-course', function () {
     return view('edit-course');
@@ -65,6 +65,16 @@ Route::get('/reviews', function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+<<<<<<< Updated upstream
+=======
+Route::get('/upload', 'UploadController@uploadForm');
+Route::post('/upload', 'UploadController@uploadSubmit');
+
+Route::get('/upload', function () {
+    return view('upload');
+});
+
+>>>>>>> Stashed changes
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login-action', 'LoginController@authenticate')->name('login-action');
 
