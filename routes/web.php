@@ -19,10 +19,6 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/upload', function () {
-    return view('upload');
-});
-
 Route::get('/edit-course', function () {
     return view('edit-course');
 });
