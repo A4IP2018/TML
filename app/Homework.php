@@ -15,7 +15,7 @@ class Homework extends Model
      * @var array
      */
     protected $fillable = [
-        'description', 'cateory_id', 'updated_at'
+        'description', 'category_id', 'updated_at'
     ];
 
     /**
@@ -37,28 +37,63 @@ class Homework extends Model
     ];
 
     /**
-     * Report -> Report_type relationship
+     * Homework -> Grade relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function homeworks_grades()
+    public function grades()
     {
         return $this->hasMany('App\Grade');
     }
 
-    public function homeworks_categories()
+    /**
+     * Homework -> Category relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
     {
-        return $this->belongsTo('App\Categories');
+        return $this->belongsTo('App\Category');
     }
 
-    public function homeworks_comparisons()
+    /**
+     * Homework -> Comparisons relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comparisons()
     {
-        return $this->hasMany('App\Comparisons');
+        return $this->hasMany('App\Comparison');
 
     }
 
-    public function homeworks_users()
+    /**
+     * Homework -> User relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
-        return $this->belongsTo('App\Users');
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Homework -> Files relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function files(){
+        return $this->hasMany('App\File');
+    }
+
+    /**
+     * Homework -> Extension relationship
+     *
+     * NOTE : Homework ONLY has one Extension TYPE (which includes MULTIPLE extensions)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function extension(){
+        return $this->hasOne('App\Extension');
     }
 }
