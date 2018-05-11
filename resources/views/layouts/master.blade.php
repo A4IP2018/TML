@@ -27,13 +27,21 @@
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                         <a class="nav-link" href="{{ url('/') }}">
                             <i class="fa fa-fw fa-dashboard"></i>
-                            <span class="nav-link-text">Dashboard</span>
+                            <span class="nav-link-text">Bord</span>
                         </a>
                     </li>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+                    <a class="nav-link" href="{{ url('/profile') }}">
+                    <i class="fa fa-fw fa-link"></i>
+                    <span class="nav-link-text">Profil</span>
+                    </a>
+                    </li>
+
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                         <a class="nav-link" href="{{ url('/homework') }}">
                             <i class="fa fa-fw fa-table"></i>
-                            <span class="nav-link-text">Homework</span>
+                            <span class="nav-link-text">Teme</span>
                         </a>
                     </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
@@ -41,25 +49,11 @@
                             <i class="fa fa-fw fa-file"></i>
                             <span class="nav-link-text">Upload</span>
                         </a>
-                        <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-                            <li>
-                                <a href="{{ url('/login') }}">Login Page</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/register') }}">Registration Page</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/password-recovery') }}">Forgot Password Page</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/blank') }}">Blank Page</a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
                         <a class="nav-link" href="{{ url('/courses') }}">
                             <i class="fa fa-fw fa-sitemap"></i>
-                            <span class="nav-link-text">Courses</span>
+                            <span class="nav-link-text">Cursuri</span>
                         </a>
                         <ul class="sidenav-second-level collapse" id="collapseMulti">
                             <li>
@@ -99,7 +93,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="{{ url('/messages') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-envelope"></i>
-                            <span class="d-lg-none">Messages
+                            <span class="d-lg-none">Mesaje
                                 <span class="badge badge-pill badge-primary">12 New</span>
                             </span>
                             <span class="indicator text-primary d-none d-lg-block">
@@ -107,7 +101,7 @@
                             </span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">New Messages:</h6>
+                            <h6 class="dropdown-header">Mesaje noi:</h6>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('/messages') }}">
                                 <strong>Basescu</strong>

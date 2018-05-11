@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/profile', function () {
+    return view('profile');
+});
+
 Route::get('/upload', function () {
     return view('upload');
 });
@@ -47,6 +51,10 @@ Route::resource('homework', 'HomeworkController');
 
 Route::get('/messages', function() {
     return view('messages');
+});
+
+Route::get('/messages-sg', function() {
+    return view('messages-sg');
 });
 
 Route::get('/reviews', function() {

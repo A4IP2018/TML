@@ -3,7 +3,7 @@
 
 @section('content')
 
-<!--MESSAGES PAGE-->
+<!--MESSAGES WITH A CERTAIN PERSON PAGE-->
 
 <div class="content-wrapper">
   <div class="container-fluid">
@@ -36,46 +36,59 @@
 
 
         <!--CONVERSATION WITH SOMEONE BODY-->
-        <div class="card text">
+        <div class="card border-primary mb-3" style="max-width:20rem;">
           <div class="card-body">
 
           <!--SOMEONE'S NAME-->
-          <h5 class="card-title">Traian Basescu</h5>
+          <h5 class="card-title">Batman</h5>
+
           <!--someone's last message to you-->
-          <a href="{{ url('/messages-sg') }}">
-          <p class="card-text">[7:00] Aici vine ultimul mesaj din conversatia cu Basescu.</p>
-          </a>
+          <p class="card-text">[7:00] Bunaaaaaaaaaa.</p>
+         
           </div>
         </div>
 
 
+        <br>
         <!--CONVERSATION WITH SOMEONE BODY-->
-        <div class="card text">
+        <div class="card border-primary mb-3" style="max-width:20rem;">
           <div class="card-body">
+
+          <!--YOU-->
+          <h5 class="card-title">Eu</h5>
+
+          <!--YOUR RESPONSE-->
+          <p class="card-text">[7:01] HEEEEEEEEEEEEEY.</p>
+         
+          </div>
+        </div>
+
+        
+        <br>
+        <!--CONVERSATION WITH SOMEONE BODY-->
+        <div class="card border-primary mb-3" style="max-width:20rem;">
+          <div class="card-body">
+
           <!--SOMEONE'S NAME-->
-          <h5 class="card-title">Spuderman</h5>
-          <a href="{{ url('/messages-sg') }}">
+          <h5 class="card-title">Batman</h5>
+
           <!--someone's last message to you-->
-          <p class="card-text">[06:42] I am cooler than Batmon</p>
-          </a>
+          <p class="card-text">[7:30] I am batmoooooooooooooooon.</p>
+          
           </div>
         </div>
 
 
-         <!--CONVERSATION WITH SOMEONE BODY-->
-         <div class="card text">
-          <div class="card-body">
-          <!--SOMEONE'S NAME-->
-          <h5 class="card-title">Bed</h5>
-          <a href="{{ url('/messages-sg') }}">
-          <!--someone's last message to you-->
-          <p class="card-text">[05:00] Come to sleep.</p>
-          </a>
-          </div>
+
+
+        </br>
+        <div class="form-group">
+          <!--WRITE NEW MESSAGE-->
+          <textarea name="new-message" class="form-control" rows="5" id="hw-descr"></textarea>
+        
         </div>
 
-
-        <button type="submit" class="btn btn-primary">Compune</button>
+        <button type="submit" class="btn btn-primary">Trimite</button>
 
       </div>
     </div>
