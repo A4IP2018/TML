@@ -72,13 +72,12 @@ Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload
 
 Route::get('/upload/{slug}', 'HomeworkController@uploadView');
 
-Route::get('/stud-uploads', function () {
-    return view('stud-uploads');
-});
+Route::get('/stud-uploads', 'HomeworkController@studentUploadsView');
 
-Route::get('/stud-uploads-sg', function () {
-    return view('stud-uploads-sg');
-});
+Route::get('/stud-uploads/{user_id}/{slug}', 'HomeworkController@studentUploadView');
+
+
+Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
 
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login-action', 'LoginController@authenticate')->name('login-action');
