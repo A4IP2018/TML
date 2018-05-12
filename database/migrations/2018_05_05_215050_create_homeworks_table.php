@@ -15,11 +15,13 @@ class CreateHomeworksTable extends Migration
     {
         Schema::create('homeworks', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('course_id');
             $table->string('name');
             $table->text('description');
             $table->string('slug');
             $table->integer('category_id');
             $table->integer('user_id');
+            $table->dateTime('deadline');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -16,6 +16,5 @@ use Faker\Generator as Faker;
 $factory->define(App\Category::class, function (Faker $faker) {
     return [
         'name' => $faker->randomElement(['C++', 'Java', 'PHP', 'PLSQL']),
-        'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray())
     ];
 });

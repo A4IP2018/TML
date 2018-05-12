@@ -15,7 +15,7 @@ class Homework extends Model
      * @var array
      */
     protected $fillable = [
-        'description', 'category_id', 'updated_at'
+        'description','name','slug', 'category_id', 'updated_at'
     ];
 
     /**
@@ -24,7 +24,7 @@ class Homework extends Model
      * @var array
      */
     protected $guarded = [
-        'íd', 'created_at'
+        'íd','user_id', 'created_at'
     ];
 
     /**
@@ -95,5 +95,15 @@ class Homework extends Model
      */
     public function extension(){
         return $this->hasOne('App\Extension');
+    }
+
+    /**
+     * Homework -> Course relationship
+     *
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function course() {
+        return $this->belongsTo('App\Course');
     }
 }
