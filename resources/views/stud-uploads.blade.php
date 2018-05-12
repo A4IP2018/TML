@@ -41,6 +41,11 @@
             <!--Homework edit-->
             <a href="#" class="btn btn-secondary">Editeaza</a>
 
+              <!--Grade homework-->
+              <button type="button" class="btn btn-primary">Noteaza</button>
+
+              <input type="number" name="grade-stud" style="width: 50px">
+
             
 
 
