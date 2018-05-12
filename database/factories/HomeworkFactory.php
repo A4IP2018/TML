@@ -15,13 +15,16 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Homework::class, function (Faker $faker) {
 
-    $name = $faker->paragraph(1);
+    $name = $faker->randomElement(['Tema IP grupa A4', 'Tema temelor care este ea tema', 'O tema de test', 'Mai multe teme de test', 'Minunata noastra tema de test']);
+
+    $slug = str_slug($name) . '-' . time();
 
     return [
         'description' => $faker->text,
         'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray()),
         'category_id' => $faker->randomElement(\App\Category::pluck('id')->toArray()),
         'name' => $name,
-        'slug' => str_slug($name)
+        'slug' => $slug,
+        'deadline' => $faker->dateTime
     ];
 });

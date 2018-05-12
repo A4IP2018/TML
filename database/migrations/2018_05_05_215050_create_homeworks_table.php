@@ -20,6 +20,7 @@ class CreateHomeworksTable extends Migration
             $table->string('slug');
             $table->integer('category_id');
             $table->integer('user_id');
+            $table->dateTime('deadline');
             $table->rememberToken();
             $table->timestamps();
         });
