@@ -17,32 +17,34 @@
 
     <div class="row">
       <div class="col-12">
-        
 
         <div class="card text-center">
 
           <div class="card-body">
 
           <!--Course title-->
-          <h5 class="card-title">PSGBD</h5>
+          <h5 class="card-title">{{ $course->course_title }}</h5>
 
           <!--Course year-->
-          <hr><p class="card-text">An: 2</p>
+          <hr><p class="card-text">An: {{ $course->year }}</p>
 
           <!--Course semester-->
-          <hr><p class="card-text">Semestru: II</p>
+          <hr><p class="card-text">Semestru: {{ $course->semester }}</p>
 
-          <!--Course description-->
-          <hr><p class="card-text">Descriere:</p>
+          <!--Course credits-->
+          <hr><p class="card-text">Credite: {{ $course->credits }}</p>
 
           <!--Course teachers-->
-          <hr><p class="card-text">Profesori: Cosmin Varlan</p><hr>
+          <hr><p class="card-text">Profesori: {{  join(", ", $course->users->pluck('username')->toArray()) }}</p><hr>
+
+          <!--Course description-->
+          <hr><p class="card-text">Description: {{ $course->description }}</p>
 
           <!--follow course-->
           <a href="#" class="btn btn-primary">Adauga membri</a>
 
           <!--edit Course-->
-          <a href="{{ url('/edit-course') }}" class="btn btn-secondary">Editeaza</a>
+          <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
 
         </div>
 

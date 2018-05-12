@@ -50,17 +50,19 @@
               <p class="card-text">An: {{ $course->year }}</p>
               <!--Course semester-->
               <p class="card-text">Semestru: {{ $course->semester }}</p>
+
+              <p class="card-text">Description: {{ $course->description }}</p>
             </div>
             <div class="card-footer bg-transparent border">
 
             <!--press to be sent to the course page-->
-            <a href="{{ url('/course') }}"><button type="button" class="btn btn-info">Detalii</button></a>
+            <a href="{{ url('/course/' . $course->slug) }}"><button type="button" class="btn btn-info">Detalii</button></a>
 
             <!--press to follow course-->
             <a href="#" class="btn btn-primary">Adauga membri</a>
 
             <!--Course edit <TEACHER>-->
-            <a href="{{ url('/edit-course') }}" class="btn btn-secondary">Editeaza</a>
+            <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
 
             <!--go to this course's forum-->
             <a href="{{ url('/forum') }}" class="btn btn-secondary">Forum</a>

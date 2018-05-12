@@ -19,16 +19,8 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/edit-course', function () {
-    return view('edit-course');
-});
-
 Route::get('/new-course', function () {
     return view('new-course');
-});
-
-Route::get('/course-sg', function() {
-    return view('course-sg');
 });
 
 Route::get('/compare', function () {
@@ -85,9 +77,6 @@ Route::get('register', 'RegisterController@index')->name('register');
 
 Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
 
-
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
-Route::get('/view-homework', 'AddHomeWorkController@insert_homework_form');
-Route::post('/add-homework', 'AddHomeWorkController@insert_new_homework')->middleware('auth');
 

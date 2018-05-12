@@ -141,45 +141,52 @@ class HomeworkController extends Controller
     public function uploadHomework(Request $request)
     {
 
-        $path = public_path(). '/files/';
-        $image =  $request->file('fileToUpload');
+        $path = public_path() . '/files/';
+        $image = $request->file('fileToUpload');
 
         $filename = time() . '.' . $image->getClientOriginalName();
-        $uploadOk = 1;
-        $imageFileType = $request->file('fileToUpload')->getMimeType();
-        $imageFileExtension = $request->file('fileToUpload')->getExtension();
+        $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
+        $fileExtension = $request->file('fileToUpload')->guessExtension();
 
+        $user_id = Auth::id();
 
-        if ($request->file('fileToUpload')->getSize() > 500000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
+        if ($user_id == null) {
+            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
         }
 
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" && $imageFileType != 'text/plain'
-            && $imageFileExtension != 'txt' && $imageFileExtension != 'jpg'
-            && $imageFileExtension != 'png' && $imageFileExtension != 'jpeg' && $imageFileExtension != 'gif') {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
+        if ($fileType != $fileExtension) {
+            return redirect()->back()->withErrors('Fisier invalid: extensia nu corespunde cu continutul.');
         }
-
-        if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
-
-        } else {
-            if ($image->move($path, $filename)) {
-
-                \App\File::create([
-                   'user_id' => Auth::id(),
-                   'homework_id' => $request->input('homework-id'),
-                   'file_name' =>  $filename
-                ]);
-
-                return redirect()->back();
-            } else {
-                echo "Sorry, there was an error uploading your file.";
+        $homework_id = $request->input('homework-id');
+        $extension_string = \App\Extension::where('id', $homework_id)->pluck('extensions_string')->toArray();
+        $extensions = explode('.', $extension_string[0]);
+        $extensionOk = 0;
+        foreach ($extensions as $extension) {
+            if ($extension == $fileType) {
+                $extensionOk = 1;
+                break;
             }
         }
+
+        if ($extensionOk == 0) {
+            return redirect()->back()->withErrors('Extensie neacceptata.');
+        }
+
+        if ($request->file('fileToUpload')->getClientSize() > 500000) {
+            return redirect()->back()->withErrors('Fisierul este prea mare.');
+        }
+
+        if ($image->move($path, $filename)) {
+
+            \App\File::create([
+                'user_id' => $user_id,
+                'homework_id' => $homework_id,
+                'file_name' => $filename
+            ]);
+            return redirect()->back()->withErrors('Fisier uploadat cu succes.');
+        } else {
+            return redirect()->back()->withErrors('Eroare la upload.');
+            }
     }
     /**
      * Teacher gives/updates grade
