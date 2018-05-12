@@ -43,7 +43,7 @@
           <!-- Example Homework Card-->
           <div class="card mb-3">
             <div class="card-header bg-transparent border">
-              <a href="{{ url('/course-sg') }}">Materie</a>
+              <a href="{{ url('/course-sg') }}">{{ $homework->course->course_title }}</a>
             </div>
             <div class="card-body text">
               <!--Homework title-->
@@ -55,7 +55,7 @@
             <!--Homework format-->
             <div class="card-footer bg-transparent border">Format: {{ $homework->category->name  }}</div>
             <!--Homework deadline-->
-            <div class="card-footer bg-transparent border">Termen limita: </div>
+            <div class="card-footer bg-transparent border">Termen limita: {{ $homework->deadline }}</div>
             <div class="card-footer bg-transparent border">
               <!--go to homework upload-->
               <a href="{{ url('/upload/' . $homework->slug) }}" class="btn btn-primary">Upload</a>
