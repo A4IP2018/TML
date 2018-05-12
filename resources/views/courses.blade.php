@@ -54,7 +54,7 @@
             <div class="card-footer bg-transparent border">
 
             <!--press to be sent to the course page-->
-            <a href="{{ url('/course') }}"><button type="button" class="btn btn-info">Detalii</button></a>
+            <a href="{{ url('/course/' . $course->slug) }}"><button type="button" class="btn btn-info">Detalii</button></a>
 
             <!--press to follow course-->
             <a href="#" class="btn btn-primary">Adauga membri</a>

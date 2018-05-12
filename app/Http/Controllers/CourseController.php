@@ -17,4 +17,9 @@ class CourseController extends Controller
         $courses = Course::all();
         return view('courses', compact('courses'));
     }
+
+    public function show($slug) {
+        $course = Course::get()->where('slug', $slug)->first();
+        return view('course-details', compact('course'));
+    }
 }

@@ -27,7 +27,7 @@ Route::get('/new-course', function () {
     return view('new-course');
 });
 
-Route::get('/course-sg', function() {
+Route::get('/course-details', function() {
     return view('course-sg');
 });
 
