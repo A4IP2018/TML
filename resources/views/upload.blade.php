@@ -26,9 +26,10 @@
             <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="homework-id" value="{{ $homework->id }}">
-                <strong>Tema: {{ $homework->name }}</strong>
-                <br />
-                <string>Curs: {{ $homework->course }}</string>
+                <strong>Tema:</strong> {{ $homework->name }}<br/>
+                <strong>Curs:</strong> {{ $homework->course->course_title }}<br/>
+                <strong>Categorie:</strong> {{ $homework->category->name }}<br/>
+                <br/>
 
                 Fisiere tema (Poti atasa unul sau mai multe):
                 <br />

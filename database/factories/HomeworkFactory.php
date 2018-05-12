@@ -22,6 +22,7 @@ $factory->define(App\Homework::class, function (Faker $faker) {
     return [
         'description' => $faker->text,
         'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray()),
+        'course_id' => $faker->randomElement(\App\Course::pluck('id')->toArray()),
         'category_id' => $faker->randomElement(\App\Category::pluck('id')->toArray()),
         'name' => $name,
         'slug' => $slug,

@@ -43,7 +43,6 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Message::class, 50)->create();
 
-        $this->call(HomeworkCourseSeeder::class);
         $this->call(FormatsTableSeeder::class);
         $this->call(CoursesTableSeeder::class);
     }
