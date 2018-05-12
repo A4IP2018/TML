@@ -3,40 +3,37 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Course extends Model
 {
+    use Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'course_title', 'year', 'semester', 'credits'
+        'course_name','description','updated_at'
     ];
 
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [
-        'id', 'created_at'
+        'íd','created_at'
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
     protected $hidden = [
         'remember_token'
     ];
 
-    /**
-     * Course -> User relationship
-     *
-     * NOTE : Many to Many between teachers and courses
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function users() {
-        return $this->belongsToMany('App\User');
-    }
-
-    /**
-     * Course -> Homework relationship
-     *
-     * NOTE: Courses have multiple homeworks, a homework has only one course
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function homeworks() {
-        return $this->hasMany('App\Homework');
-    }
 }
