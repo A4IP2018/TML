@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Homework;
+use App\User;
+use App\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\File\File;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeworkController extends Controller
 {
@@ -176,5 +180,49 @@ class HomeworkController extends Controller
                 echo "Sorry, there was an error uploading your file.";
             }
         }
+    }
+    /**
+     * Teacher gives/updates grade
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function updateGrade(Request $request)
+    {
+        $homeworkId = $request->input('homework-id');
+        $grade = $request->input('grade');
+        $userId = $request->input('user-id');
+
+        Grade::create([
+            'grade' => $grade,
+            'user_id' => $userId,
+            'homework_id' => $homeworkId
+        ]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function studentUploadsView()
+    {
+        $files = \App\File::all();
+        return view('stud-uploads', compact('files'));
+    }
+
+    /**
+     * @param $userId
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function studentUploadView($userId, $slug)
+    {
+        $user = User::find($userId);
+        $homework = Homework::where('slug', $slug)->first();
+        $grade = Grade::where('user_id', $user->id)->where('homework_id', $homework->id)->first();
+
+        return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
     }
 }
