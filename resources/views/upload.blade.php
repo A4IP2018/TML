@@ -26,23 +26,9 @@
             <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="homework-id" value="{{ $homework->id }}">
-                Titlu tema:
+                <strong>Tema: {{ $homework->name }}</strong>
                 <br />
-                <input name="homework-title" type="text" class="form-control" id="hw-title" placeholder="Alege un titlu">
-
-                <div class="form-group">
-
-                <label for="sel1">Curs:</label>
-                <select name="course-title" class="form-control" id="hw-curssel">
-
-                  <option>IP fara Patrut :(</option>
-                  <option>Curs 2</option>
-                  <option>Curs 3</option>
-                  <option>Curs 4</option>
-
-                </select>
-
-                </div>
+                <string>Curs: {{ $homework->course }}</string>
 
                 Fisiere tema (Poti atasa unul sau mai multe):
                 <br />

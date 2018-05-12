@@ -96,4 +96,14 @@ class Homework extends Model
     public function extension(){
         return $this->hasOne('App\Extension');
     }
+
+    /**
+     * Homework -> Course relationship
+     *
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function course() {
+        return $this->belongsTo('App\Course');
+    }
 }
