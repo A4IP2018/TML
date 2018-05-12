@@ -9,11 +9,11 @@
       <form  method="POST" action="{{ route('login-action') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
-          <label for="exampleInputEmail1">Username</label>
-          <input name="username" class="form-control" id="exampleInputEmail1" type="text" aria-describedby="emailHelp" placeholder="Enter email">
+          <label for="login-email">Email</label>
+          <input name="email" class="form-control" id="login-email" type="text" aria-describedby="emailHelp" placeholder="Enter email">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
+          <label for="exampleInputPassword1">Parola</label>
           <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
         </div>
         <div class="form-group">

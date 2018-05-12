@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Report::class, 50)->create();
 
-        factory(App\Group::class, 50)->create();
+        $this->call(GroupTableSeeder::class);
 
         factory(App\StudentInformation::class,50)->create();
 
@@ -45,5 +45,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FormatsTableSeeder::class);
         $this->call(CoursesTableSeeder::class);
+
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
+use App\StudentInformation;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -54,6 +57,7 @@ class RegisterController extends Controller
 //            'password' => 'required|string|min:5|confirmed',
 //            'role_id' => 'required|string',
 //        ]);
+
     }
 
     /**
@@ -63,7 +67,8 @@ class RegisterController extends Controller
      */
     protected function index()
     {
-        return view('register');
+        $groups = Group::all();
+        return view('register', compact('groups'));
     }
 
     /**
@@ -74,13 +79,38 @@ class RegisterController extends Controller
      */
     protected function registerAction(Request $request)
     {
-        User::create([
-            'username' => $request->input('username'),
-            'password' => bcrypt($request->input('password')),
+        $validator = $this->validate($request, [
+            'email' => 'unique:users|required|max:255|email',
+            'password' => 'required|max:255',
+            'first-name' => 'required|max:255',
+            'first-name' => 'required|max:255',
+            'year' => 'required|integer',
+            'group' => 'required',
+        ]);
+
+        $password = Hash::make($request->input('password'));
+
+        if (Hash::check($request->input('confirm-password'), $password))
+        {
+
+        $user = User::create([
+            'email' => $request->input('email'),
+            'password' => $password,
             'role_id' => 1,
         ]);
 
-        return Redirect::to($this->redirectTo);
+        StudentInformation::create([
+            'first_name' => $request->input('first-name'),
+            'last_name' => $request->input('last-name'),
+            'user_id' => $user->id,
+            'year' => (int) $request->input('year'),
+            'group_id' => $request->input('group')
+        ]);
+            return Redirect::to($this->redirectTo);
+        }
+
+        return redirect()->back()->withErrors();
+
     }
 
 
