@@ -22,52 +22,36 @@
 
           <!--Course title edit-->
           <label for="hw-title">Titlu:</label>
-          <input name="course-title" type="text" class="form-control" id="hw-title" placeholder="Alege un titlu">
+          <input name="course_title" type="text" class="form-control" id="hw-title" placeholder="{{ $course->course_title }}">
 
         </div>
 
         <div class="form-group">
-
           <!--Course year edit-->
-          <label for="sel1">An:</label>
-          <select name="course-year" class="form-control" id="hw-curssel">
-
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>Other</option>
-
-          </select>
-
+          <label for="year_select">An:</label>
+          <input name="year_select" type="number" min="1" max="6" class="form-control" id="hw-year" placeholder="{{ $course->year }}">
         </div>
 
+
         <div class="form-group">
-
           <!--Course semester edit-->
-          <label for="sel1">Semestru:</label>
-          <select name="course-sem" class="form-control" id="hw-curssel">
-
-            <option>1</option>
-            <option>2</option>
-            <option>Other</option>
-
-          </select>
-
+          <label for="semester_select">An:</label>
+          <input name="semester_select" type="number" min="1" max="2" class="form-control" id="hw-semester" placeholder="{{ $course->semester }}">
         </div>
 
         <div class="form-group">
           
           <!--Course description edit-->
-          <label for="hw-descr">Descriere:</label>
-          <textarea name="course-descr" class="form-control" rows="5" id="hw-descr" placeholder="Alege o descriere">bla bla bla</textarea>
+          <label for="course-descr">Descriere:</label>
+          <textarea name="course-descr" class="form-control" rows="5" id="hw-descr" placeholder="{{ $course->description }}"></textarea>
         
         </div>
 
         <div class="form-group">
           
           <!--Course teachers edit-->
-          <label for="hw-descr">Profesori:</label>
-          <textarea name="course-teach" class="form-control" rows="5" id="hw-descr" placeholder="Alege o descriere">bla bla bla</textarea>
+          <label for="course-teach">Profesori:</label>
+          <textarea name="course-teach" class="form-control" rows="5" id="hw-descr" placeholder="Alege o descriere">{{ join(', ', $course->users->pluck('username')->toArray()) }}</textarea>
         
         </div>
 

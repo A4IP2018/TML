@@ -37,19 +37,25 @@ class CoursesTableSeeder extends Seeder
 
         $teachers = \App\User::get()->where('role_id', '=', '3');
 
-        foreach ($courses as $course) {
+        foreach ($courses as $course)
+        {
             $c_insert = new \App\Course();
             $c_insert->course_title = $course[0];
             $c_insert->year = $course[1];
             $c_insert->semester = $course[2];
             $c_insert->credits = $course[3];
+            $c_insert->description = $faker->realText(200);
             $c_insert->slug = str_slug(strval($course[1]).'_'.strval($course[2]).'_'.$course[0]);
             $c_insert->save();
 
-            DB::table('course_user')->insert([
-                'course_id' => $c_insert->id,
-                'user_id' => $faker->randomElement($teachers->pluck('id')->toArray()),
-            ]);
+            for ($count = 0; $count < $faker->numberBetween(1, 3); $count++)
+            {
+                DB::table('course_user')->insert([
+                    'course_id' => $c_insert->id,
+                    'user_id' => $faker->randomElement($teachers->pluck('id')->toArray()),
+                ]);
+            }
+
         }
     }
 }

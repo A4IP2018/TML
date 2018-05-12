@@ -22,4 +22,9 @@ class CourseController extends Controller
         $course = Course::get()->where('slug', $slug)->first();
         return view('course-details', compact('course'));
     }
+
+    public function edit($slug) {
+        $course = Course::get()->where('slug', $slug)->first();
+        return view('edit-course', compact('course'));
+    }
 }
