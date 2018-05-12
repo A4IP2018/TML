@@ -73,4 +73,12 @@ class User extends Authenticatable
         return $this->belongsTo('App\Message');
     }
 
+    /**
+     * User -> Files relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function files(){
+        return $this->hasMany('App\File');
+    }
 }
