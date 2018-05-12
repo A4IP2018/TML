@@ -23,10 +23,6 @@ Route::get('/new-course', function () {
     return view('new-course');
 });
 
-Route::get('/course-details', function() {
-    return view('course-sg');
-});
-
 Route::get('/compare', function () {
     return view('compare');
 });
@@ -81,9 +77,6 @@ Route::get('register', 'RegisterController@index')->name('register');
 
 Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
 
-
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
-Route::get('/view-homework', 'AddHomeWorkController@insert_homework_form');
-Route::post('/add-homework', 'AddHomeWorkController@insert_new_homework')->middleware('auth');
 

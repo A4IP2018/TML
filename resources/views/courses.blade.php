@@ -50,6 +50,8 @@
               <p class="card-text">An: {{ $course->year }}</p>
               <!--Course semester-->
               <p class="card-text">Semestru: {{ $course->semester }}</p>
+
+              <p class="card-text">Description: {{ $course->description }}</p>
             </div>
             <div class="card-footer bg-transparent border">
 

@@ -31,17 +31,20 @@
           <!--Course semester-->
           <hr><p class="card-text">Semestru: {{ $course->semester }}</p>
 
-          <!--Course description-->
+          <!--Course credits-->
           <hr><p class="card-text">Credite: {{ $course->credits }}</p>
 
           <!--Course teachers-->
           <hr><p class="card-text">Profesori: {{  join(", ", $course->users->pluck('username')->toArray()) }}</p><hr>
 
+          <!--Course description-->
+          <hr><p class="card-text">Description: {{ $course->description }}</p>
+
           <!--follow course-->
           <a href="#" class="btn btn-primary">Adauga membri</a>
 
           <!--edit Course-->
-          <a href="{{ url('/edit-course') }}" class="btn btn-secondary">Editeaza</a>
+          <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
 
         </div>
 
