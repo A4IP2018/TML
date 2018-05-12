@@ -24,6 +24,8 @@ class AddHomeWorkController extends Controller {
 	  $user = Auth::User();     
       $userId = $user->id;
 	  //returns the id of the logged in user.
+	  $format_string=$request->input('homework_formats');
+	  $slug=str_replace(' ','.',$format_string)
 	  
 	  
       ip_project::insert('insert into homeworks (description,name,category_id,user_id) values(?)',[$desctiption],[$name],[$slug],[$id_course],[$userId]);
