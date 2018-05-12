@@ -27,10 +27,6 @@ Route::get('/new-course', function () {
     return view('new-course');
 });
 
-Route::get('/courses', function() {
-    return view('courses');
-});
-
 Route::get('/course-sg', function() {
     return view('course-sg');
 });
@@ -48,6 +44,9 @@ Route::get('/edit-homework', function () {
 });
 
 Route::resource('homework', 'HomeworkController');
+
+Route::resource('course', 'CourseController');
+
 
 Route::get('/messages', function() {
     return view('messages');
