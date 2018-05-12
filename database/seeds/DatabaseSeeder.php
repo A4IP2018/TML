@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         factory(App\StudentInformation::class,50)->create();
 
-        factory(App\Homework::class,50)->create();
+        factory(App\Homework::class,5)->create();
 
         factory(App\Grade::class,50)->create();
 
@@ -44,5 +44,7 @@ class DatabaseSeeder extends Seeder
         factory(App\Message::class, 50)->create();
 
         $this->call(HomeworkCourseSeeder::class);
+        $this->call(FormatsTableSeeder::class);
+        $this->call(CoursesTableSeeder::class);
     }
 }

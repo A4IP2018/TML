@@ -39,5 +39,4 @@ class Course extends Model
     public function homeworks() {
         return $this->hasMany('App\Homework');
     }
-
 }

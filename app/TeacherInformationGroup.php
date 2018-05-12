@@ -9,6 +9,8 @@ class TeacherInformationGroup extends Model
 {
     use Notifiable;
 
+    public $table = "teacher_information_group";
+
     /**
      * The attributes that are mass assignable.
      *
