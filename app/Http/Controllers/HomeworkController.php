@@ -66,7 +66,7 @@ class HomeworkController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('edit-homework');
     }
 
     /**

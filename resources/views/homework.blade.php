@@ -53,20 +53,20 @@
             </div>
 
             <!--Homework format-->
-            <div class="card-footer bg-transparent border">Format: {{ $homework->category->name  }}</div>
+            <div class="card-footer bg-transparent border">Categorie: {{ $homework->category->name  }}</div>
             <!--Homework deadline-->
             <div class="card-footer bg-transparent border">Termen limita: {{ $homework->deadline }}</div>
             <div class="card-footer bg-transparent border">
               <!--go to homework upload-->
               <a href="{{ url('/upload/' . $homework->slug) }}" class="btn btn-primary">Upload</a>
               <!--go to homework page-->
-              <a href="{{ url('/homework-sg') }}" class="btn btn-info">Detalii</a>
+              <a href="{{ url('/homework/' . $homework->slug) }}" class="btn btn-info">Detalii</a>
               <!--go to request page-->
               <a href="{{ url('/request') }}" class="btn btn-info">Cerere</a>
               <!--Add member to homework <TEACHER>-->
               <a href="#" class="btn btn-primary">Adauga membri</a>
               <!--Homework edit <TEACHER>-->
-              <a href="{{ url('/edit-homework') }}" class="btn btn-secondary">Editeaza</a>
+              <a href="{{ url('/homework/' . $homework->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
               <!--student uploads for this homework <TEACHER>-->
               <a href="{{ url('/stud-uploads') }}" class="btn btn-secondary">Uploads</a>
             </div>
