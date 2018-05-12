@@ -40,27 +40,21 @@
         <i class="fa fa-newspaper-o"></i> ...</div>
         <hr class="mt-2">
         <div class="card-columns">
-
+        @foreach ($courses as $course)
         <!-- Example Course Card-->
           <div class="card mb-3">
-            
-
             <div class="card-body text">
-
               <!--Course title-->
-              <h5 class="card-title">Titlu Materie</h5>
-
+              <h5 class="card-title">{{ $course->course_title }}</h5>
               <!--Course year-->
-              <p class="card-text">An:</p>
-              
+              <p class="card-text">An: {{ $course->year }}</p>
               <!--Course semester-->
-              <p class="card-text">Semestru:</p>
-
+              <p class="card-text">Semestru: {{ $course->semester }}</p>
             </div>
             <div class="card-footer bg-transparent border">
 
             <!--press to be sent to the course page-->
-            <a href="{{ url('/course-sg') }}"><button type="button" class="btn btn-info">Detalii</button></a>
+            <a href="{{ url('/course') }}"><button type="button" class="btn btn-info">Detalii</button></a>
 
             <!--press to follow course-->
             <a href="#" class="btn btn-primary">Adauga membri</a>
@@ -70,12 +64,9 @@
 
             <!--go to this course's forum-->
             <a href="{{ url('/forum') }}" class="btn btn-secondary">Forum</a>
-
-
-
           </div>
         </div>
-
+        @endforeach
       </div>
           <!--pagination-->
 

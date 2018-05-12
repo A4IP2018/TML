@@ -41,5 +41,6 @@ class DatabaseSeeder extends Seeder
 
         factory(App\Message::class, 50)->create();
 
+        $this->call(CoursesTableSeeder::class);
     }
 }

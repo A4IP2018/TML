@@ -81,4 +81,17 @@ class User extends Authenticatable
     public function files(){
         return $this->hasMany('App\File');
     }
+
+    public function courses(){
+        return $this->belongsToMany('App\Course');
+    }
+
+    public function teacher() {
+        return $this->hasOne('App\TeacherInformation');
+    }
+
+    public function student() {
+        return $this->hasOne('App\StudentInformation');
+    }
+
 }

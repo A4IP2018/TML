@@ -4,7 +4,6 @@
 @section('content')
 
 <!--MULTIPLE HOMEWORK PAGE-->
-
 <div class="content-wrapper">
   <div class="container-fluid">
   <!-- Breadcrumbs-->
@@ -18,80 +17,62 @@
     <div class="row">
       <div class="col-12">
 
-    <div class="input-group">
+        <div class="input-group">
+          <!--search for homework-->
+          <input name="homework-search" class="form-control" type="text" placeholder="Cauta tema...">
+          <span class="input-group-append">
+            <button class="btn btn-primary" type="button">
+            <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
 
-      <!--search for homework-->
-      <input name="homework-search" class="form-control" type="text" placeholder="Cauta tema...">
+        <!--press to create new homework <TEACHER>-->
+        <br><a href="{{ url('/homework/create') }}" class="btn btn-primary btn-lg btn-block">Tema noua</a>
 
-      <span class="input-group-append">
-      <button class="btn btn-primary" type="button">
-      <i class="fa fa-search"></i>
-      </button>
+        <!--press to compare homework <TEACHER>-->
+        <a href="{{ url('/compare') }}" class="btn btn-secondary btn-lg btn-block">Compara</a>
 
-      </span>
-    </div>
-
-    <!--press to create new homework <TEACHER>-->
-    <br><a href="{{ url('/homework/create') }}" class="btn btn-primary btn-lg btn-block">Tema noua</a>
-    
-    <!--press to compare homework <TEACHER>-->
-    <a href="{{ url('/compare') }}" class="btn btn-secondary btn-lg btn-block">Compara</a>
-
-      <div class="mb-0 mt-4">
-
-        <i class="fa fa-newspaper-o"></i> ... </div>
-
+        <div class="mb-0 mt-4">
+          <i class="fa fa-newspaper-o"></i> ...
+        </div>
         <hr class="mt-2">
+
         <div class="card-columns">
-
-        <!-- Example Homework Card-->
+          @foreach ($homeworks as $homework)
+          <!-- Example Homework Card-->
           <div class="card mb-3">
-
-            <div class="card-header bg-transparent border"><a href="{{ url('/course-sg') }}">Materie<a></div>
-            
+            <div class="card-header bg-transparent border">
+              <a href="{{ url('/course-sg') }}">Materie</a>
+            </div>
             <div class="card-body text">
-              
               <!--Homework title-->
-              <h5 class="card-title">Tema</h5>
-
+              <h5 class="card-title">{{ $homework->name }}</h5>
               <!--Homework description-->
-              <p class="card-text">Descriere Tema</p>
-
+              <p class="card-text">{{ $homework->description }}</p>
             </div>
 
             <!--Homework format-->
-            <div class="card-footer bg-transparent border">Format: </div>
-
+            <div class="card-footer bg-transparent border">Format: {{ $homework->category->name  }}</div>
             <!--Homework deadline-->
             <div class="card-footer bg-transparent border">Termen limita: </div>
-            
             <div class="card-footer bg-transparent border">
-            
-            <!--go to homework upload-->
-            <a href="{{ url('/upload') }}" class="btn btn-primary">Upload</a>
-
-            <!--go to homework page-->
-            <a href="{{ url('/homework-sg') }}" class="btn btn-info">Detalii</a>
-
-            <!--go to request page-->
-            <a href="{{ url('/request') }}" class="btn btn-info">Cerere</a>
-
-            <!--Add member to homework <TEACHER>-->
-            <a href="#" class="btn btn-primary">Adauga membri</a>
-
-            <!--Homework edit <TEACHER>-->
-            <a href="{{ url('/edit-homework') }}" class="btn btn-secondary">Editeaza</a>
-
-            <!--student uploads for this homework <TEACHER>-->
-            <a href="{{ url('/stud-uploads') }}" class="btn btn-secondary">Uploads</a>
-
-
-
+              <!--go to homework upload-->
+              <a href="{{ url('/upload/' . $homework->slug) }}" class="btn btn-primary">Upload</a>
+              <!--go to homework page-->
+              <a href="{{ url('/homework-sg') }}" class="btn btn-info">Detalii</a>
+              <!--go to request page-->
+              <a href="{{ url('/request') }}" class="btn btn-info">Cerere</a>
+              <!--Add member to homework <TEACHER>-->
+              <a href="#" class="btn btn-primary">Adauga membri</a>
+              <!--Homework edit <TEACHER>-->
+              <a href="{{ url('/edit-homework') }}" class="btn btn-secondary">Editeaza</a>
+              <!--student uploads for this homework <TEACHER>-->
+              <a href="{{ url('/stud-uploads') }}" class="btn btn-secondary">Uploads</a>
+            </div>
           </div>
+          @endforeach
         </div>
-      </div>
-
-
 
         <!--pagination-->
         <ul class="pagination">
