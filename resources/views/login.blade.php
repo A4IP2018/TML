@@ -6,6 +6,13 @@
   <div class="card card-login mx-auto mt-5">
     <div class="card-header">Login</div>
     <div class="card-body">
+      @if (count($errors) > 0)
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      @endif
       <form  method="POST" action="{{ route('login-action') }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
