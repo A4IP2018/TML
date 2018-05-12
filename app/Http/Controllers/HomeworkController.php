@@ -18,7 +18,8 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        return view('homework');
+        $homeworks = Homework::all();
+        return view('homework', compact('homeworks'));
     }
 
     /**
