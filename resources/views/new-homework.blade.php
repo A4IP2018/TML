@@ -69,15 +69,18 @@
                         <div class="format" style="text-align: center;">
                             <h2>Format:</h2>
 
-                            @foreach ($formats as $format)
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input name="format[]" type="checkbox" class="form-check-input"
-                                               value="{{ $format->id }}">
-                                        {{ $format->extension_name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                            @if ($formats)
+                                @foreach ($formats as $format)
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input name="format[]" type="checkbox" class="form-check-input"
+                                                   value="{{ $format->id }}">
+                                            {{ $format->extension_name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            @endif
+
                         </div>
 
                         <button style="display: flex; margin: auto; margin-top: 30px;" type="submit"
