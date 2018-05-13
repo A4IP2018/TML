@@ -52,6 +52,10 @@ Route::get('/settings', function() {
     return view('settings');
 });
 
+Route::get('/contact', function () {
+    return view('contact');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 
