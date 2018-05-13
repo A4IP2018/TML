@@ -80,10 +80,10 @@ class Homework extends Model
     /**
      * Homework -> Files relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function files(){
-        return $this->hasMany('App\File');
+    public function file(){
+        return $this->hasOne('App\File');
     }
 
     /**

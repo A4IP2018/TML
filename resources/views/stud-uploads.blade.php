@@ -30,10 +30,10 @@
             <div class="card-body text">
               
               <!--Homework title-->
-              <h5 class="card-title">Tema</h5>
+              <h5 class="card-title">{{ $file->homework->name }}</h5>
 
               <!--Homework description-->
-              <p class="card-text">Descriere Upload</p>
+              <p class="card-text">{{ $file->homework->name }}</p>
 
             </div>
             
@@ -42,23 +42,11 @@
 
             <!--go to homework page-->
               <a href="{{ url('/stud-uploads/' . $file->user_id .'/' . $file->homework->slug ) }}" class="btn btn-info">Detalii</a>
+          </div>
 
-            <!--Homework edit-->
-            <a href="#" class="btn btn-secondary">Editeaza</a>
-
-              <!--Grade homework-->
-              <button type="button" class="btn btn-primary">Noteaza</button>
-
-              <input type="number" name="grade-stud" style="width: 50px">
-
-            </div>
           </div>
         @endforeach
 
-
-
-      </div>
-      
       </div>
     </div>
   </div>
