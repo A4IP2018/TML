@@ -40,6 +40,8 @@ Route::get('/messages', function() {
     return view('messages');
 });
 
+Route::get('/deadlines', 'DeadlineController@index');
+
 Route::get('/request', function () {
     return view('request');
 });
