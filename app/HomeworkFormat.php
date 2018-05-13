@@ -10,6 +10,8 @@ class HomeworkFormat extends Model
 {
     use Notifiable;
 
+    protected $table = 'homework_format';
+
     /**
      * The attributes that are mass assignable.
      *

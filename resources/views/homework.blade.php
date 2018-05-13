@@ -57,9 +57,10 @@
 
                                     <!--Homework format-->
                                     <div class="card-footer bg-transparent border">
-                                        @if ($homework->category)
-                                            Categorie: {{ $homework->category->name  }}</div>
+                                        @if ($homework->course)
+                                            Curs: {{ $homework->course->course_title  }}
                                         @endif
+                                    </div>
                                     <!--Homework deadline-->
                                     <div class="card-footer bg-transparent border">Termen
                                         limita: {{ $homework->deadline }}</div>
@@ -83,6 +84,7 @@
 
                         @endif
                     </div>
+
 
                     <!--pagination-->
                     <ul class="pagination">
