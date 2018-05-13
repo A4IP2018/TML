@@ -13,10 +13,12 @@ use \Carbon\Carbon as Carbon;
 
 class CourseController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index','show']]);
     }
+
 
     public function get_teacher_names($course) {
         $teachers_string = null;
