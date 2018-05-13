@@ -35,10 +35,12 @@
           <hr><p class="card-text">Credite: {{ $course->credits }}</p>
 
           <!--Course teachers-->
-          <hr><p class="card-text">Profesori: {{  join(", ", $course->users->pluck('username')->toArray()) }}</p><hr>
+          <hr>
+          <p class="card-text">Profesori: {{ $teachers_string }}</p>
+          <hr>
 
           <!--Course description-->
-          <hr><p class="card-text">Description: {{ $course->description }}</p>
+          <hr><p class="card-text">Description: {{ $course->description }}</p><hr>
 
           <!--follow course-->
           <a href="#" class="btn btn-primary">Adauga membri</a>
@@ -50,7 +52,7 @@
 
         <!--date/time when posted-->
         <div class="card-footer text-muted">
-          2 days ago
+          {{ $elapsed_time }}
         </div>
 
       </div>

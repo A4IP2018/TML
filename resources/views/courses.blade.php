@@ -31,7 +31,7 @@
     </div>
 
       <!--Press to create new Course-->
-      <br><a href="{{ url('/new-course') }}" class="btn btn-primary btn-lg btn-block">Curs nou</a>
+      <br><a href="{{ url('/course/create') }}" class="btn btn-primary btn-lg btn-block">Curs nou</a>
 
 
       <!--Multiple Courses-->

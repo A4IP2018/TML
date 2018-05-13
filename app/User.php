@@ -65,6 +65,15 @@ class User extends Authenticatable
     }
 
     /**
+     * User->TeacherInformation relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function teacher_information() {
+        return $this->hasOne('App\TeacherInformation');
+    }
+
+    /**
      * User->Message relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
