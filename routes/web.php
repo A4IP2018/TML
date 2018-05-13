@@ -19,7 +19,7 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/new-course', function () {
+Route::get('/course/create', function () {
     return view('new-course');
 });
 
