@@ -53,8 +53,6 @@ Route::get('/settings', function() {
     return view('settings');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/download/{path}', 'HomeworkController@download')->name('download');
 
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
