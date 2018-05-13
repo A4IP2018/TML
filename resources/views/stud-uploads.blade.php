@@ -18,25 +18,30 @@
       <div class="col-12">
 
 
+        @foreach($files as $file)
+
         <!-- Example Homework Card-->
           <div class="card mb-3">
 
-            <div class="card-header bg-transparent border"><a href="{{ url('/profile') }}">Student<a></div>
-            
+            @if ($file->user && $file->user->student_information)
+              <div class="card-header bg-transparent border"><a href="{{ url('/profile') }}">{{ $file->user->student_information->last_name }} {{ $file->user->student_information->first_name }}</a></div>
+            @endif
+
             <div class="card-body text">
               
               <!--Homework title-->
               <h5 class="card-title">Tema</h5>
 
               <!--Homework description-->
-              <p class="card-text">Descriere Tema</p>
+              <p class="card-text">Descriere Upload</p>
 
             </div>
             
             <div class="card-footer bg-transparent border">
 
+
             <!--go to homework page-->
-            <a href="{{ url('/stud-uploads-sg') }}" class="btn btn-info">Detalii</a>
+              <a href="{{ url('/stud-uploads/' . $file->user_id .'/' . $file->homework->slug ) }}" class="btn btn-info">Detalii</a>
 
             <!--Homework edit-->
             <a href="#" class="btn btn-secondary">Editeaza</a>
@@ -46,21 +51,13 @@
 
               <input type="number" name="grade-stud" style="width: 50px">
 
-            
-
-
+            </div>
           </div>
-        </div>
+        @endforeach
+
+
+
       </div>
-      
-
-
-
-
-
-        
-      
-      
       
       </div>
     </div>

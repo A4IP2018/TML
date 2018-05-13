@@ -8,14 +8,14 @@ use Illuminate\Notifications\Notifiable;
 class StudentInformation extends Model
 {
     use Notifiable;
-
+    protected $table = 'student_informations';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id', 'an','group_id', 'updated_at'
+        'user_id', 'an','group_id', 'updated_at', 'first_name', 'last_name'
     ];
 
     /**
@@ -41,10 +41,10 @@ class StudentInformation extends Model
     /**
      * Student_information -> User relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function users() {
-        return $this->hasMany('App\User','user_id');
+        return $this->belongsTo('App\User');
     }
     /**
      * Student_information -> Group relationship

@@ -13,7 +13,7 @@ class CreateHomeworkFormatTable extends Migration
      */
     public function up()
     {
-        Schema::create('homework_format', function (Blueprint $table) {
+        Schema::create('format_homework', function (Blueprint $table) {
             $table->increments('id');
             $table->string('format_id');
             $table->string('homework_id');
@@ -29,6 +29,6 @@ class CreateHomeworkFormatTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('homework_format');
+        Schema::dropIfExists('format_homework');
     }
 }

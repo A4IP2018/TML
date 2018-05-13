@@ -19,6 +19,7 @@ class CreateCoursesTable extends Migration
             $table->integer('year');
             $table->integer('semester');
             $table->integer('credits');
+            $table->string('description');
             $table->string('slug');
             $table->timestamps();
             $table->rememberToken();

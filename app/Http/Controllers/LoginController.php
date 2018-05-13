@@ -47,7 +47,7 @@ class LoginController extends Controller
      */
     protected function authenticate(Request $request)
     {
-        if (Auth::attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
             return redirect()->intended();
         }
 

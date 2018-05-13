@@ -58,6 +58,14 @@
                         </a>
                     </li>
 
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                        <!--student uploads for this homework <TEACHER>-->
+                        <a class="nav-link" href="{{ url('/stud-uploads') }}">
+                            <i class="fa fa-fw fa-wrench"></i>
+                            <span class="nav-link-text">Teme incarcate</span>
+                        </a>
+                    </li>
+
                 </ul>
                 <ul class="navbar-nav sidenav-toggler">
                     <li class="nav-item">

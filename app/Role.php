@@ -9,6 +9,9 @@ class Role extends Model
 {
     use Notifiable;
 
+    public static $ADMINISTRATOR_RANK = 1;
+    public static $TEACHER_RANK = 5;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,10 +43,10 @@ class Role extends Model
     /**
      * Role-> User relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->hasMany('App\User');
     }
 
 }
