@@ -54,7 +54,7 @@ Route::get('/settings', function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
+Route::get('/download/{path}', 'HomeworkController@download')->name('download');
 
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
 
@@ -63,7 +63,6 @@ Route::get('/upload/{slug}', 'HomeworkController@uploadView');
 Route::get('/stud-uploads', 'HomeworkController@studentUploadsView');
 
 Route::get('/stud-uploads/{user_id}/{slug}', 'HomeworkController@studentUploadView');
-
 
 Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
 
@@ -78,5 +77,11 @@ Route::get('register', 'RegisterController@index')->name('register');
 Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
 
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
+
+
+Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
+
+Route::get('/view-homework', 'AddHomeWorkController@insert_homework_form');
+Route::post('/add-homework', 'AddHomeWorkController@insert_new_homework')->middleware('auth');
 
 

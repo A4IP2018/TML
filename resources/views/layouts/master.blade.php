@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Description">
         <meta name="author" content="HomeworkManager Team">
-        <title>HomeworkManager</title>
+        <title>TML</title>
 
         <!-- Bootstrap core CSS-->
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -18,7 +18,7 @@
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-            <a class="navbar-brand" href="/">HomeworkManager</a>
+            <a class="navbar-brand" href="/">TeMeLe</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -168,10 +168,12 @@
 
         <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <!-- Core plugin JavaScript-->
-        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}></script>
+
+        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('js/main.min.js') }}"></script>
+
     </body>
 </html>
