@@ -209,6 +209,14 @@ class HomeworkController extends Controller
     public function studentUploadsView()
     {
         $files = \App\File::all();
+        $i=0;
+        foreach ($files as $file){
+            $homeworkID = $file->homework_id;
+            $TeacherId = Homework::where('homeworks.id', $homeworkID)->value('user_id');
+            if($TeacherId!=Auth::id())
+                unset($files[$i]);
+            $i=$i+1;
+        }
         return view('stud-uploads', compact('files'));
     }
 
