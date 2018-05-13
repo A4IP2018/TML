@@ -50,18 +50,18 @@ class User extends Authenticatable
     /**
      * User -> role relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
-    public function roles() {
-        return $this->hasMany('App\Role','role_id');
+    public function role() {
+        return $this->belongsTo('App\Role');
     }
     /**
-     * User->Student_informationrelationship
+     * User->Student_information relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function student_information() {
-        return $this->belongsTo('App\StudentInformation');
+        return $this->hasOne('App\StudentInformation');
     }
 
     /**
@@ -89,9 +89,4 @@ class User extends Authenticatable
     public function teacher() {
         return $this->hasOne('App\TeacherInformation');
     }
-
-    public function student() {
-        return $this->hasOne('App\StudentInformation');
-    }
-
 }

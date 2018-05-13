@@ -34,8 +34,14 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="homework-id" value="{{ $homework->id }}">
                 <strong>Tema:</strong> {{ $homework->name }}<br/>
-                <strong>Curs:</strong> {{ $homework->course->course_title }}<br/>
-                <strong>Categorie:</strong> {{ $homework->category->name }}<br/>
+                @if ($homework->course)
+                    <strong>Curs:</strong> {{ $homework->course->course_title }}<br/>
+                @endif
+
+                @if ($homework->category)
+                    <strong>Categorie:</strong> {{ $homework->category->name }}<br/>
+                @endif
+
                 <br/>
 
                 Fisiere tema :
