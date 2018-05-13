@@ -85,6 +85,7 @@
                         @endif
                     </div>
 
+
                     <!--pagination-->
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
