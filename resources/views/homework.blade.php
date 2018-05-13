@@ -66,9 +66,12 @@
                                         <!--go to homework page-->
                                         <a href="{{ url('/homework/' . $homework->slug) }}"
                                            class="btn btn-info">Detalii</a>
-                                        <!--Homework edit <TEACHER>-->
-                                        <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
-                                           class="btn btn-secondary">Editeaza</a>
+                                        <!--Add member to homework <TEACHER>-->
+
+                                        @if ($homework->user && Auth::check() && Auth::id() == $homework->user->id)
+                                            <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
+                                               class="btn btn-secondary">Editeaza</a>
+                                        @endif
                                     </div>
                                 </div>
                                 @endif

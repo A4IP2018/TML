@@ -33,6 +33,7 @@ class HomeworkController extends Controller
     public function index()
     {
         $homeworks = Homework::orderBy('id', 'desc')
+            ->with('user')
             ->get()
             ->filter(function($homework) {
                 if (is_null($homework->course->subscriptions) ) {
@@ -136,9 +137,25 @@ class HomeworkController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        return view('edit-homework');
+
+        $formats = Format::all();
+        $homework = Homework::where('slug', $slug)->with('formats')->first();
+
+        $currentTeacher = User::where('id', Auth::id())->whereHas('role', function ($query) {
+            $query->where('rank', Role::$TEACHER_RANK);
+        })->first();
+
+        if ($currentTeacher) {
+            $teacherCourses = $currentTeacher->courses;
+
+            return view('edit-homework', compact('homework', 'formats', 'currentTeacher', 'teacherCourses'));
+        }
+
+        else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -148,9 +165,43 @@ class HomeworkController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $validator = $this->validate($request, [
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'deadline' => 'required',
+            'format' => 'required',
+        ]);
+
+        $selectedFormats = $request->input('format');
+        $deadline = $request->input('deadline');
+        $description = $request->input('description');
+        $course = $request->input('course');
+        $title = $request->input('name');
+        $homeworkId = Homework::where('slug', $slug)->first();
+        $homeworkId = $homeworkId->id;
+
+        $slug = str_slug($title);
+        $count = Homework::where('slug', $slug)->count();
+
+        $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
+
+        $formats = Format::whereIn('id', $selectedFormats)->get();
+
+        $homework = Homework::updateOrCreate(['id' => $homeworkId],  [
+            'course_id' => $course,
+            'name' => $title,
+            'description' => $description,
+            'slug' => $slug,
+            'category_id' => 1,
+            'user_id' => Auth::id(),
+            'deadline' => $deadline,
+        ]);
+
+        $homework->formats()->sync($formats);
+
+        return redirect()->back()->withErrors($validator);
     }
 
     /**
