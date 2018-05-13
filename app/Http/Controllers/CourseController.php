@@ -11,6 +11,10 @@ use \Carbon\Carbon as Carbon;
 
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index','show']]);
+    }
 
     public function get_teacher_names($course) {
         $teachers_string = null;
@@ -62,7 +66,11 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($slug) {
+
         $course = Course::where('slug', $slug)->first();
+        if (!in_array($course->users->pluck('id'))) {
+        }
+
         return view('edit-course', compact('course'));
     }
 
