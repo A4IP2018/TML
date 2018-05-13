@@ -15,7 +15,7 @@ class Homework extends Model
      * @var array
      */
     protected $fillable = [
-        'description','name','slug', 'category_id', 'updated_at', 'deadline', 'course_id'
+        'description','name','slug', 'category_id', 'updated_at', 'deadline', 'course_id', 'user_id'
     ];
 
     /**
@@ -24,7 +24,7 @@ class Homework extends Model
      * @var array
      */
     protected $guarded = [
-        'íd','user_id', 'created_at'
+        'íd', 'created_at'
     ];
 
     /**
