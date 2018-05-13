@@ -40,7 +40,7 @@
                         @foreach ($homeworks as $homework)
                             <!-- Example Homework Card-->
                             <div class="card mb-3">
-                                <div class="card-header bg-transparent border">
+                                <div class="card-header bg-transparent">
                                     @if ($homework->course)
                                     <a href="{{ url('/course/' . $homework->course->slug) }}">{{ $homework->course->course_title }}</a>
                                     @endif
@@ -53,9 +53,9 @@
                                 </div>
 
                                 <!--Homework deadline-->
-                                <div class="card-footer bg-transparent border">Termen
+                                <div class="card-footer bg-transparent">Termen
                                     limita: {{ $homework->deadline }}</div>
-                                <div class="card-footer bg-transparent border">
+                                <div class="card-footer bg-transparent">
                                     <!--go to homework upload-->
                                     @if (!is_homework_author($homework))
                                     <a href="{{ url('/upload/' . $homework->slug) }}"
