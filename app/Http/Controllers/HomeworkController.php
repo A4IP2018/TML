@@ -34,21 +34,13 @@ class HomeworkController extends Controller
     public function index()
     {
 
-        $homeworks = null;
+        $homeworks = User::where('id', Auth::id())->first()->subscription_homeworks;
+
         if (Auth::check() and is_teacher(Auth::id()))
         {
-            $homeworks = User::where('id', Auth::id())->first()->published_homeworks;
+            $homeworks = $homeworks->merge(User::where('id', Auth::id())->first()->published_homeworks);
         }
-        else {
-            $homeworks = Homework::orderBy('id', 'desc')
-                ->get()
-                ->filter(function($homework) {
-                    if (is_null($homework->course->subscriptions) ) {
-                        return false;
-                    }
-                    else return in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray());
-                });
-        }
+
         return view('homework', compact('homeworks'));
     }
 
