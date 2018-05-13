@@ -11,6 +11,28 @@ use \Carbon\Carbon as Carbon;
 
 class CourseController extends Controller
 {
+
+    public function get_teacher_names($course) {
+        $teachers_string = null;
+        if (!is_null($course->users))
+        {
+            $teachers_string = implode(", ", $course->users
+                ->map(function($user) {
+                    if (!is_null($user->teacher_information)) {
+                        return $user->teacher_information->name;
+                    }
+                    return null;
+                })
+                ->filter(function($str) { return is_null($str) ? false : true; })
+                ->toArray());
+
+        }
+        if (is_null($teachers_string)) {
+            $teachers_string = 'Nici un profesor specificat';
+        }
+        return $teachers_string;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,25 +53,7 @@ class CourseController extends Controller
         $course = Course::where('slug', $slug)->first();
         $elapsed_time = Carbon::parse($course->created_at);
 
-        $teachers_string = null;
-        if (!is_null($course->users))
-        {
-            $teachers_string = implode(", ", $course->users
-                ->map(function($user) {
-                    if (!is_null($user->teacher_information)) {
-                        return $user->teacher_information->name;
-                    }
-                    return null;
-                })
-                ->filter(function($str) { return is_null($str) ? false : true; })
-                ->toArray());
-
-        }
-        if (is_null($teachers_string)) {
-            $teachers_string = 'Nici un profesor specificat';
-        }
-
-        return view('course-details')->with(['course' => $course, 'elapsed_time' => $elapsed_time->diffForHumans(), 'teachers_string' => $teachers_string]);
+        return view('course-details')->with(['course' => $course, 'elapsed_time' => $elapsed_time->diffForHumans(), 'teachers_string' => $this->get_teacher_names($course)]);
     }
 
     /**
