@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Format;
 use App\Homework;
+
 use App\Role;
 use App\StudentInformation;
+
 use App\User;
 use App\Grade;
 use Illuminate\Http\Request;
@@ -285,4 +287,58 @@ class HomeworkController extends Controller
 
         return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
     }
+
+    /**
+     * Teacher gives/updates grade
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function updateGrade(Request $request)
+    {
+        $homeworkId = $request->input('homework-id');
+        $grade = $request->input('grade');
+        $userId = $request->input('user-id');
+
+        Grade::create([
+            'grade' => $grade,
+            'user_id' => $userId,
+            'homework_id' => $homeworkId
+        ]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function studentUploadsView()
+    {
+        $files = \App\File::all();
+        $i=0;
+        foreach ($files as $file){
+            $homeworkID = $file->homework_id;
+            $TeacherId = Homework::where('homeworks.id', $homeworkID)->value('user_id');
+            if($TeacherId!=Auth::id())
+                unset($files[$i]);
+            $i=$i+1;
+        }
+        return view('stud-uploads', compact('files'));
+    }
+
+    /**
+     * @param $userId
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function studentUploadView($userId, $slug)
+    {
+        $user = User::find($userId);
+        $homework = Homework::where('slug', $slug)->first();
+        $grade = Grade::where('user_id', $user->id)->where('homework_id', $homework->id)->first();
+
+        return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
+    }
+
 }

@@ -64,7 +64,6 @@ Route::get('/stud-uploads', 'HomeworkController@studentUploadsView');
 
 Route::get('/stud-uploads/{user_id}/{slug}', 'HomeworkController@studentUploadView');
 
-
 Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
 
 Route::get('/login', 'LoginController@index')->name('login');
