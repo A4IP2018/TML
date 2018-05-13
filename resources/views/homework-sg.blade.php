@@ -16,6 +16,7 @@
   </ol>
     <div class="row">
       <div class="col-12">
+
         <div class="progress">
 
             <!--deadline time left bar-->
@@ -63,46 +64,92 @@
         <div class="card-footer text-muted">
             2 days ago
         </div>
-        </div>
 
 
-        </div>
-    </div>
-    </div>
-
+    <br>
     <!--homework title-->
     <div class="comment-section">
         <div class="container-fluid">
 
             <form action="{{ \Illuminate\Support\Facades\URL::to('/comments-action') }}" method="POST">
+
                 {{ csrf_field() }}
+
                 <input name="homework-id" type="hidden" value="{{ $homework->id }}">
-                <textarea name="comments" id="" cols="30" rows="10"></textarea>
 
-                <button type="submit btn-primary">Posteaza</button>
+                <textarea name="comments" id="" rows="2" cols="110" style="border:2px solid #8eb4cb;border-radius: 12px"></textarea>
+
             </form>
+        </div>
 
+    </div>
 
-
-
+            <div class="card-body">
+            <button type="submit" class="btn btn-primary">Posteaza</button>
+            </div>
 
 
         </div>
+
+
+          <br><hr>
+
+
+
+          <!--COMMENTS TEST-->
+          <div class="card mb-3">
+              <div class="card-body">
+                  <h6 class="card-title mb-1"><a href="#">Batman</a></h6>
+                  <p class="card-text small">I don't know how to solve these...
+                  </p>
+              </div>
+              <hr class="my-0">
+          </div>
+
+          <div class="card mb-3">
+              <div class="card-body">
+                  <h6 class="card-title mb-1"><a href="#">Spuderman</a></h6>
+                  <p class="card-text small">LOL
+                  </p>
+              </div>
+              <hr class="my-0">
+          </div>
+          <!--END COMENNTS TEST-->
+
+
 
 
         <div class="comments-wrapper">
             @foreach($comments as $comment)
 
-                {{ $comment->comment }}
+                <div class="card mb-3">
+                    <div class="card-body">
 
-                <br><br>
+                        <!--SOMEONE'S NAME-->
+                        <h5 class="card-title mb-1"><a href="{{ url('/profile') }}">Traian Basescu</a></h5>
+                        <!--someone's last comment-->
+                        <p class="card-text small">
+
+                            {{ $comment->comment }}
+
+                        </p>
+                    </div>
+                    <hr class="my-0">
+                </div>
+
+                <br>
 
             @endforeach
         </div>
 
-    </div>
 
-</div>
+
+          <br>
+
+    </div>
+    </div>
+    </div>
+  </div>
 
 
 
