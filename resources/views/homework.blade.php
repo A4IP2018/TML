@@ -38,9 +38,10 @@
                     </div>
                     <hr class="mt-2">
 
+                    @if ($homeworks->count() > 0)
                     <div class="card-columns">
-                    @if ($homeworks)
                         @foreach ($homeworks as $homework)
+                            @if (in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
                             <!-- Example Homework Card-->
                                 <div class="card mb-3">
                                     <div class="card-header bg-transparent border">
@@ -55,12 +56,6 @@
                                         <p class="card-text">{{ $homework->description }}</p>
                                     </div>
 
-                                    <!--Homework format-->
-                                    <div class="card-footer bg-transparent border">
-                                        @if ($homework->course)
-                                            Curs: {{ $homework->course->course_title  }}
-                                        @endif
-                                    </div>
                                     <!--Homework deadline-->
                                     <div class="card-footer bg-transparent border">Termen
                                         limita: {{ $homework->deadline }}</div>
@@ -71,22 +66,19 @@
                                         <!--go to homework page-->
                                         <a href="{{ url('/homework/' . $homework->slug) }}"
                                            class="btn btn-info">Detalii</a>
-                                        <!--go to request page-->
-                                        <a href="{{ url('/request') }}" class="btn btn-info">Cerere</a>
-                                        <!--Add member to homework <TEACHER>-->
-                                        <a href="#" class="btn btn-primary">Adauga membri</a>
                                         <!--Homework edit <TEACHER>-->
                                         <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
                                            class="btn btn-secondary">Editeaza</a>
                                     </div>
                                 </div>
+                                @endif
                             @endforeach
-
-                        @endif
                     </div>
+                    @else
+                        <h4 class="text-center" >Nicio tema aici, incearca sa te abonezi la cateva <a href="{{ url('/course') }}">cursuri</a></h4>
+                    @endif
 
-
-                    <!--pagination-->
+                    <!--pagination
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -95,7 +87,7 @@
                         <li class="page-item"><a class="page-link" href="#">4</a></li>
                         <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
                     </ul>
-
+                    --->
                 </div>
             </div>
         </div>

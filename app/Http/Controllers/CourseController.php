@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Course;
+use App\User;
+use App\UserCourse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use \Carbon\Carbon as Carbon;
@@ -127,5 +129,21 @@ class CourseController extends Controller
         ]);
 
         return redirect('/course');
+    }
+
+
+    public function subscribe($slug) {
+        $course_id = Course::where('slug', $slug)->first()->id;
+        $current_user = User::where('id', Auth::id())->first();
+
+        if (!in_array($course_id, $current_user->subscribed->pluck('id')->toArray()))
+        {
+            $new_entry = new UserCourse();
+            $new_entry->user_id = $current_user->id;
+            $new_entry->course_id = $course_id;
+            $new_entry->save();
+        }
+
+        return redirect()->back();
     }
 }
