@@ -42,32 +42,40 @@
         <div class="card-columns">
         @foreach ($courses as $course)
         <!-- Example Course Card-->
-          <div class="card mb-3">
-            <div class="card-body text">
-              <!--Course title-->
-              <h5 class="card-title">{{ $course->course_title }}</h5>
-              <!--Course year-->
-              <p class="card-text">An: {{ $course->year }}</p>
-              <!--Course semester-->
-              <p class="card-text">Semestru: {{ $course->semester }}</p>
+          <form action = "{{ url('/course/' . $course->slug . '/subscribe') }}" method = "POST">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="card mb-3">
+              <div class="card-body text">
+                <!--Course title-->
+                <h5 class="card-title">{{ $course->course_title }}</h5>
+                <!--Course year-->
+                <p class="card-text">An: {{ $course->year }}</p>
+                <!--Course semester-->
+                <p class="card-text">Semestru: {{ $course->semester }}</p>
 
-              <p class="card-text">Description: {{ $course->description }}</p>
+                <p class="card-text">Description: {{ $course->description }}</p>
+              </div>
+              <div class="card-footer bg-transparent border">
+
+                <!--press to be sent to the course page-->
+                <a href="{{ url('/course/' . $course->slug) }}"><button type="button" class="btn btn-info">Detalii</button></a>
+
+                <!--press to follow course-->
+                @if (!in_array(Auth::id(), $course->subscriptions->pluck('id')->toArray()))
+                  <button type="submit" href="" class="btn btn-primary">Aboneaza-te</button>
+                @endif
+
+                @if (in_array(Auth::id(), $course->users->pluck('id')->toArray()))
+                  <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>;
+                @endif
+
+                <!--go to this course's forum-->
+                <a href="{{ url('/forum') }}" class="btn btn-secondary">Forum</a>
+
+              </div>
             </div>
-            <div class="card-footer bg-transparent border">
+          </form>
 
-            <!--press to be sent to the course page-->
-            <a href="{{ url('/course/' . $course->slug) }}"><button type="button" class="btn btn-info">Detalii</button></a>
-
-            <!--press to follow course-->
-            <a href="#" class="btn btn-primary">Adauga membri</a>
-              @if (in_array(Auth::id(), $course->users->pluck('id')->toArray()))
-                <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>;
-              @endif
-
-            <!--go to this course's forum-->
-            <a href="{{ url('/forum') }}" class="btn btn-secondary">Forum</a>
-          </div>
-        </div>
         @endforeach
       </div>
           <!--pagination-->

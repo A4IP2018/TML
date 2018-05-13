@@ -95,10 +95,14 @@ class User extends Authenticatable
     }
 
     public function courses(){
-        return $this->belongsToMany('App\Course');
+        return $this->belongsToMany('App\Course', 'teacher_course');
     }
 
     public function teacher() {
         return $this->hasOne('App\TeacherInformation');
+    }
+
+    public function subscribed() {
+        return $this->belongsToMany('App\Course','user_course');
     }
 }

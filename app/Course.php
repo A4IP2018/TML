@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $fillable = [
-        'course_title', 'year', 'semester', 'credits'
+        'course_title', 'year', 'semester', 'credits', 'description', 'slug'
     ];
 
     protected $guarded = [
@@ -26,7 +26,7 @@ class Course extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users() {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\User', 'teacher_course');
     }
 
     /**
@@ -39,4 +39,9 @@ class Course extends Model
     public function homeworks() {
         return $this->hasMany('App\Homework');
     }
+
+    public function subscriptions() {
+        return $this->belongsToMany('App\User', 'user_course');
+    }
+
 }

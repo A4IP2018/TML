@@ -22,7 +22,7 @@ class HomeworkController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index','show']]);
+        $this->middleware('auth');
     }
 
     /**
@@ -32,8 +32,14 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        $homeworks = Homework::orderBy('id', 'desc')->get();
-
+        $homeworks = Homework::orderBy('id', 'desc')
+            ->get()
+            ->filter(function($homework) {
+                if (is_null($homework->course->subscriptions) ) {
+                    return false;
+                }
+                else return in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray());
+            });
         return view('homework', compact('homeworks'));
     }
 

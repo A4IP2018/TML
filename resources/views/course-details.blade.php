@@ -42,11 +42,14 @@
           <!--Course description-->
           <hr><p class="card-text">Description: {{ $course->description }}</p><hr>
 
-          <!--follow course-->
-          <a href="#" class="btn btn-primary">Adauga membri</a>
+            <!--press to follow course-->
+            @if (!in_array(Auth::id(), $course->subscriptions->pluck('id')->toArray()))
+              <button type="submit" href="" class="btn btn-primary">Aboneaza-te</button>
+            @endif
 
-          <!--edit Course-->
-          <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
+            @if (in_array(Auth::id(), $course->users->pluck('id')->toArray()))
+              <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>;
+            @endif
 
         </div>
 

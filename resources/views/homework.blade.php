@@ -39,8 +39,9 @@
                     <hr class="mt-2">
 
                     <div class="card-columns">
-                    @if ($homeworks)
+                    @if ($homeworks->count() > 0)
                         @foreach ($homeworks as $homework)
+                            @if (in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
                             <!-- Example Homework Card-->
                                 <div class="card mb-3">
                                     <div class="card-header bg-transparent border">
@@ -54,13 +55,7 @@
                                         <!--Homework description-->
                                         <p class="card-text">{{ $homework->description }}</p>
                                     </div>
-
-                                    <!--Homework format-->
-                                    <div class="card-footer bg-transparent border">
-                                        @if ($homework->course)
-                                            Curs: {{ $homework->course->course_title  }}
-                                        @endif
-                                    </div>
+                                    
                                     <!--Homework deadline-->
                                     <div class="card-footer bg-transparent border">Termen
                                         limita: {{ $homework->deadline }}</div>
@@ -71,17 +66,16 @@
                                         <!--go to homework page-->
                                         <a href="{{ url('/homework/' . $homework->slug) }}"
                                            class="btn btn-info">Detalii</a>
-                                        <!--go to request page-->
-                                        <a href="{{ url('/request') }}" class="btn btn-info">Cerere</a>
-                                        <!--Add member to homework <TEACHER>-->
-                                        <a href="#" class="btn btn-primary">Adauga membri</a>
                                         <!--Homework edit <TEACHER>-->
                                         <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
                                            class="btn btn-secondary">Editeaza</a>
                                     </div>
                                 </div>
+                                @endif
                             @endforeach
 
+                        @else
+                            <h1>Nicio tema aici, incearca sa te abonezi la cateva <a href="{{ url('/course') }}">cursuri</a></h1>
                         @endif
                     </div>
 
