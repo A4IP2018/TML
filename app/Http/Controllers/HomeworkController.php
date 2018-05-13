@@ -9,6 +9,7 @@ use App\Homework;
 use App\Role;
 use App\StudentInformation;
 
+use App\TeacherCourse;
 use App\User;
 use App\Grade;
 use Illuminate\Http\Request;
@@ -32,14 +33,21 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        $homeworks = Homework::orderBy('id', 'desc')
-            ->get()
-            ->filter(function($homework) {
-                if (is_null($homework->course->subscriptions) ) {
-                    return false;
-                }
-                else return in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray());
-            });
+        $homeworks = null;
+        if (Auth::check() and is_teacher(Auth::id()))
+        {
+            $homeworks = User::where('id', Auth::id())->first()->published_homeworks;
+        }
+        else {
+            $homeworks = Homework::orderBy('id', 'desc')
+                ->get()
+                ->filter(function($homework) {
+                    if (is_null($homework->course->subscriptions) ) {
+                        return false;
+                    }
+                    else return in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray());
+                });
+        }
         return view('homework', compact('homeworks'));
     }
 

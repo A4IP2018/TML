@@ -123,7 +123,7 @@ class CourseController extends Controller
 
         $course->save();
 
-        \DB::table('course_user')->insert([
+        \DB::table('teacher_course')->insert([
             'course_id' => $course->id,
             'user_id' => Auth::id()
         ]);

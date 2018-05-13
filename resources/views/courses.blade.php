@@ -30,15 +30,13 @@
       </span>
     </div>
 
-      <!--Press to create new Course-->
-      <br><a href="{{ url('/course/create') }}" class="btn btn-primary btn-lg btn-block">Curs nou</a>
-
-
+      @if (Auth::check() and is_teacher(Auth::id()))
+        <!--Press to create new Course-->
+        <br><a href="{{ url('/course/create') }}" class="btn btn-primary btn-lg btn-block">Curs nou</a>
+      @endif
       <!--Multiple Courses-->
       <div class="mb-0 mt-4">
 
-        <i class="fa fa-newspaper-o"></i> ...</div>
-        <hr class="mt-2">
         <div class="card-columns">
         @foreach ($courses as $course)
         <!-- Example Course Card-->
