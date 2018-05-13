@@ -10,6 +10,8 @@ class Format extends Model
 {
     use Notifiable;
 
+    protected $table = 'formats';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -37,5 +39,10 @@ class Format extends Model
         'remember_token'
     ];
 
+
+    public function homeworks()
+    {
+        return $this->belongsToMany('App\Homework');
+    }
 
 }
