@@ -18,7 +18,11 @@
       <div class="col-12">
 
         <h1>Blank</h1>
-        <h1>Nota: {{ $grade->grade }}</h1>
+
+         @if ($grade)
+          <h1>Nota: {{ $grade->grade }}</h1>
+        @endif
+        
         <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
 
         <form action="{{ URL::to('grade-action') }}" method="POST">

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use \Faker\Factory as Faker;
 
 class CoursesTableSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class CoursesTableSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+
         $courses = [
             ['Logica', 1, 1, 5],
             ['Matematica', 1, 1, 4],
@@ -32,14 +35,27 @@ class CoursesTableSeeder extends Seeder
             ['Retele Petri', 3, 2, 6]
         ];
 
-        foreach ($courses as $course) {
-            DB::table('courses')->insert([
-                'course_title' => $course[0],
-                'year' => $course[1],
-                'semester' => $course[2],
-                'credits' => $course[3],
-                'slug' => str_slug(strval($course[1]).'_'.strval($course[2]).'_'.$course[0])
-            ]);
+        $teachers = \App\User::get()->where('role_id', '=', '3');
+
+        foreach ($courses as $course)
+        {
+            $c_insert = new \App\Course();
+            $c_insert->course_title = $course[0];
+            $c_insert->year = $course[1];
+            $c_insert->semester = $course[2];
+            $c_insert->credits = $course[3];
+            $c_insert->description = $faker->realText(200);
+            $c_insert->slug = str_slug(strval($course[1]).'_'.strval($course[2]).'_'.$course[0]);
+            $c_insert->save();
+
+            for ($count = 0; $count < $faker->numberBetween(1, 3); $count++)
+            {
+                DB::table('course_user')->insert([
+                    'course_id' => $c_insert->id,
+                    'user_id' => $faker->randomElement($teachers->pluck('id')->toArray()),
+                ]);
+            }
+
         }
     }
 }

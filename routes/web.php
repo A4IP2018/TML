@@ -19,16 +19,8 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/edit-course', function () {
-    return view('edit-course');
-});
-
 Route::get('/new-course', function () {
     return view('new-course');
-});
-
-Route::get('/course-sg', function() {
-    return view('course-sg');
 });
 
 Route::get('/compare', function () {
@@ -37,10 +29,6 @@ Route::get('/compare', function () {
 
 Route::get('/forum', function () {
     return view('forum');
-});
-
-Route::get('/edit-homework', function () {
-    return view('edit-homework');
 });
 
 Route::resource('homework', 'HomeworkController');
@@ -68,14 +56,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action');
+Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
 
 Route::get('/upload/{slug}', 'HomeworkController@uploadView');
 
 Route::get('/stud-uploads', 'HomeworkController@studentUploadsView');
 
 Route::get('/stud-uploads/{user_id}/{slug}', 'HomeworkController@studentUploadView');
-
 
 Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
 
@@ -89,9 +76,6 @@ Route::get('register', 'RegisterController@index')->name('register');
 
 Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
 
+Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
-Route::post('comments-action', 'HomeworkController@uploadComment');
-
-Route::get('/view-homework', 'AddHomeWorkController@insert_homework_form');
-Route::post('/add-homework', 'AddHomeWorkController@insert_new_homework');
 

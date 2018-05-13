@@ -23,8 +23,10 @@
         <!-- Example Homework Card-->
           <div class="card mb-3">
 
-            <div class="card-header bg-transparent border"><a href="{{ url('/profile') }}">Student</a></div>
-            
+            @if ($file->user && $file->user->student_information)
+              <div class="card-header bg-transparent border"><a href="{{ url('/profile') }}">{{ $file->user->student_information->last_name }} {{ $file->user->student_information->first_name }}</a></div>
+            @endif
+
             <div class="card-body text">
               
               <!--Homework title-->

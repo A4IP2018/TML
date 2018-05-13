@@ -22,16 +22,29 @@
             <p class="mb-0">Upload</p>
             <footer class="blockquote-footer">acum ori niciodata</footer>
             </blockquote>
+            @if (count($errors) > 0)
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
 
             <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="homework-id" value="{{ $homework->id }}">
                 <strong>Tema:</strong> {{ $homework->name }}<br/>
-                <strong>Curs:</strong> {{ $homework->course->course_title }}<br/>
-                <strong>Categorie:</strong> {{ $homework->category->name }}<br/>
+                @if ($homework->course)
+                    <strong>Curs:</strong> {{ $homework->course->course_title }}<br/>
+                @endif
+
+                @if ($homework->category)
+                    <strong>Categorie:</strong> {{ $homework->category->name }}<br/>
+                @endif
+
                 <br/>
 
-                Fisiere tema (Poti atasa unul sau mai multe):
+                Fisiere tema :
                 <br />
                 <input type="file" name="fileToUpload" />
                 <br /><br />
