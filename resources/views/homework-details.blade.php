@@ -28,7 +28,7 @@
 
                             $remainingDif = $deadline->diffInDays($now);
 
-                          $new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
+                            $new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
 
                       ?>
 
@@ -41,48 +41,38 @@
                     </div>
 
                     <div class="card text-center">
-
                         <!--homework course title-->
                         <a href="{{ url('/course-sg') }}" class="card-header">{{ $homework->course->course_title }}</a>
-
                         <div class="card-body">
-
                             <!--homework title-->
                             <h5 class="card-title">{{ $homework->name }}</h5>
-
                             <!--homework description-->
                             <p class="card-text">
                                 {{ $homework->description }}
                             </p>
-
                             <!--homework format-->
                             <hr>
                             <p class="card-text">Formate acceptate:
-
                                 @foreach($homework->formats as $format)
 
                                     <span style="color: blue;">{{ $format->extension_name }}</span>
 
                                 @endforeach
-
                             </p>
-
                             <!--homework deadline-->
                             <hr>
                             <p class="card-text">Termen limita: {{ $homework->deadline }}</p>
-
                             <!--homework author-->
                             <hr>
 {{--                            <p class="card-text">Autor: {{ $homework->user->teacher_information->name }}</p>--}}
                             <hr>
-
                             <!--upload to this homework-->
-                            <a href="{{ url('/upload/' . $homework->slug) }}" class="btn btn-primary">Upload
-                                Rezolvare</a>
-
-                            <!--add members to this homework <TEACHER>-->
-                            <a href="#" class="btn btn-primary">Adauga membri</a>
-
+                            <!--press to follow course-->
+                            @if (!in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
+                                <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaza-te la curs</a>
+                            @else
+                                <a href="{{ url('/upload/' . $homework->slug) }}" class="btn btn-primary">Upload Rezolvare</a>
+                            @endif
                         </div>
                         <!--date/time when posted-->
                         <div class="card-footer text-muted">
@@ -94,21 +84,16 @@
                         <!--homework title-->
                         <div class="comment-section">
                             <div class="container-fluid">
-
                                 <form action="{{ \Illuminate\Support\Facades\URL::to('/comments-action') }}"
                                       method="POST">
-
                                     {{ csrf_field() }}
-
                                     <input name="homework-id" type="hidden" value="{{ $homework->id }}">
-
                                     <textarea name="comments" id="" rows="2" cols="110"
                                               style="outline: none;border:2px solid #8eb4cb;border-radius: 5px"></textarea>
 
                                     <div class="card-body">
                                         <button type="submit" class="btn btn-primary">Posteaza</button>
                                     </div>
-
                                 </form>
                             </div>
 

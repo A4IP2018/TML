@@ -126,7 +126,7 @@ class HomeworkController extends Controller
             ->with('user', 'user.student_information')
             ->orderBy('id', 'desc')
             ->get();
-        return view('homework-sg', compact('comments', 'homework'));
+        return view('homework-details', compact('comments', 'homework'));
 
     }
 

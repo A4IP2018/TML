@@ -144,6 +144,6 @@ class CourseController extends Controller
             $new_entry->save();
         }
 
-        return redirect('/course/' . $slug);
+        return redirect()->back();
     }
 }

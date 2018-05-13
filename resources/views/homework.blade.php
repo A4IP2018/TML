@@ -38,8 +38,8 @@
                     </div>
                     <hr class="mt-2">
 
-                    <div class="card-columns">
                     @if ($homeworks->count() > 0)
+                    <div class="card-columns">
                         @foreach ($homeworks as $homework)
                             @if (in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
                             <!-- Example Homework Card-->
@@ -55,7 +55,7 @@
                                         <!--Homework description-->
                                         <p class="card-text">{{ $homework->description }}</p>
                                     </div>
-                                    
+
                                     <!--Homework deadline-->
                                     <div class="card-footer bg-transparent border">Termen
                                         limita: {{ $homework->deadline }}</div>
@@ -73,14 +73,12 @@
                                 </div>
                                 @endif
                             @endforeach
-
-                        @else
-                            <h1>Nicio tema aici, incearca sa te abonezi la cateva <a href="{{ url('/course') }}">cursuri</a></h1>
-                        @endif
                     </div>
+                    @else
+                        <h4 class="text-center" >Nicio tema aici, incearca sa te abonezi la cateva <a href="{{ url('/course') }}">cursuri</a></h4>
+                    @endif
 
-
-                    <!--pagination-->
+                    <!--pagination
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -89,7 +87,7 @@
                         <li class="page-item"><a class="page-link" href="#">4</a></li>
                         <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
                     </ul>
-
+                    --->
                 </div>
             </div>
         </div>
