@@ -70,7 +70,6 @@
                                     <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
                                        class="btn btn-secondary">Editeaza</a>
                                     @endif
-
                                 </div>
                             </div>
                             @endforeach
