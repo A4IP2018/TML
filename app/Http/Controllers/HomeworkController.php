@@ -14,6 +14,7 @@ use App\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -139,7 +140,6 @@ class HomeworkController extends Controller
      */
     public function edit($slug)
     {
-
         $formats = Format::all();
         $homework = Homework::where('slug', $slug)->with('formats')->first();
 
@@ -174,22 +174,22 @@ class HomeworkController extends Controller
             'format' => 'required',
         ]);
 
+        $currentHomework = Homework::where('slug', $slug)->first();
+
         $selectedFormats = $request->input('format');
         $deadline = $request->input('deadline');
         $description = $request->input('description');
         $course = $request->input('course');
         $title = $request->input('name');
-        $homeworkId = Homework::where('slug', $slug)->first();
-        $homeworkId = $homeworkId->id;
 
         $slug = str_slug($title);
-        $count = Homework::where('slug', $slug)->count();
+        $count = Homework::where('slug', $slug)->where('id', '!=', $currentHomework->id)->count();
 
         $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
 
         $formats = Format::whereIn('id', $selectedFormats)->get();
 
-        $homework = Homework::updateOrCreate(['id' => $homeworkId],  [
+        $homework = Homework::updateOrCreate(['id' => $currentHomework->id],  [
             'course_id' => $course,
             'name' => $title,
             'description' => $description,
@@ -201,7 +201,7 @@ class HomeworkController extends Controller
 
         $homework->formats()->sync($formats);
 
-        return redirect()->back()->withErrors($validator);
+        return redirect()->route('homework.edit', $slug)->withErrors($validator);
     }
 
     /**
