@@ -105,4 +105,13 @@ class User extends Authenticatable
     public function subscribed() {
         return $this->belongsToMany('App\Course','user_course');
     }
+
+    public function published_homeworks() {
+        return $this->hasMany('App\Homework');
+    }
+  
+    public function subscription_homeworks() {
+        return $this->hasManyThrough('App\Homework', 'App\UserCourse', 'user_id', 'course_id');
+    }
+
 }

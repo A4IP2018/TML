@@ -9,6 +9,7 @@ use App\Homework;
 use App\Role;
 use App\StudentInformation;
 
+use App\TeacherCourse;
 use App\User;
 use App\Grade;
 use Illuminate\Http\Request;
@@ -33,15 +34,15 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        $homeworks = Homework::orderBy('id', 'desc')
-            ->with('user')
-            ->get()
-            ->filter(function($homework) {
-                if (is_null($homework->course->subscriptions) ) {
-                    return false;
-                }
-                else return in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray());
-            });
+
+        $homeworks = User::where('id', Auth::id())->first()->subscription_homeworks;
+
+        if (Auth::check() and is_teacher(Auth::id()))
+        {
+            $homeworks = $homeworks->merge(User::where('id', Auth::id())->first()->published_homeworks);
+        }
+
+
         return view('homework', compact('homeworks'));
     }
 
@@ -174,8 +175,9 @@ class HomeworkController extends Controller
             'format' => 'required',
         ]);
 
-        $currentHomework = Homework::where('slug', $slug)->first();
 
+        $currentHomework = Homework::where('slug', $slug)->first();
+      
         $selectedFormats = $request->input('format');
         $deadline = $request->input('deadline');
         $description = $request->input('description');
@@ -189,6 +191,7 @@ class HomeworkController extends Controller
 
         $formats = Format::whereIn('id', $selectedFormats)->get();
 
+
         $homework = Homework::updateOrCreate(['id' => $currentHomework->id],  [
             'course_id' => $course,
             'name' => $title,
@@ -200,6 +203,7 @@ class HomeworkController extends Controller
         ]);
 
         $homework->formats()->sync($formats);
+
 
         return redirect()->route('homework.edit', $slug)->withErrors($validator);
     }
