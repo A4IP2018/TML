@@ -60,9 +60,9 @@
 
             <!--press to follow course-->
             <a href="#" class="btn btn-primary">Adauga membri</a>
-
-            <!--Course edit <TEACHER>-->
-            <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
+              @if (in_array(Auth::id(), $course->users->pluck('id')->toArray()))
+                <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>;
+              @endif
 
             <!--go to this course's forum-->
             <a href="{{ url('/forum') }}" class="btn btn-secondary">Forum</a>
