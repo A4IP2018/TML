@@ -214,7 +214,7 @@ class HomeworkController extends Controller
 
         $extensionOk = 0;
         foreach ($extensions as $extension) {
-            if (str_replace('.', '', $extension->extension_name)== $fileType) {
+            if (str_replace('.', '', $extension->extension_name) == $fileType) {
                 $extensionOk = 1;
                 break;
             }
@@ -250,17 +250,19 @@ class HomeworkController extends Controller
 
     public function updateGrade(Request $request)
     {
+        $validator = $this->validate($request, [
+            'grade' => 'required|integer|between:1,10'
+        ]);
+
         $homeworkId = $request->input('homework-id');
         $grade = $request->input('grade');
         $userId = $request->input('user-id');
 
-        Grade::create([
-            'grade' => $grade,
-            'user_id' => $userId,
-            'homework_id' => $homeworkId
+        Grade::updateOrCreate( ['homework_id' => $homeworkId, 'user_id' => $userId], [
+            'grade' => $grade
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->withErrors($validator);
     }
 
     /**
@@ -268,7 +270,7 @@ class HomeworkController extends Controller
      */
     public function studentUploadsView()
     {
-        $files = \App\File::with('user', 'user.student_information')->get();
+        $files = \App\File::with('user', 'homework', 'user.student_information')->orderBy('id', 'desc')->get();
         return view('stud-uploads', compact('files'));
     }
 
@@ -280,9 +282,16 @@ class HomeworkController extends Controller
     public function studentUploadView($userId, $slug)
     {
         $user = User::find($userId);
-        $homework = Homework::where('slug', $slug)->first();
+        $homework = Homework::with('course', 'file')->where('slug', $slug)->first();
         $grade = Grade::where('user_id', $user->id)->where('homework_id', $homework->id)->first();
 
         return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
+    }
+
+    public function download($fileName)
+    {
+        $path = public_path() . '/files/';
+
+        return response()->download($path . $fileName);
     }
 }
