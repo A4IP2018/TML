@@ -30,9 +30,9 @@
         </div>
         
 
-        <div class="card-group">
-            <div class="card">
-                <div class="card border-success mb-3" style="max-width: 40rem;">
+        <div class="card-group" style="width: 100%">
+
+                <div class="card border-success mb-3" style="width: auto;">
                 <div class="card-header bg-transparent border-success">
                 <div class="form-group">
 
@@ -55,14 +55,14 @@
                 <h5 class="card-title">Laborator 8</h5>
 
                 <!--Homework stud 1 content-->
-                <p class="card-text">Tema primului student.</p>
+                <p class="card-text">Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea, când un tipograf anonim a luat o planşetă de litere şi le-a amestecat pentru a crea o carte demonstrativă pentru literele respective. Nu doar că a supravieţuit timp de cinci secole, dar şi a facut saltul în tipografia electronică practic neschimbată. A fost popularizată în anii '60 odată cu ieşirea colilor Letraset care conţineau pasaje Lorem Ipsum, iar mai recent, prin programele de publicare pentru calculator, ca Aldus PageMaker care includeau versiuni de Lorem Ipsum. "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
                 </div>
                 </div>
-            </div>
 
-            <div class="card">
-                <div class="card border-success mb-3" style="max-width: 40rem;">
+
+
+                <div class="card border-success mb-3" style="width: auto">
                 <div class="card-header bg-transparent border-success">
                 <div class="form-group">
 
@@ -85,15 +85,15 @@
                 <h5 class="card-title">Laborator 8</h5>
 
                 <!--Homework stud 2 content-->
-                <p class="card-text">Tema celui de-al doilea student.</p>
+                <p class="card-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
                 </div>
                 </div>
-            </div>
+
 
         </div>
 
-        <div class="card border-success mb-3" style="max-width: 70rem;">
+        <div class="card border-success mb-3" style="width: auto">
                 <div class="card-header bg-transparent border">
                 <div class="card-body text">
 
