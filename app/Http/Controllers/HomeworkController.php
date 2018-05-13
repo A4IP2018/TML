@@ -34,7 +34,6 @@ class HomeworkController extends Controller
     public function index()
     {
 
-
         $homeworks = User::where('id', Auth::id())->first()->subscription_homeworks;
 
         if (Auth::check() and is_teacher(Auth::id()))
