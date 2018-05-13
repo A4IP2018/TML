@@ -11,7 +11,7 @@ class Comment extends Model
      *
      * @return array
      */
-    protected $fillable = ['comment','homework_id','users_id'];
+    protected $fillable = ['comment','homework_id','user_id'];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     /**
