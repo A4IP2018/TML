@@ -3,77 +3,92 @@
 
 @section('content')
 
-<!--NEW HOMEWORK page-->
+    <!--NEW HOMEWORK page-->
 
-<div class="content-wrapper">
-  <div class="container-fluid">
-  <!-- Breadcrumbs-->
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="#">Bord</a>
-    </li>
-    <li class="breadcrumb-item active">Teme</li>
-    <li class="breadcrumb-item active">Tema Noua</li>
-  </ol>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Bord</a>
+                </li>
+                <li class="breadcrumb-item active">Teme</li>
+                <li class="breadcrumb-item active">Tema Noua</li>
+            </ol>
 
-  <form action="/add-homework>" method="post">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label for="hw-title">Titlu:</label>
-          <input type="text" name="homework_title" class="form-control" id="hw-title" placeholder="Alege un titlu">
-        </div>
-        <div class="form-group">
+            <div class="errors">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
 
-          <label for="sel1">Curs:</label>
-          <select class="form-control" name="homework_course" id="hw-curssel">
-            <option>IP fara Patrut :(</option>
-            <option>Curs 2</option>
-            <option>Curs 3</option>
-            <option>Curs 4</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="hw-descr">Descriere:</label>
-          <textarea class="form-control" name="homework_description" rows="5" id="hw-descr" placeholder="Alege o descriere"></textarea>
-        </div>
+            <form action="{{ \Illuminate\Support\Facades\URL::to('homework') }}" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="hw-title">Titlu:</label>
+                            <input type="text" name="name" class="form-control" id="hw-title"
+                                   placeholder="Alege un titlu">
+                        </div>
+                        <div class="form-group">
 
-        <div class="form-group row">
+                            <label for="sel1">Curs:</label>
+                            <select class="form-control" name="course" id="hw-curssel">
+                                @if ($teacherCourses)
+                                   @foreach($teacherCourses as $teacherCours)
+                                        <option value="{{ $teacherCours->id }}">{{ $teacherCours->course_title }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hw-descr">Descriere:</label>
+                            <textarea class="form-control" name="description" rows="5" id="hw-descr"
+                                      placeholder="Alege o descriere"></textarea>
+                        </div>
 
-        <label for="example-date-input" class="col-1 col-form-label">Termen limita:</label>
+                        <div class="form-group row">
 
-        <!--Homework deadline-->
-        <div class="col-10">
-          <input class="form-control" name="homework_deadline" type="date" value="2018-08-19" id="example-date-input">
-        </div>
-        </div>
+                            <label for="example-date-input" class="col-1 col-form-label">Termen limita:</label>
 
-        <!--Homework format-->
-        <p>Format:
+                            <!--Homework deadline-->
+                            <div class="col-10">
+                                <input class="form-control" name="deadline" type="date" value="2018-08-19"
+                                       id="example-date-input">
+                            </div>
+                        </div>
 
-        <div class="form-check form-check-inline">
-          <label class="form-check-label">
-            <input name="format-check" type="checkbox" class="form-check-input" value="">.rar
-          </label>
+                        <!--Homework format-->
+                        <div class="format" style="text-align: center;">
+                            <h2>Format:</h2>
+
+                            @foreach ($formats as $format)
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input name="format[]" type="checkbox" class="form-check-input"
+                                               value="{{ $format->id }}">
+                                        {{ $format->extension_name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <button style="display: flex; margin: auto; margin-top: 30px;" type="submit"
+                                class="btn btn-primary">Salveaza
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-check form-check-inline">
-          <label class="form-check-label">
-            <input name="format check" type="checkbox" class="form-check-input" value="">.zip
-          </label>
-        </div>
-        <div class="form-check form-check-inline disabled">
-          <label class="form-check-label">
-            <input name="format-check" type="checkbox" class="form-check-input" value="" disabled>disabled
-          </label>
-        </div>
-        </p>
-        <button type="submit" class="btn btn-primary">Salveaza</button>
-      </div>
     </div>
-	</form>
-  </div>
-</div>
-<!-- /.container-fluid-->
-<!-- /.content-wrapper-->
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
 
 @endsection

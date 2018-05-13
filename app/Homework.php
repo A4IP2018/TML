@@ -15,7 +15,7 @@ class Homework extends Model
      * @var array
      */
     protected $fillable = [
-        'description','name','slug', 'category_id', 'updated_at'
+        'description','name','slug', 'category_id', 'updated_at', 'deadline', 'course_id'
     ];
 
     /**
@@ -95,6 +95,11 @@ class Homework extends Model
      */
     public function extension(){
         return $this->hasOne('App\Extension');
+    }
+
+    public function format()
+    {
+        return $this->belongsToMany('App\Format');
     }
 
     /**

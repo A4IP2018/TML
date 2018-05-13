@@ -20,13 +20,6 @@ class FormatsTableSeeder extends Seeder
 
         DB::table('formats')->insert(
             [
-            'mime_type' => 'plain/text',
-            'extension_name' => '.txt',
-            ]
-        );
-
-        DB::table('formats')->insert(
-            [
             'mime_type' => 'application/msword',
             'extension_name' => '.doc',
             ]

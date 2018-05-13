@@ -15,7 +15,7 @@ class RolesTableSeeder extends Seeder
         DB::table('roles')->insert(
             [
                 'name' => 'administrator',
-                'rank' => 1
+                'rank' => \App\Role::$ADMINISTRATOR_RANK
             ]
         );
 
@@ -29,7 +29,7 @@ class RolesTableSeeder extends Seeder
         DB::table('roles')->insert(
             [
                 'name' => 'teacher',
-                'rank' => 5
+                'rank' => \App\Role::$TEACHER_RANK
             ]
         );
 

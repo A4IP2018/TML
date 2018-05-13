@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Format;
 use App\Homework;
+use App\Role;
+use App\StudentInformation;
 use App\User;
 use App\Grade;
 use Illuminate\Http\Request;
@@ -22,7 +25,8 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        $homeworks = Homework::all();
+        $homeworks = Homework::orderBy('id', 'desc')->get();
+
         return view('homework', compact('homeworks'));
     }
 
@@ -33,24 +37,65 @@ class HomeworkController extends Controller
      */
     public function create()
     {
-        return view('new-homework');
+        $formats = Format::all();
+
+        $currentTeacher = User::where('id', Auth::id())->whereHas('role', function ($query) {
+            $query->where('rank', Role::$TEACHER_RANK);
+        })->first();
+
+        $teacherCourses = $currentTeacher->courses;
+
+        return view('new-homework', compact('formats', 'currentTeacher', 'teacherCourses'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validator = $this->validate($request, [
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'deadline' => 'required',
+            'format' => 'required',
+        ]);
+
+        $selectedFormats = $request->input('format');
+        $deadline = $request->input('deadline');
+        $description = $request->input('description');
+        $course = $request->input('course');
+        $title = $request->input('name');
+
+        $slug = str_slug($title);
+        $count = Homework::where('slug', $slug)->count();
+
+        $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
+
+        $formats = Format::whereIn('id', $selectedFormats)->get();
+
+        $homework = Homework::create([
+            'course_id' => $course,
+            'name' => $title,
+            'description' => $description,
+            'slug' => $slug,
+            'category_id' => 1,
+            'user_id' => Auth::id(),
+            'deadline' => $deadline,
+        ]);
+
+        $homework->format()->sync($formats);
+
+        return redirect()->back()->withErrors($validator);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $slug
+     * @param  int $slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -65,7 +110,7 @@ class HomeworkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -76,8 +121,8 @@ class HomeworkController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -88,7 +133,7 @@ class HomeworkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -158,11 +203,13 @@ class HomeworkController extends Controller
             return redirect()->back()->withErrors('Fisier invalid: extensia nu corespunde cu continutul.');
         }
         $homework_id = $request->input('homework-id');
-        $extension_string = \App\Extension::where('id', $homework_id)->pluck('extensions_string')->toArray();
-        $extensions = explode('.', $extension_string[0]);
+
+        $homework = Homework::find($homework_id);
+        $extensions = $homework->format()->get();
+
         $extensionOk = 0;
         foreach ($extensions as $extension) {
-            if ($extension == $fileType) {
+            if (str_replace('.', '', $extension->extension_name)== $fileType) {
                 $extensionOk = 1;
                 break;
             }
@@ -186,8 +233,9 @@ class HomeworkController extends Controller
             return redirect()->back()->withErrors('Fisier uploadat cu succes.');
         } else {
             return redirect()->back()->withErrors('Eroare la upload.');
-            }
+        }
     }
+
     /**
      * Teacher gives/updates grade
      *
@@ -215,7 +263,7 @@ class HomeworkController extends Controller
      */
     public function studentUploadsView()
     {
-        $files = \App\File::all();
+        $files = \App\File::with('user', 'user.student_information')->get();
         return view('stud-uploads', compact('files'));
     }
 
