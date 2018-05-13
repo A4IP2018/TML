@@ -51,20 +51,30 @@
                         </a>
                     </li>
 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                        <!--student uploads for this homework <TEACHER>-->
+                        <a class="nav-link" href="{{ url('/stud-uploads') }}">
+                            <i class="fa fa-fw fa-file"></i>
+                            <span class="nav-link-text">Teme incarcate</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <a class="nav-link" href="{{ url('/settings') }}">
                             <i class="fa fa-fw fa-wrench"></i>
                             <span class="nav-link-text">Setari</span>
                         </a>
                     </li>
 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-                        <!--student uploads for this homework <TEACHER>-->
-                        <a class="nav-link" href="{{ url('/stud-uploads') }}">
-                            <i class="fa fa-fw fa-wrench"></i>
-                            <span class="nav-link-text">Teme incarcate</span>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                        <a class="nav-link" href="{{ url('/contact') }}">
+                            <i class="fa fa-fw fa-connectdevelop"></i>
+                            <span class="nav-link-text">Contact</span>
                         </a>
                     </li>
+
 
                 </ul>
                 <ul class="navbar-nav sidenav-toggler">

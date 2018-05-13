@@ -76,7 +76,6 @@
 
 
 
-
             <hr>
             <!--Edit homework-->
             <a href="#" class="btn btn-secondary">Editeaza</a>
@@ -85,6 +84,7 @@
             <button type="button" class="btn btn-primary">Noteaza</button>
 
             <input type="number" name="grade-stud" style="width: 50px">
+
 
         <h1>Blank</h1>
 
@@ -102,6 +102,62 @@
           <input type="text" name="grade">
           <button type="submit">Submit</button>
         </form>
+
+
+
+            <br><hr>
+
+
+
+            <!--COMMENTS TEST-->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h6 class="card-title mb-1"><a href="#">Batman</a></h6>
+                <p class="card-text small">I think you should fix that...
+                </p>
+              </div>
+              <hr class="my-0">
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h6 class="card-title mb-1"><a href="#">Spuderman</a></h6>
+                <p class="card-text small">still LOL
+                </p>
+              </div>
+              <hr class="my-0">
+            </div>
+            <!--END COMENNTS TEST-->
+
+
+
+            <div class="comments-wrapper">
+              <!-- @foreach($comments as $comment)
+
+                <div class="card mb-3">
+                  <div class="card-body">
+
+                    <!--SOMEONE'S NAME-->
+                    <h5 class="card-title mb-1"><a href="{{ url('/profile') }}">Traian Basescu</a></h5>
+                    <!--someone's last comment-->
+                    <p class="card-text small">
+
+                      {{ $comment->comment }}
+
+                    </p>
+                  </div>
+                  <hr class="my-0">
+                </div>
+
+                <br>
+
+              @endforeach -->
+            </div>
+
+
+
+
+
 
       </div>
     </div>
