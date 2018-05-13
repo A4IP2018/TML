@@ -97,7 +97,7 @@ class Homework extends Model
         return $this->hasOne('App\Extension');
     }
 
-    public function format()
+    public function formats()
     {
         return $this->belongsToMany('App\Format');
     }

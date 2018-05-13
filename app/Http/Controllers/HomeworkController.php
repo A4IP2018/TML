@@ -50,9 +50,16 @@ class HomeworkController extends Controller
             $query->where('rank', Role::$TEACHER_RANK);
         })->first();
 
-        $teacherCourses = $currentTeacher->courses;
+        if ($currentTeacher) {
+            $teacherCourses = $currentTeacher->courses;
 
-        return view('new-homework', compact('formats', 'currentTeacher', 'teacherCourses'));
+            return view('new-homework', compact('formats', 'currentTeacher', 'teacherCourses'));
+        }
+
+        else {
+            return redirect()->back();
+        }
+
     }
 
     /**
@@ -93,7 +100,7 @@ class HomeworkController extends Controller
             'deadline' => $deadline,
         ]);
 
-        $homework->format()->sync($formats);
+        $homework->formats()->sync($formats);
 
         return redirect()->back()->withErrors($validator);
 
@@ -107,9 +114,12 @@ class HomeworkController extends Controller
      */
     public function show($slug)
     {
-        $homework = Homework::where('slug', $slug)->first();
-        $comments = Comment::where('homework_id', $homework->id)->get();
+        $homework = Homework::where('slug', $slug)->with('formats')->first();
 
+        $comments = Comment::where('homework_id', $homework->id)
+            ->with('user', 'user.student_information')
+            ->orderBy('id', 'desc')
+            ->get();
         return view('homework-sg', compact('comments', 'homework'));
 
     }
@@ -176,7 +186,7 @@ class HomeworkController extends Controller
         Comment::create([
             'comment' => $comment,
             'homework_id' => $homeworkId,
-            'users_id' => Auth::id()
+            'user_id' => Auth::id()
         ]);
 
         return redirect()->back();
