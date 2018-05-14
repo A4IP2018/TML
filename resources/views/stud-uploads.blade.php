@@ -30,10 +30,10 @@
             <div class="card-body text">
               
               <!--Homework title-->
-              <h5 class="card-title">Tema</h5>
+              <h5 class="card-title">{{ $file->homework->name }}</h5>
 
               <!--Homework description-->
-              <p class="card-text">Descriere Upload</p>
+              <p class="card-text">{{ $file->homework->name }}</p>
 
             </div>
             
@@ -51,14 +51,9 @@
 
               <input type="number" name="grade-stud" style="width: 50px">
 
-            </div>
           </div>
         @endforeach
 
-
-
-      </div>
-      
       </div>
     </div>
   </div>

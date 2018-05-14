@@ -43,6 +43,5 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FormatsTableSeeder::class);
 
-        $this->call(CoursesTableSeeder::class);
     }
 }

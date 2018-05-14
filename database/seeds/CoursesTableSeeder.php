@@ -50,7 +50,7 @@ class CoursesTableSeeder extends Seeder
 
             for ($count = 0; $count < $faker->numberBetween(1, 3); $count++)
             {
-                DB::table('course_user')->insert([
+                DB::table('teacher_course')->insert([
                     'course_id' => $c_insert->id,
                     'user_id' => $faker->randomElement($teachers->pluck('id')->toArray()),
                 ]);

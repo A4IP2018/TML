@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -65,6 +68,15 @@ class User extends Authenticatable
     }
 
     /**
+     * User->TeacherInformation relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function teacher_information() {
+        return $this->hasOne('App\TeacherInformation');
+    }
+
+    /**
      * User->Message relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -83,10 +95,19 @@ class User extends Authenticatable
     }
 
     public function courses(){
-        return $this->belongsToMany('App\Course');
+        return $this->belongsToMany('App\Course', 'teacher_course');
     }
 
     public function teacher() {
         return $this->hasOne('App\TeacherInformation');
     }
+
+    public function subscribed() {
+        return $this->belongsToMany('App\Course','user_course');
+    }
+
+    public function published_homeworks() {
+        return $this->hasMany('App\Homework');
+    }
+
 }

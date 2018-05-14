@@ -16,29 +16,40 @@
     <li class="breadcrumb-item active">Editare Tema</li>
   </ol>
 
+    @if ($errors->any())
+      <div class="alert alert-danger">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
     <div class="row">
       <div class="col-12">
-
+        <form  action="{{ url('homework/'. $homework->slug) }}" method="POST">
+          {{ method_field('PUT') }}
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
+
+
 
           <label for="hw-title">Titlu:</label>
 
           <!--Homework title edit-->
-          <input name="homework-title" type="text" class="form-control" id="hw-title" placeholder="Alege un titlu">
+          <input name="name" type="text" class="form-control" id="hw-title" value="{{ $homework->name }}">
 
         </div>
         <div class="form-group">
 
           <label for="sel1">Curs:</label>
-
-          <!--Homework Course edit-->
-          <select name="course-title" class="form-control" id="hw-curssel">
-
-            <option>IP fara Patrut :(</option>
-            <option>Curs 2</option>
-            <option>Curs 3</option>
-            <option>Curs 4</option>
-
+          <select class="form-control" name="course" id="hw-curssel">
+            @if ($teacherCourses)
+              @foreach($teacherCourses as $teacherCours)
+                <option {{ $teacherCours->id == $homework->course->id ? 'selected' : '' }} value="{{ $teacherCours->id }}">{{ $teacherCours->course_title }}</option>
+              @endforeach
+            @endif
           </select>
 
         </div>
@@ -47,7 +58,7 @@
           <label for="hw-descr">Descriere:</label>
           
           <!--Homework description edit-->
-          <textarea class="form-control" rows="5" id="hw-descr" placeholder="Alege o descriere"></textarea>
+          <textarea name="description" class="form-control" rows="5" id="hw-descr">{{ $homework->description }}</textarea>
         
         </div>
 
@@ -57,28 +68,24 @@
 
         <!--Homework deadline edit-->
         <div class="col-10">
-          <input name="homework-deadline" class="form-control" type="date" value="2018-08-19" id="example-date-input">
+          <input name="deadline" class="form-control" type="date" value="{{ \Carbon\Carbon::parse($homework->deadline)->toDateString() }}" id="example-date-input">
         </div>
         </div>
 
         <!--Homework format edit-->
         <p>Format:
 
-        <div class="form-check form-check-inline">
-          <label class="form-check-label">
-            <input name="format-check" type="checkbox" class="form-check-input" value="">.rar
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <label class="form-check-label">
-            <input name="format check" type="checkbox" class="form-check-input" value="">.zip
-          </label>
-        </div>
-        <div class="form-check form-check-inline disabled">
-          <label class="form-check-label">
-            <input name="format-check" type="checkbox" class="form-check-input" value="" disabled>disabled
-          </label>
-        </div>
+        @if ($formats)
+          @foreach ($formats as $format)
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input {{ in_array($format->id, $homework->formats->pluck('id')->toArray()) ? 'checked' : '' }} name="format[]" type="checkbox" class="form-check-input"
+                       value="{{ $format->id }}">
+                {{ $format->extension_name }}
+              </label>
+            </div>
+          @endforeach
+        @endif
 
         </p>
 
@@ -95,7 +102,7 @@
         <!--cancel edit-->
         <a href="{{ url('/homework') }}" class="btn btn-secondary">Cancel</a>
 
-
+        </form>
 
       </div>
     </div>

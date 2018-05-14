@@ -2,170 +2,102 @@
 
 @section('content')
 
-<!--single HOMEWORK UPLOAD PAGE-->
+    <!--single HOMEWORK UPLOAD PAGE-->
 
-<div class="content-wrapper">
-  <div class="container-fluid">
-    <!-- Breadcrumbs-->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href="#">Teme</a>
-      </li>
-    </ol>
-
-
-    <div class="row">
-      <div class="col-12">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Teme</a>
+                </li>
+            </ol>
 
 
-
-        <div class="card text-center">
-
-          <!--homework course title-->
-          <a href="{{ url('/course-sg') }}" class="card-header">PSGBD</a>
-
-          <div class="card-body">
-
-            <!--homework title-->
-            <h5 class="card-title">Laboratorul 8</h5>
-
-            <!--stud homework -->
-            <p class="card-text"> Bla bla bla. Aceasta este o tema foarte faina.
-
-            </p>
-
-
-            <!--homework Content-->
-            <hr><p class="card-text">Continut tema:</p>
-
-            <!--homework uploaded files-->
-            <div class="card-columns">
-
-              <div class="card" style="width: 8rem;">
-                <div class="card-header bg-transparent border">
-
-              <div class="card-body">
-
-                <!--homework file title-->
-                <h6 class="card-subtitle mb-2 text-muted">index</h6>
-                <!--homework file extension-->
-                <p class="card-text">.txt</p>
-
-              </div></div></div>
-
-
-              <div class="card" style="width: 8rem;">
-                <div class="card-header bg-transparent border">
-
-                  <div class="card-body">
-
-                    <!--homework file title-->
-                    <h6 class="card-subtitle mb-2 text-muted">ex1</h6>
-                    <!--homework file extension-->
-                    <p class="card-text">.sql</p>
-
-                  </div></div></div>
-
-
-
-          </div>
-          <!--date/time when posted-->
-          <div class="card-footer text-muted">
-            2 days ago
-          </div>
-
-
-
-            <hr>
-            <!--Edit homework-->
-            <a href="#" class="btn btn-secondary">Editeaza</a>
-
-            <!--Grade homework-->
-            <button type="button" class="btn btn-primary">Noteaza</button>
-
-            <input type="number" name="grade-stud" style="width: 50px">
-
-
-        <h1>Blank</h1>
-
-        @if ($grade)
-          <h1>Nota: {{ $grade->grade }}</h1>
-        @endif
-        <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
-
-        <form action="{{ URL::to('grade-action') }}" method="POST">
-          <input type="hidden" name="homework-id" value="{{ $homework->id }}">
-          <input type="hidden" name="user-id" value="{{ $user->id }}">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
-          <input type="text" name="grade">
-          <button type="submit">Submit</button>
-        </form>
-
-
-
-            <br><hr>
-
-
-
-            <!--COMMENTS TEST-->
-            <div class="card mb-3">
-              <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">Batman</a></h6>
-                <p class="card-text small">I think you should fix that...
-                </p>
-              </div>
-              <hr class="my-0">
+            <div class="errors card">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
 
-            <div class="card mb-3">
-              <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">Spuderman</a></h6>
-                <p class="card-text small">still LOL
-                </p>
-              </div>
-              <hr class="my-0">
-            </div>
-            <!--END COMENNTS TEST-->
+
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="card text-center">
+
+                        <!--homework course title-->
+                        @if ($homework->course)
+                            <a href="{{ url('/course-sg') }}" class="card-header">{{ $homework->course->course_title }}</a>
+                        @endif
+
+                        <div class="card-body">
+
+                            <!--homework title-->
+                            <h5 class="card-title">{{ $homework->name }}</h5>
+
+                            <!--stud homework -->
+                            <p class="card-text">
+                                {{ $homework->description }}
+                            </p>
 
 
+                            <!--homework Content-->
+                            <hr>
+                            <p class="card-text">Continut tema:</p>
 
-            <div class="comments-wrapper">
-              <!-- @foreach($comments as $comment)
+                            <a href="{{ route('download', ['path' => $homework->file->file_name ]) }}">
+                                <div class="card-columns">
+                                    <div class="card" style="width: 8rem;">
+                                        <div class="card-header bg-transparent border">
+                                            <div class="card-body">
+                                                <h6 class="card-subtitle mb-2 text-muted">{{ $homework->file->file_name }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
 
-                <div class="card mb-3">
-                  <div class="card-body">
+                            <!--date/time when posted-->
+                            <div class="card-footer text-muted">
+                                2 days ago
 
-                    <!--SOMEONE'S NAME-->
-                    <h5 class="card-title mb-1"><a href="{{ url('/profile') }}">Traian Basescu</a></h5>
-                    <!--someone's last comment-->
-                    <p class="card-text small">
 
-                      {{ $comment->comment }}
+                            </div>
 
-                    </p>
-                  </div>
-                  <hr class="my-0">
+                            @if ($grade)
+                                <div class="card-footer text-muted">
+                                    <h1 style="color: <?= $grade->grade < 5 ? 'red' : 'green' ?>;">
+                                        Nota: {{ $grade->grade }}</h1>
+                                </div>
+                            @endif
+
+                            <form style="display: flex; flex-direction: column" action="{{ URL::to('grade-action') }}"
+                                  method="POST">
+                                <input type="hidden" name="homework-id" value="{{ $homework->id }}">
+                                <input type="hidden" name="user-id" value="{{ $user->id }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+                                <input style="margin-top: 30px;margin-bottom: 30px;" type="number" name="grade"
+                                       placeholder="Introducere nota">
+                                <button type="submit" class="btn btn-primary">Noteaza</button>
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
 
-                <br>
-
-              @endforeach -->
+            </div>
             </div>
 
+          </div>
 
 
-
-
-
-      </div>
-    </div>
-  </div>
-
-  <!-- /.container-fluid-->
-  <!-- /.content-wrapper-->
-
-
-  
 @endsection

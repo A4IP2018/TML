@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Format;
 use App\Homework;
+
 use App\Role;
 use App\StudentInformation;
+
+use App\TeacherCourse;
 use App\User;
 use App\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +24,7 @@ class HomeworkController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index','show']]);
+        $this->middleware('auth');
     }
 
     /**
@@ -30,7 +34,10 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        $homeworks = Homework::orderBy('id', 'desc')->get();
+
+        $homeworks = Homework::whereHas('course.subscriptions', function ($query) {
+            $query->where ('users.id', Auth::id());
+        })->with('user', 'user.subscribed')->orWhere('user_id', Auth::id())->get();
 
         return view('homework', compact('homeworks'));
     }
@@ -48,9 +55,16 @@ class HomeworkController extends Controller
             $query->where('rank', Role::$TEACHER_RANK);
         })->first();
 
-        $teacherCourses = $currentTeacher->courses;
+        if ($currentTeacher) {
+            $teacherCourses = $currentTeacher->courses;
 
-        return view('new-homework', compact('formats', 'currentTeacher', 'teacherCourses'));
+            return view('new-homework', compact('formats', 'currentTeacher', 'teacherCourses'));
+        }
+
+        else {
+            return redirect()->back();
+        }
+
     }
 
     /**
@@ -91,7 +105,7 @@ class HomeworkController extends Controller
             'deadline' => $deadline,
         ]);
 
-        $homework->format()->sync($formats);
+        $homework->formats()->sync($formats);
 
         return redirect()->back()->withErrors($validator);
 
@@ -105,10 +119,13 @@ class HomeworkController extends Controller
      */
     public function show($slug)
     {
-        $homework = Homework::where('slug', $slug)->first();
-        $comments = Comment::where('homework_id', $homework->id)->get();
+        $homework = Homework::where('slug', $slug)->with('formats')->first();
 
-        return view('homework-sg', compact('comments', 'homework'));
+        $comments = Comment::where('homework_id', $homework->id)
+            ->with('user', 'user.student_information')
+            ->orderBy('id', 'desc')
+            ->get();
+        return view('homework-details', compact('comments', 'homework'));
 
     }
 
@@ -118,9 +135,24 @@ class HomeworkController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        return view('edit-homework');
+        $formats = Format::all();
+        $homework = Homework::where('slug', $slug)->with('formats')->first();
+
+        $currentTeacher = User::where('id', Auth::id())->whereHas('role', function ($query) {
+            $query->where('rank', Role::$TEACHER_RANK);
+        })->first();
+
+        if ($currentTeacher) {
+            $teacherCourses = $currentTeacher->courses;
+
+            return view('edit-homework', compact('homework', 'formats', 'currentTeacher', 'teacherCourses'));
+        }
+
+        else {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -130,9 +162,46 @@ class HomeworkController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $validator = $this->validate($request, [
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'deadline' => 'required',
+            'format' => 'required',
+        ]);
+
+
+        $currentHomework = Homework::where('slug', $slug)->first();
+      
+        $selectedFormats = $request->input('format');
+        $deadline = $request->input('deadline');
+        $description = $request->input('description');
+        $course = $request->input('course');
+        $title = $request->input('name');
+
+        $slug = str_slug($title);
+        $count = Homework::where('slug', $slug)->where('id', '!=', $currentHomework->id)->count();
+
+        $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
+
+        $formats = Format::whereIn('id', $selectedFormats)->get();
+
+
+        $homework = Homework::updateOrCreate(['id' => $currentHomework->id],  [
+            'course_id' => $course,
+            'name' => $title,
+            'description' => $description,
+            'slug' => $slug,
+            'category_id' => 1,
+            'user_id' => Auth::id(),
+            'deadline' => $deadline,
+        ]);
+
+        $homework->formats()->sync($formats);
+
+
+        return redirect()->route('homework.edit', $slug)->withErrors($validator);
     }
 
     /**
@@ -174,7 +243,7 @@ class HomeworkController extends Controller
         Comment::create([
             'comment' => $comment,
             'homework_id' => $homeworkId,
-            'users_id' => Auth::id()
+            'user_id' => Auth::id()
         ]);
 
         return redirect()->back();
@@ -214,7 +283,7 @@ class HomeworkController extends Controller
 
         $extensionOk = 0;
         foreach ($extensions as $extension) {
-            if (str_replace('.', '', $extension->extension_name)== $fileType) {
+            if (str_replace('.', '', $extension->extension_name) == $fileType) {
                 $extensionOk = 1;
                 break;
             }
@@ -250,17 +319,19 @@ class HomeworkController extends Controller
 
     public function updateGrade(Request $request)
     {
+        $validator = $this->validate($request, [
+            'grade' => 'required|integer|between:1,10'
+        ]);
+
         $homeworkId = $request->input('homework-id');
         $grade = $request->input('grade');
         $userId = $request->input('user-id');
 
-        Grade::create([
-            'grade' => $grade,
-            'user_id' => $userId,
-            'homework_id' => $homeworkId
+        Grade::updateOrCreate( ['homework_id' => $homeworkId, 'user_id' => $userId], [
+            'grade' => $grade
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->withErrors($validator);
     }
 
     /**
@@ -268,7 +339,7 @@ class HomeworkController extends Controller
      */
     public function studentUploadsView()
     {
-        $files = \App\File::with('user', 'user.student_information')->get();
+        $files = \App\File::with('user', 'homework', 'user.student_information')->orderBy('id', 'desc')->get();
         return view('stud-uploads', compact('files'));
     }
 
@@ -280,9 +351,18 @@ class HomeworkController extends Controller
     public function studentUploadView($userId, $slug)
     {
         $user = User::find($userId);
-        $homework = Homework::where('slug', $slug)->first();
+        $homework = Homework::with('course', 'file')->where('slug', $slug)->first();
         $grade = Grade::where('user_id', $user->id)->where('homework_id', $homework->id)->first();
 
         return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
     }
+
+
+    public function download($fileName)
+    {
+        $path = public_path() . '/files/';
+
+        return response()->download($path . $fileName);
+    }
+
 }

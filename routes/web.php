@@ -19,7 +19,7 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/new-course', function () {
+Route::get('/course/create', function () {
     return view('new-course');
 });
 
@@ -33,6 +33,7 @@ Route::get('/forum', function () {
 
 Route::resource('homework', 'HomeworkController');
 
+Route::post('/course/{slug}/subscribe', 'CourseController@subscribe')->middleware('auth');
 Route::resource('course', 'CourseController');
 
 
@@ -54,9 +55,13 @@ Route::get('/settings', function() {
     return view('settings');
 });
 
+
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::get('/download/{path}', 'HomeworkController@download')->name('download');
+
 
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
 
@@ -65,7 +70,6 @@ Route::get('/upload/{slug}', 'HomeworkController@uploadView');
 Route::get('/stud-uploads', 'HomeworkController@studentUploadsView');
 
 Route::get('/stud-uploads/{user_id}/{slug}', 'HomeworkController@studentUploadView');
-
 
 Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
 

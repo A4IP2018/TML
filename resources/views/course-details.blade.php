@@ -7,57 +7,57 @@
 
 <div class="content-wrapper">
   <div class="container-fluid">
-  <!-- Breadcrumbs-->
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="#">Bord</a>
-    </li>
-    <li class="breadcrumb-item active">Curs</li>
-  </ol>
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#">Bord</a>
+      </li>
+      <li class="breadcrumb-item active">Curs</li>
+    </ol>
 
     <div class="row">
       <div class="col-12">
+        <form action="{{ url('/course/' . $course->slug . '/subscribe') }}" method="POST">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <div class="card text-center">
 
-        <div class="card text-center">
+            <div class="card-body">
+              <!--Course title-->
+              <h5 class="card-title">{{ $course->course_title }}</h5>
+              <!--Course year-->
+              <hr><p class="card-text">An: {{ $course->year }}</p>
+              <!--Course semester-->
+              <hr><p class="card-text">Semestru: {{ $course->semester }}</p>
+              <!--Course credits-->
+              <hr><p class="card-text">Credite: {{ $course->credits }}</p>
+              <!--Course teachers-->
+              <hr>
+              <p class="card-text">Profesori: {{ $teachers_string }}</p>
+              <hr>
+              <!--Course description-->
+              <hr><p class="card-text">Description: {{ $course->description }}</p><hr>
 
-          <div class="card-body">
+                <!--press to follow course-->
+                @if (!in_array(Auth::id(), $course->subscriptions->pluck('id')->toArray()))
+                  <button type="submit" class="btn btn-primary">Aboneaza-te</button>
+                @endif
 
-          <!--Course title-->
-          <h5 class="card-title">{{ $course->course_title }}</h5>
+                @if (in_array(Auth::id(), $course->users->pluck('id')->toArray()))
+                  <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>;
+                @endif
 
-          <!--Course year-->
-          <hr><p class="card-text">An: {{ $course->year }}</p>
+            </div>
 
-          <!--Course semester-->
-          <hr><p class="card-text">Semestru: {{ $course->semester }}</p>
+            <!--date/time when posted-->
+            <div class="card-footer text-muted">
+              {{ $elapsed_time }}
+            </div>
 
-          <!--Course credits-->
-          <hr><p class="card-text">Credite: {{ $course->credits }}</p>
-
-          <!--Course teachers-->
-          <hr><p class="card-text">Profesori: {{  join(", ", $course->users->pluck('username')->toArray()) }}</p><hr>
-
-          <!--Course description-->
-          <hr><p class="card-text">Description: {{ $course->description }}</p>
-
-          <!--follow course-->
-          <a href="#" class="btn btn-primary">Adauga membri</a>
-
-          <!--edit Course-->
-          <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
-
-        </div>
-
-        <!--date/time when posted-->
-        <div class="card-footer text-muted">
-          2 days ago
-        </div>
-
+          </div>
+        </form>
       </div>
-
-
     </div>
-</div>
+  </div>
 </div>
 
 <!-- /.container-fluid-->

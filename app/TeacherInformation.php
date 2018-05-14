@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 class TeacherInformation extends Model
 {
     use Notifiable;
+    protected $table = 'teacher_informations';
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +16,7 @@ class TeacherInformation extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'updated_at'
+        'user_id', 'name', 'updated_at'
     ];
 
     /**

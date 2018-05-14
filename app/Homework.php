@@ -15,7 +15,7 @@ class Homework extends Model
      * @var array
      */
     protected $fillable = [
-        'description','name','slug', 'category_id', 'updated_at', 'deadline', 'course_id'
+        'description','name','slug', 'category_id', 'updated_at', 'deadline', 'course_id', 'user_id'
     ];
 
     /**
@@ -24,7 +24,7 @@ class Homework extends Model
      * @var array
      */
     protected $guarded = [
-        'íd','user_id', 'created_at'
+        'íd', 'created_at'
     ];
 
     /**
@@ -80,10 +80,10 @@ class Homework extends Model
     /**
      * Homework -> Files relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function files(){
-        return $this->hasMany('App\File');
+    public function file(){
+        return $this->hasOne('App\File');
     }
 
     /**
@@ -97,7 +97,7 @@ class Homework extends Model
         return $this->hasOne('App\Extension');
     }
 
-    public function format()
+    public function formats()
     {
         return $this->belongsToMany('App\Format');
     }
