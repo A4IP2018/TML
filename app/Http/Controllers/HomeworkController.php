@@ -35,13 +35,9 @@ class HomeworkController extends Controller
     public function index()
     {
 
-        $homeworks = User::where('id', Auth::id())->first()->subscription_homeworks;
-
-        if (Auth::check() and is_teacher(Auth::id()))
-        {
-            $homeworks = $homeworks->merge(User::where('id', Auth::id())->first()->published_homeworks);
-        }
-
+        $homeworks = Homework::whereHas('course.subscriptions', function ($query) {
+            $query->where ('users.id', Auth::id());
+        })->with('user', 'user.subscribed')->orWhere('user_id', Auth::id())->get();
 
         return view('homework', compact('homeworks'));
     }
