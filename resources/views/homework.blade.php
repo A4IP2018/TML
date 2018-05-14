@@ -57,11 +57,6 @@
                                 <div class="card-footer bg-transparent">Termen
                                     limita: {{ $homework->deadline }}</div>
                                 <div class="card-footer bg-transparent">
-                                    <!--go to homework upload-->
-                                    @if (!is_homework_author($homework))
-                                    <a href="{{ url('/upload/' . $homework->slug) }}"
-                                       class="btn btn-primary">Upload</a>
-                                    @endif
                                     <!--go to homework page-->
                                     <a href="{{ url('/homework/' . $homework->slug) }}"
                                        class="btn btn-info">Detalii</a>

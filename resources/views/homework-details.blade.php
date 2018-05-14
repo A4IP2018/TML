@@ -5,6 +5,19 @@
 
     <!--HOMEWORK SINGLE PAGE-->
 
+    <?php
+    $now = \Carbon\Carbon::now();
+    $start = \Carbon\Carbon::parse($homework->created_at);
+    $deadline = \Carbon\Carbon::parse($homework->deadline);
+
+    $wholeDif = $deadline->diffInDays($start);
+
+    $remainingDif = $deadline->diffInDays($now);
+
+    $new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
+
+    ?>
+
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Breadcrumbs-->
@@ -12,96 +25,84 @@
                 <li class="breadcrumb-item">
                     <a href="#">Bord</a>
                 </li>
-                <li class="breadcrumb-item active">Tema</li>
+                <li class="breadcrumb-item active">Tema (postata {{ ($now->diffInDays($start) == 0) ? "azi" : "zile in urma" }})</li>
             </ol>
             <div class="row">
-                <div class="col-12">
-
+                <div class="col-6">
                     <div class="progress">
-
-                      <?php
-                            $now = \Carbon\Carbon::now();
-                            $start = \Carbon\Carbon::parse($homework->created_at);
-                            $deadline = \Carbon\Carbon::parse($homework->deadline);
-
-                            $wholeDif = $deadline->diffInDays($start);
-
-                            $remainingDif = $deadline->diffInDays($now);
-
-                            $new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
-
-                      ?>
-
                         <!--deadline time left bar-->
                         <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $new_width . '%' ?>;"  aria-valuenow="{{ $wholeDif - $remainingDif }} "
                              aria-valuemin="0" aria-valuemax="{{ $wholeDif }}">
                             {{ $remainingDif }} zile ramase
                         </div>
+                    </div>
+                    <br>
 
+                    <div class="card-group" style="width: fit-content; min-width: 50rem">
+                        <div class="card mb-3 text-center">
+                            <div class="card-header">Tema</div>
+                            <div class="card-body ">
+                                <h5 class="card-title">{{ $homework->name }}</h5>
+                            </div>
+                        </div>
+
+                        @if ($homework->course)
+                            <div class="card mb-3 text-center">
+                                <div class="card-header">Curs</div>
+                                <div class="card-body ">
+                                    <h5><a href="{{ url('/course/' . $homework->course->slug) }}">{{ $homework->course->course_title }}</a></h5>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if ($homework->category)
+                            <div class="card mb-3 text-center">
+                                <div class="card-header">Categorie</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $homework->category->name }}</h5>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="card text-center">
-                        <!--homework course title-->
-                        <a href="{{ url('/course-sg') }}" class="card-header">{{ $homework->course->course_title }}</a>
+                        <div class="card-header">Descriere</div>
+                        <div class="card-body ">
+                            <h5 class="card-title">{{ $homework->course->description }}</h5>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card text-center">
+                        <div class="card-header">Termen limita</div>
                         <div class="card-body">
-                            <!--homework title-->
-                            <h5 class="card-title">{{ $homework->name }}</h5>
-                            <!--homework description-->
-                            <p class="card-text">
-                                {{ $homework->description }}
-                            </p>
-                            <!--homework format-->
-                            <hr>
-                            <p class="card-text">Formate acceptate:
-                                @foreach($homework->formats as $format)
-
-                                    <span style="color: blue;">{{ $format->extension_name }}</span>
-
-                                @endforeach
-                            </p>
-                            <!--homework deadline-->
-                            <hr>
-                            <p class="card-text">Termen limita: {{ $homework->deadline }}</p>
-                            <!--homework author-->
-                            <hr>
-{{--                            <p class="card-text">Autor: {{ $homework->user->teacher_information->name }}</p>--}}
-                            <hr>
-                            <!--upload to this homework-->
-                            <!--press to follow course-->
-                            @if (!in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
-                                <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaza-te la curs</a>
-                            @else
-                                <a href="{{ url('/upload/' . $homework->slug) }}" class="btn btn-primary">Upload Rezolvare</a>
-                            @endif
+                            <h5 class="card-title">{{ $homework->deadline }}</h5>
                         </div>
-                        <!--date/time when posted-->
-                        <div class="card-footer text-muted">
-                            2 days ago
+                    </div>
+
+                    @if (!in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
+                        <div class="card text-center">
+                            <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaza-te la curs</a>
                         </div>
+                    @endif
 
-
-                        <br>
-                        <!--homework title-->
-                        <div class="comment-section">
-                            <div class="container-fluid">
-                                <form action="{{ \Illuminate\Support\Facades\URL::to('/comments-action') }}"
-                                      method="POST">
-                                    {{ csrf_field() }}
-                                    <input name="homework-id" type="hidden" value="{{ $homework->id }}">
-                                    <textarea name="comments" id="" rows="2" cols="110"
-                                              style="outline: none;border:2px solid #8eb4cb;border-radius: 5px"></textarea>
-
-                                    <div class="card-body">
-                                        <button type="submit" class="btn btn-primary">Posteaza</button>
-                                    </div>
-                                </form>
+                    <br>
+                    <div class="card text-center">
+                        <div class="card-header">Adauga un comentariu</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                            <form action="{{ \Illuminate\Support\Facades\URL::to('/comments-action') }}"
+                                  method="POST">
+                                {{ csrf_field() }}
+                                <input name="homework-id" type="hidden" value="{{ $homework->id }}">
+                                <textarea class="form-control" name="comments" id="" rows="2" style="width:100%"></textarea>
+                                <br>
+                                <button type="submit" class="btn btn-primary">Posteaza</button>
+                            </form>
                             </div>
 
                         </div>
-
                     </div>
                     <br>
-                    <hr>
 
                     <!--COMMENTS TEST-->
 
@@ -121,6 +122,78 @@
 
 
                     <br>
+
+                </div>
+
+                <div class="col-6">
+
+                    <div class="mb-0 mt-4">
+                        <i class="fa fa-newspaper-o"></i> Incarcare tema</div>
+                    <hr class="mt-2">
+
+                    <p class="card-text">Formate acceptate:
+                        @foreach($homework->formats as $format)
+
+                            <span style="color: blue;">{{ $format->extension_name }}</span>
+
+                        @endforeach
+                    </p>
+
+                    <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="homework-id" value="{{ $homework->id }}">
+
+                        <br/>
+
+                        <p>
+                            Fisiere tema :
+                        </p>
+
+
+
+                        <div class="input-group" style="width: fit-content">
+                            <div class="custom-file">
+                                <input name="fileToUpload" type="file" class="custom-file-input">
+                                <label class="custom-file-label" for="inputGroupFile04">Incarca</label>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">Upload</button>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <!--homework uploaded files-->
+                        <div class="card-columns">
+
+                            <div class="card" style="width: auto;">
+                                <div class="card-header bg-transparent border">
+
+                                    <div class="card-body">
+
+                                        <!--homework file title-->
+                                        <h6 class="card-subtitle mb-2 text-muted">index.html</h6>
+
+                                    </div></div></div>
+
+
+                            <div class="card" style="width: auto;">
+                                <div class="card-header bg-transparent border">
+
+                                    <div class="card-body">
+
+                                        <!--homework file title-->
+                                        <h6 class="card-subtitle mb-2 text-muted">ex1.sql</h6>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+
 
                 </div>
             </div>
