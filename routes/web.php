@@ -58,10 +58,6 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-
-
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
 
 Route::get('/upload/{slug}', 'HomeworkController@uploadView');
