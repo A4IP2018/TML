@@ -50,7 +50,7 @@
                               <td><a href="#">25</a></td>
                           </tr>
                       </table>
-                      <div style="text-align: right;">
+                      <div style="text-align: right; ">
                           <a href="#" class="btn btn-primary smaller">Participa la discutie</a>
                       </div>
                   </div>
