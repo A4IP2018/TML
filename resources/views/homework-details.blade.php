@@ -139,70 +139,41 @@
                         @endforeach
                     </p>
 
-                    <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ URL::to('upload-action') }}" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="homework-id" value="{{ $homework->id }}">
-
                         <br/>
-
-                        <p>
-                            Fisiere tema :
-                        </p>
-
-
+                        <p>Fisiere tema :</p>
 
                         <div class="input-group" style="width: fit-content">
                             <div class="custom-file">
                                 <input name="fileToUpload" type="file" class="custom-file-input">
-                                <label class="custom-file-label" for="inputGroupFile04">Incarca</label>
+                                <label class="custom-file-label" for="fileToUpload">Incarca</label>
                             </div>
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">Upload</button>
+                                <button class="btn btn-primary" type="submit">Upload</button>
                             </div>
                         </div>
 
                         <br>
-
-                        <!--homework uploaded files-->
-                        <div class="card-columns">
-
-                            <div class="card" style="width: auto;">
-                                <div class="card-header bg-transparent border">
-
-                                    <div class="card-body">
-
-                                        <!--homework file title-->
-                                        <h6 class="card-subtitle mb-2 text-muted">index.html</h6>
-
-                                    </div></div></div>
-
-
-                            <div class="card" style="width: auto;">
-                                <div class="card-header bg-transparent border">
-
-                                    <div class="card-body">
-
-                                        <!--homework file title-->
-                                        <h6 class="card-subtitle mb-2 text-muted">ex1.sql</h6>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
                     </form>
+
+                    @if (Auth::check() and Auth::user()->files->count() > 0)
+                        <div class="card text-center">
+                            <ul class="list-group list-group-flush">
+                            @foreach (Auth::user()->files as $file)
+                         <!--homework uploaded files-->
+                                <li class="list-group-item">{{ $file->file_name }}</li>
+                            @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
 
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
 
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->

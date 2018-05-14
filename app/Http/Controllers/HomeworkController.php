@@ -279,7 +279,7 @@ class HomeworkController extends Controller
         $homework_id = $request->input('homework-id');
 
         $homework = Homework::find($homework_id);
-        $extensions = $homework->format()->get();
+        $extensions = $homework->formats;
 
         $extensionOk = 0;
         foreach ($extensions as $extension) {

@@ -62,7 +62,6 @@ Route::get('/contact', function () {
 
 Route::get('/download/{path}', 'HomeworkController@download')->name('download');
 
-
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
 
 Route::get('/upload/{slug}', 'HomeworkController@uploadView');
@@ -88,7 +87,6 @@ Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('
 
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
-Route::get('/view-homework', 'AddHomeWorkController@insert_homework_form');
-Route::post('/add-homework', 'AddHomeWorkController@insert_new_homework')->middleware('auth');
+
 
 
