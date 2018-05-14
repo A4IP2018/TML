@@ -15,8 +15,8 @@ use App\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
-use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,7 +34,6 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-
         $homeworks = Homework::whereHas('course.subscriptions', function ($query) {
             $query->where ('users.id', Auth::id());
         })->with('user', 'user.subscribed')->orWhere('user_id', Auth::id())->get();
@@ -286,5 +285,38 @@ class HomeworkController extends Controller
         return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
     }
 
+
+    public function download($fileName)
+    {
+        $path = public_path() . '/files/';
+
+        return response()->download($path . $fileName);
+    }
+
+    public function compare()
+    {
+        $files = \App\File::all();
+
+        return view('compare', compact('files'));
+    }
+
+    public function compareAction(Request $request)
+    {
+
+        $firstFile = $request->input('first-compare-field');
+        $secondFile = $request->input('second-compare-field');
+
+        $firstFile = \App\File::find($firstFile);
+        $secondFile = \App\File::find($secondFile);
+
+        $content1 = File::get(public_path('files/' . $firstFile->file_name));
+        $content2 = File::get(public_path('files/' . $secondFile->file_name));
+
+
+        $procent = plagiarism_check($content1, $content2);
+
+        return redirect()->back()->with(compact('procent'));
+
+    }
 
 }

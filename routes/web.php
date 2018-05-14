@@ -23,9 +23,8 @@ Route::get('/course/create', function () {
     return view('new-course');
 });
 
-Route::get('/compare', function () {
-    return view('compare');
-});
+Route::get('/compare', 'HomeworkController@compare')->name('compare');
+Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
 
 Route::get('/forum', function () {
     return view('forum');
