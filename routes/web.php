@@ -41,6 +41,8 @@ Route::get('/messages', function() {
     return view('messages');
 });
 
+Route::get('/deadlines', 'DeadlineController@index');
+
 Route::get('/request', function () {
     return view('request');
 });
@@ -53,7 +55,13 @@ Route::get('/settings', function() {
     return view('settings');
 });
 
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
 Route::get('/download/{path}', 'HomeworkController@download')->name('download');
+
 
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
 

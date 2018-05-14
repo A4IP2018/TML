@@ -78,7 +78,9 @@
                         <h4 class="text-center" >Nicio tema aici, incearca sa te abonezi la cateva <a href="{{ url('/course') }}">cursuri</a></h4>
                     @endif
 
+
                     <!--pagination
+                    
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
