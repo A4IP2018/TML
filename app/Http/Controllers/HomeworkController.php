@@ -237,6 +237,9 @@ class HomeworkController extends Controller
      */
     public function uploadComment(Request $request)
     {
+        $validator = $this->validate($request, [
+            'comments' => 'required|min:5|max:60000',
+        ]);
         $comment = $request->input('comments');
         $homeworkId = $request->input('homework-id');
 
@@ -259,7 +262,9 @@ class HomeworkController extends Controller
      */
     public function uploadHomework(Request $request)
     {
-
+        $validator = $this->validate($request, [
+            'fileToUpload' => 'required',
+        ]);
         $path = public_path() . '/files/';
         $image = $request->file('fileToUpload');
 

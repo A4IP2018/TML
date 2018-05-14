@@ -7,6 +7,7 @@
 
   <div class="content-wrapper">
     <div class="container-fluid">
+
     <!-- Breadcrumbs-->
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
@@ -22,12 +23,14 @@
             <p class="mb-0">Upload</p>
             <footer class="blockquote-footer">acum ori niciodata</footer>
             </blockquote>
-            @if (count($errors) > 0)
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
 
             <form action="{{ URL::to('upload-action') }}" method="post" enctype="multipart/form-data">
