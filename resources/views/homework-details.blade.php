@@ -159,8 +159,10 @@
                         <div class="card text-center">
                             <ul class="list-group list-group-flush">
                             @foreach (Auth::user()->files as $file)
+                                @if ($file->homework->id == $homework->id)
                          <!--homework uploaded files-->
                                 <li class="list-group-item"><a href="{{ url('/upload/' . $file->file_name) }}">{{ $file->file_name }}</a></li>
+                                @endif
                             @endforeach
                             </ul>
                         </div>
