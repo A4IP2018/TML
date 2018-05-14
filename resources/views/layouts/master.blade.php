@@ -20,7 +20,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 
             <a class="navbar-brand" href="/">
-                <img src="favicon.ico" class="img-fluid" style="max-width: 15%;max-height: 15%">
+                <img src="{{ URL::asset('favicon.ico') }}" class="img-fluid" style="max-width: 15%;max-height: 15%">
                 TeMeLe
             </a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
