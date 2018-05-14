@@ -32,6 +32,8 @@
 
         <div class="card-group" style="width: 100%">
 
+            <form action="{{ url('compare-action') }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="card border-success mb-3" style="width: auto;">
                 <div class="card-header bg-transparent border-success">
                 <div class="form-group">
@@ -39,12 +41,10 @@
                     <label for="sel1">Student #1</label>
 
                     <!--Select student id 1-->
-                    <select name="hw-compare-stud1" class="form-control" id="hw-curssel">
-
-                    <option>Upload#1</option>
-                    <option>Upload#2</option>
-                    <option>Alt stud</option>
-
+                    <select name="first-compare-field" class="form-control" id="hw-curssel">
+                        @foreach ($files as $file)
+                            <option value="{{ $file->id }}">{{ $file->file_name }}</option>
+                        @endforeach
                     </select>
 
                     </div>
@@ -69,12 +69,10 @@
                     <label for="sel1">Student #2</label>
 
                     <!--Select student id 2-->
-                    <select name="hw-compare-stud2" class="form-control" id="hw-curssel">
-
-                    <option>Upload#1</option>
-                    <option>Upload#2</option>
-                    <option>Alt stud</option>
-
+                    <select name="second-compare-field" class="form-control" id="hw-curssel">
+                        @foreach ($files as $file)
+                            <option value="{{ $file->id }}">{{ $file->file_name }}</option>
+                        @endforeach
                     </select>
 
                     </div>
@@ -89,8 +87,8 @@
 
                 </div>
                 </div>
-
-
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Compara teme</button>
+            </form>
         </div>
 
         <div class="card border-success mb-3" style="width: auto">
@@ -99,11 +97,14 @@
 
                     <!--compare result-->
                     <h5 class="card-title">Rezultat:</h5>
-                    <p class="card-text">Asemanare tema 50%</p>
+
+
+
+                    <p class="card-text">Asemanare tema {{ session('procent') }}%</p>
 
                     <!--result bar depending on compare result-->
                     <div class="progress">
-                        <div class="progress-bar bg-danger" style="width:50%"></div>
+                        <div class="progress-bar bg-danger" style="width:{{ session('procent') }}%"></div>
                     </div>
 
                 </div>
@@ -111,10 +112,10 @@
         </div>
 
         <!--Select All to compare all homework-->
-        <br><a href="#" class="btn btn-primary btn-lg btn-block">Compara toate temele</a>
+
 
         <!--Select Two to compare only the two of them-->
-        <br><a href="#" class="btn btn-primary btn-lg btn-block">Compare cele 2 teme</a><br>
+        {{--<br><a href="#" class="btn btn-primary btn-lg btn-block">Compare cele 2 teme</a><br>--}}
 
 
         </div>

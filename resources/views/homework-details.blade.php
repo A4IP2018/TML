@@ -38,7 +38,7 @@
                     </div>
                     <br>
 
-                    <div class="card-group" style="width: fit-content; min-width: 50rem">
+                    <div class="card-group">
                         <div class="card mb-3 text-center">
                             <div class="card-header">Tema</div>
                             <div class="card-body ">
