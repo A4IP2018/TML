@@ -16,41 +16,28 @@
 
     <div class="row">
       <div class="col-12">
-
-
         @foreach($files as $file)
-
         <!-- Example Homework Card-->
           <div class="card mb-3">
+            <div class="card-header">{{ $file->file_name }}</div>
 
-            @if ($file->user && $file->user->student_information)
-              <div class="card-header bg-transparent border"><a href="{{ url('/profile') }}">{{ $file->user->student_information->last_name }} {{ $file->user->student_information->first_name }}</a></div>
-            @endif
+            <div class="card-body">
 
-            <div class="card-body text">
-              
               <!--Homework title-->
-              <h5 class="card-title">{{ $file->homework->name }}</h5>
+              <h5 class="card-title">{{ $file->homework->course->course_title }}</h5>
 
               <!--Homework description-->
               <p class="card-text">{{ $file->homework->name }}</p>
 
             </div>
-            
+
             <div class="card-footer bg-transparent border">
-
-
             <!--go to homework page-->
-              <a href="{{ url('/stud-uploads/' . $file->user_id .'/' . $file->homework->slug ) }}" class="btn btn-info">Detalii</a>
-
-            <!--Homework edit-->
-            <a href="#" class="btn btn-secondary">Editeaza</a>
-
+              <a href="{{ url('/upload/' . $file->file_name ) }}" class="btn btn-info">Detalii</a>
               <!--Grade homework-->
               <button type="button" class="btn btn-primary">Noteaza</button>
-
               <input type="number" name="grade-stud" style="width: 50px">
-
+            </div>
           </div>
         @endforeach
 

@@ -53,7 +53,7 @@
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <!--student uploads for this homework <TEACHER>-->
-                        <a class="nav-link" href="{{ url('/stud-uploads') }}">
+                        <a class="nav-link" href="{{ url('/upload') }}">
                             <i class="fa fa-fw fa-upload"></i>
                             <span class="nav-link-text">Teme incarcate</span>
                         </a>
@@ -184,6 +184,10 @@
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('js/main.min.js') }}"></script>
+
+        <link rel="stylesheet" href="{{ asset('vendor/highlight/styles/default.css') }}">
+        <script src="{{ asset('vendor/highlight/highlight.pack.js') }}"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
 
     </body>
 </html>
