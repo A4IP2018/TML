@@ -36,6 +36,7 @@ Route::resource('homework', 'HomeworkController');
 Route::post('/course/{slug}/subscribe', 'CourseController@subscribe')->middleware('auth');
 Route::resource('course', 'CourseController');
 
+Route::resource('upload', 'UploadController');
 
 Route::get('/messages', function() {
     return view('messages');

@@ -215,19 +215,7 @@ class HomeworkController extends Controller
         //
     }
 
-
-    /**
-     * Upload view return
-     *
-     * @param $slug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function uploadView($slug)
-    {
-        $homework = Homework::where('slug', $slug)->first();
-
-        return view('upload', compact('homework'));
-    }
+    
 
     /**
      * Upload comment
@@ -250,65 +238,6 @@ class HomeworkController extends Controller
 
     }
 
-
-    /**
-     * Upload homework functionality
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function uploadHomework(Request $request)
-    {
-
-        $path = public_path() . '/files/';
-        $image = $request->file('fileToUpload');
-
-        $filename = time() . '.' . $image->getClientOriginalName();
-        $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
-        $fileExtension = $request->file('fileToUpload')->guessExtension();
-
-        $user_id = Auth::id();
-
-        if ($user_id == null) {
-            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
-        }
-
-        if ($fileType != $fileExtension) {
-            return redirect()->back()->withErrors('Fisier invalid: extensia nu corespunde cu continutul.');
-        }
-        $homework_id = $request->input('homework-id');
-
-        $homework = Homework::find($homework_id);
-        $extensions = $homework->formats;
-
-        $extensionOk = 0;
-        foreach ($extensions as $extension) {
-            if (str_replace('.', '', $extension->extension_name) == $fileType) {
-                $extensionOk = 1;
-                break;
-            }
-        }
-
-        if ($extensionOk == 0) {
-            return redirect()->back()->withErrors('Extensie neacceptata.');
-        }
-
-        if ($request->file('fileToUpload')->getClientSize() > 500000) {
-            return redirect()->back()->withErrors('Fisierul este prea mare.');
-        }
-
-        if ($image->move($path, $filename)) {
-
-            \App\File::create([
-                'user_id' => $user_id,
-                'homework_id' => $homework_id,
-                'file_name' => $filename
-            ]);
-            return redirect()->back()->withErrors('Fisier uploadat cu succes.');
-        } else {
-            return redirect()->back()->withErrors('Eroare la upload.');
-        }
-    }
 
     /**
      * Teacher gives/updates grade

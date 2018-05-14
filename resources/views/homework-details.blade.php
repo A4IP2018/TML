@@ -133,13 +133,11 @@
 
                     <p class="card-text">Formate acceptate:
                         @foreach($homework->formats as $format)
-
                             <span style="color: blue;">{{ $format->extension_name }}</span>
-
                         @endforeach
                     </p>
 
-                    <form action="{{ URL::to('upload-action') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ url('/upload') }}" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="homework-id" value="{{ $homework->id }}">
                         <br/>
