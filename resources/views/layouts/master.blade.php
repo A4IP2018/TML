@@ -54,7 +54,7 @@
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <!--student uploads for this homework <TEACHER>-->
                         <a class="nav-link" href="{{ url('/stud-uploads') }}">
-                            <i class="fa fa-fw fa-file"></i>
+                            <i class="fa fa-fw fa-upload"></i>
                             <span class="nav-link-text">Teme incarcate</span>
                         </a>
                     </li>
