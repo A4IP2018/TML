@@ -52,15 +52,14 @@ class UploadController extends Controller
         $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
         $fileExtension = $request->file('fileToUpload')->guessExtension();
 
+
+
         $user_id = Auth::id();
 
         if ($user_id == null) {
             return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
         }
 
-        if ($fileType != $fileExtension) {
-            return redirect()->back()->withErrors('Fisier invalid: extensia nu corespunde cu continutul.');
-        }
         $homework_id = $request->input('homework-id');
 
         $homework = Homework::find($homework_id);

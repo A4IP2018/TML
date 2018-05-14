@@ -46,5 +46,62 @@ class FormatsTableSeeder extends Seeder
             ]
         );
 
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.c',
+            ]
+        );
+
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.cpp',
+            ]
+        );
+
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.java',
+            ]
+        );
+
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.sql',
+            ]
+        );
+
+
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.js',
+            ]
+        );
+
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.py',
+            ]
+        );
+
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.l',
+            ]
+        );
+
+        DB::table('formats')->insert(
+            [
+                'mime_type' => 'plain/text',
+                'extension_name' => '.y',
+            ]
+        );
+
     }
 }
