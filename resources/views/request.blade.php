@@ -18,6 +18,10 @@
       <div class="col-12">
 
 
+<div class="mb-0 mt-4">
+            <h5 class="card-title"><i class="fa fa-fw fa-newspaper-o"></i> &nbsp; Propune o schimbare ~</h5>
+          <hr class="mt-2">
+
 
 
   <!-- Pentru -->
@@ -53,14 +57,14 @@
   </div>
   
   <!--Mesajul-->
-  <div class="input-group input-group-lg">
-      <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+  <div class="input-group input-group-sm mb-3">
+      <textarea rows="10" style="height: 200px; width: 1100px"></textarea> 
   </div>
-  <br> 
-      
+        
   <!--Buton trimitere-->
   <button class="btn btn-primary" aria-label="Center" type="submit">Trimite</button>
-      
+  <br>
+  <br>
 
 
 
