@@ -38,16 +38,16 @@
                       </div>
                       <hr>
                       <table style="width:100%">
-                          <tr style="text-align:left">
-                              <th>Autor</th>
-                              <th>Data</th>
-                              <th>Raspunsuri</th>
+                          {{--<tr style="text-align:left">--}}
+                              {{--<th>Autor</th>--}}
+                              {{--<th>Data</th>--}}
+                              {{--<th>Raspunsuri</th>--}}
 
-                          </tr>
+                          {{--</tr>--}}
                           <tr>
-                              <td><a href="#">utilizator</a></td>
-                              <td><a href="#">5 aprilie 2018</a></td>
-                              <td><a href="#">25</a></td>
+                              <td>Autor <a href="#">utilizator</a></td>
+                              <td>Data <a href="#">5 aprilie 2018</a></td>
+                              <td>Raspunsuri <a href="#">25</a></td>
                           </tr>
                       </table>
                       <div style="text-align: right; ">
