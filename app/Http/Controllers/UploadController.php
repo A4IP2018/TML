@@ -1,30 +1,135 @@
 <?php
 
 namespace App\Http\Controllers;
-namespace App;
-use App\Http\Requests\UploadRequest;
-use Illuminate\Support\Facades\File;
-use Illuminate\Auth;
+
+use App\File;
+use App\User;
+use App\Homework;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UploadController extends Controller
 {
-    public function uploadForm()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return view('upload-hw');
+        //
     }
 
-    public function uploadSubmit(UploadRequest $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        foreach ($request->homework as $hw) {
-            $filename = $hw->store('homework');
-            $homework_slug = parse_url($request->url(),PHP_URL_PATH);
-            $homework_id = Homework::where('slug',$homework_slug)->get();
-            File::create([
-                'user_id' => Auth::user()->id,
-                'homework_id' => $homework_id,
-                'filename' => $filename
-            ]);
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $path = public_path() . '/files/';
+        $image = $request->file('fileToUpload');
+
+        $filename = time() . '.' . $image->getClientOriginalName();
+        $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
+        $fileExtension = $request->file('fileToUpload')->guessExtension();
+
+        $user_id = Auth::id();
+
+        if ($user_id == null) {
+            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
         }
-        return 'Upload successful!';
+
+        if ($fileType != $fileExtension) {
+            return redirect()->back()->withErrors('Fisier invalid: extensia nu corespunde cu continutul.');
+        }
+        $homework_id = $request->input('homework-id');
+
+        $homework = Homework::find($homework_id);
+        $extensions = $homework->formats;
+
+        $extensionOk = 0;
+        foreach ($extensions as $extension) {
+            if (str_replace('.', '', $extension->extension_name) == $fileType) {
+                $extensionOk = 1;
+                break;
+            }
+        }
+
+        if ($extensionOk == 0) {
+            return redirect()->back()->withErrors('Extensie neacceptata.');
+        }
+
+        if ($request->file('fileToUpload')->getClientSize() > 500000) {
+            return redirect()->back()->withErrors('Fisierul este prea mare.');
+        }
+
+        if ($image->move($path, $filename)) {
+
+            \App\File::create([
+                'user_id' => $user_id,
+                'homework_id' => $homework_id,
+                'file_name' => $filename
+            ]);
+            return redirect()->back()->withErrors('Fisier uploadat cu succes.');
+        } else {
+            return redirect()->back()->withErrors('Eroare la upload.');
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
