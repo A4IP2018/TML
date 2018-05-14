@@ -126,7 +126,6 @@
                 </div>
 
                 <div class="col-6">
-
                     <div class="mb-0 mt-4">
                         <i class="fa fa-newspaper-o"></i> Incarcare tema</div>
                     <hr class="mt-2">
