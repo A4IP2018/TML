@@ -13,7 +13,7 @@
     </ol>
 
 <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
     <div class="card bg-light border-dark mb-3" style="max-width: 18rem;">
   <div class="card-body">
     <h5 class="card-title"><i class="fa fa-fw fa-user"></i>Username</h5>
