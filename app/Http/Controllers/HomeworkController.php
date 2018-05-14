@@ -287,11 +287,4 @@ class HomeworkController extends Controller
     }
 
 
-    public function download($fileName)
-    {
-        $path = public_path() . '/files/';
-
-        return response()->download($path . $fileName);
-    }
-
 }

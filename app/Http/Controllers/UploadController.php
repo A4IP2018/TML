@@ -7,6 +7,7 @@ use App\User;
 use App\Homework;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File as FileSystem;
 
 class UploadController extends Controller
 {
@@ -17,7 +18,13 @@ class UploadController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::check()) {
+            $files = \App\File::where('user_id', Auth::id())->get();
+            return view('uploaded-files', compact('files'));
+        }
+        else {
+            return redirect('/login');
+        }
     }
 
     /**
@@ -41,7 +48,7 @@ class UploadController extends Controller
         $path = public_path() . '/files/';
         $image = $request->file('fileToUpload');
 
-        $filename = time() . '.' . $image->getClientOriginalName();
+        $filename = time() . '.' . str_replace(' ', '', $image->getClientOriginalName());
         $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
         $fileExtension = $request->file('fileToUpload')->guessExtension();
 
@@ -94,9 +101,11 @@ class UploadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $file = \App\File::where('file_name', $slug)->first();
+        $content = mb_convert_encoding(FileSystem::get(public_path() . '/files/' . $file->file_name), 'UTF-16LE', 'UTF-8');
+        return view('uploaded-file-details')->with(['file' => $file, 'content' => $content]);
     }
 
     /**
@@ -131,5 +140,12 @@ class UploadController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function download($fileName)
+    {
+        $path = public_path() . '/files/';
+        return response()->download($path . $fileName);
     }
 }

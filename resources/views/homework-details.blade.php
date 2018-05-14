@@ -160,7 +160,7 @@
                             <ul class="list-group list-group-flush">
                             @foreach (Auth::user()->files as $file)
                          <!--homework uploaded files-->
-                                <li class="list-group-item">{{ $file->file_name }}</li>
+                                <li class="list-group-item"><a href="{{ url('/upload/' . $file->file_name) }}">{{ $file->file_name }}</a></li>
                             @endforeach
                             </ul>
                         </div>
