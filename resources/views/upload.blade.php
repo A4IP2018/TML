@@ -88,8 +88,6 @@
 
                                 <!--homework file title-->
                                 <h6 class="card-subtitle mb-2 text-muted">index.html</h6>
-                                <!--homework file extension-->
-                                <!-- <p class="card-text">.txt</p> -->
 
                             </div></div></div>
 
@@ -101,8 +99,7 @@
 
                                 <!--homework file title-->
                                 <h6 class="card-subtitle mb-2 text-muted">ex1.sql</h6>
-                                <!--homework file extension-->
-                                <!--  <p class="card-text">.sql</p> -->
+                               
 
                             </div></div></div>
 
