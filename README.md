@@ -1,12 +1,12 @@
 # Table Of Contents:
 
-1. <a href=https://a4ip2018.github.io/HomeworkManager/index.html><strong>Project presentation</strong></a>
-2. <a href=https://github.com/A4IP2018/HomeworkManager/wiki/Teams>Teams</a>
-3. <a href=https://github.com/A4IP2018/HomeworkManager/wiki/GitHub>Github</a>
-4. <a href=https://github.com/A4IP2018/HomeworkManager/wiki/Trello>Trello</a>
-5. <a href=https://github.com/A4IP2018/HomeworkManager/wiki/XAMPP>XAMPP</a>
-6. <a href=https://github.com/A4IP2018/HomeworkManager/wiki/Laravel>Laravel</a>
-7. <a href=https://github.com/A4IP2018/HomeworkManager/wiki/Organizare>Organizare</a>
+1. <a href=https://a4ip2018.github.io/TML/index.html><strong>Project presentation</strong></a>
+2. <a href=https://github.com/A4IP2018/TML/wiki/Teams>Teams</a>
+3. <a href=https://github.com/A4IP2018/TML/wiki/GitHub>Github</a>
+4. <a href=https://github.com/A4IP2018/TML/wiki/Trello>Trello</a>
+5. <a href=https://github.com/A4IP2018/TML/wiki/XAMPP>XAMPP</a>
+6. <a href=https://github.com/A4IP2018/TML/wiki/Laravel>Laravel</a>
+7. <a href=https://github.com/A4IP2018/TML/wiki/Organizare>Organizare</a>
 
 ### Teams and members
                     
