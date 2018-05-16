@@ -66,8 +66,15 @@
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <a class="nav-link" href="{{ url('/contact') }}">
-                            <i class="fa fa-fw fa-connectdevelop"></i>
+                            <i class="fa fa-fw fa-address-book"></i>
                             <span class="nav-link-text">Contact</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                        <a class="nav-link" href="{{ url('/about') }}">
+                            <i class="fa fa-fw fa-connectdevelop"></i>
+                            <span class="nav-link-text">About</span>
                         </a>
                     </li>
 

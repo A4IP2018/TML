@@ -54,6 +54,10 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
 Route::get('/download/{path}', 'UploadController@download')->name('download');
 
 Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
