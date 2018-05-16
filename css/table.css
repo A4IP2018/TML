@@ -1,13 +1,23 @@
 
+.table-wrapper {
+  border-bottom: 10px solid gold;
+  padding-bottom: 50px;
+  width: 100%;
+}
+
 .content-table {
   overflow: scroll;
 }
 
 .checktable {
-  min-width: 1000px;
+  min-width: 100%;
   width: 100%;
   margin-top: 70px;
   table-layout: fixed;
+  max-height: 700px;
+  display: block;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .checktable thead {
@@ -43,6 +53,7 @@
   padding-right: 20px;
   text-align: right;
   width: 300px;
+  text-align: center;
 }
 
 .checkrow > td:first-of-type {
