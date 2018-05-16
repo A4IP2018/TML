@@ -18,11 +18,11 @@
       <div class="card text-white bg-primary o-hidden h-100">
         <div class="card-body">
           <div class="card-body-icon">
-            <i class="fa fa-fw fa-comments"></i>
+            <i class="fa fa-fw fa-sticky-note"></i>
           </div>
-          <div class="mr-5">26 Mesaje noi!</div>
+          <div class="mr-5">26 Notificari noi!</div>
         </div>
-        <a class="card-footer text-white clearfix small z-1" href="{{ url('/messages') }}">
+        <a class="card-footer text-white clearfix small z-1" href="{{ url('/notifications') }}">
           <span class="float-left">Citeste mai mult</span>
           <span class="float-right">
             <i class="fa fa-angle-right"></i>
@@ -68,7 +68,7 @@
 
       <!-- Card Columns Example Social Feed-->
       <div class="mb-0 mt-4">
-        <i class="fa fa-newspaper-o"></i> News Feed</div>
+        <i class="fa fa-newspaper-o"></i> Noutati</div>
       <hr class="mt-2">
 
 

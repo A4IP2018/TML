@@ -67,9 +67,6 @@
                   <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>;
                 @endif
 
-                <!--go to this course's forum-->
-                <a href="{{ url('/forum') }}" class="btn btn-secondary">Forum</a>
-
               </div>
             </div>
           </form>
