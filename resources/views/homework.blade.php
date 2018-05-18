@@ -41,6 +41,7 @@
                         <label class="checkbox-inline">
                             <input type="checkbox" value=""> Corectate
                         </label>
+<hr>
                     </form>
                     <form>
                         <h6>Cursuri:&nbsp; </h6>
