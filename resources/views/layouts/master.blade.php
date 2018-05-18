@@ -42,16 +42,17 @@
                     </a>
                     </li>
 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-                        <a class="nav-link" href="{{ url('/homework') }}">
-                            <i class="fa fa-fw fa-table"></i>
-                            <span class="nav-link-text">Teme</span>
-                        </a>
-                    </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
                         <a class="nav-link" href="{{ url('/course') }}">
                             <i class="fa fa-fw fa-sitemap"></i>
                             <span class="nav-link-text">Cursuri</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+                        <a class="nav-link" href="{{ url('/homework') }}">
+                            <i class="fa fa-fw fa-table"></i>
+                            <span class="nav-link-text">Teme disponibile</span>
                         </a>
                     </li>
 
@@ -63,19 +64,17 @@
                         </a>
                     </li>
 
-
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
-                        <a class="nav-link" href="{{ url('/settings') }}">
-                            <i class="fa fa-fw fa-wrench"></i>
-                            <span class="nav-link-text">Setari</span>
+                        <a class="nav-link" href="{{ url('/contact') }}">
+                            <i class="fa fa-fw fa-address-book"></i>
+                            <span class="nav-link-text">Contact</span>
                         </a>
                     </li>
 
-
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
-                        <a class="nav-link" href="{{ url('/contact') }}">
+                        <a class="nav-link" href="{{ url('/about') }}">
                             <i class="fa fa-fw fa-connectdevelop"></i>
-                            <span class="nav-link-text">Contact</span>
+                            <span class="nav-link-text">About</span>
                         </a>
                     </li>
 
@@ -90,31 +89,9 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="{{ url('/messages') }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-fw fa-envelope"></i>
-                            <span class="d-lg-none">Mesaje
-                                <span class="badge badge-pill badge-primary">12 New</span>
-                            </span>
-                            <span class="indicator text-primary d-none d-lg-block">
-                              <i class="fa fa-fw fa-circle"></i>
-                            </span>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">Mesaje noi:</h6>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url('/messages') }}">
-                                <strong>Basescu</strong>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">Buna!</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item small" href="{{ url('/messages') }}">View all messages</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
-                            <span class="d-lg-none">Alerts
+                            <span class="d-lg-none">Notificari
                               <span class="badge badge-pill badge-warning">6 New</span>
                             </span>
                             <span class="indicator text-warning d-none d-lg-block">
@@ -122,19 +99,24 @@
                             </span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">New Alerts:</h6>
+                            <h6 class="dropdown-header">Notificari noi:</h6>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{ url('/notifications') }}">
                                 <span class="text-success">
                                     <strong>
-                                    <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+                                    <i class="fa fa-envelope fa-fw"></i>Comentariu nou la Tema 5</strong>
                                 </span>
                                 <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+                                <div class="dropdown-message small">Un nou comentariu adaugat la Tema 5.</div>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item small" href="#">View all alerts</a>
+                            <a class="dropdown-item small" href="{{ url('/notifications') }}">Vizualizeaza toate</a>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mr-lg-2" id="changeThemeColor" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-fw fa-moon-o"></i>
+                        </a>
                     </li>
 
                     @if (Auth::check())
@@ -153,7 +135,7 @@
         <footer class="sticky-footer">
             <div class="container">
                 <div class="text-center">
-                    <small>Copyright © HomeworkManagerA4IP 2018</small>
+                    <small>Copyright © TeMeLe-A4IP 2018</small>
                 </div>
             </div>
         </footer>
@@ -188,6 +170,14 @@
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('js/main.min.js') }}"></script>
+
+        <script>
+            $('#changeThemeColor').click(function() {
+                $('nav').toggleClass('navbar-dark navbar-light');
+                $('nav').toggleClass('bg-dark bg-light');
+                $('body').toggleClass('bg-dark bg-light');
+            });
+        </script>
 
         <link rel="stylesheet" href="{{ asset('vendor/highlight/styles/default.css') }}">
         <script src="{{ asset('vendor/highlight/highlight.pack.js') }}"></script>

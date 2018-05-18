@@ -26,9 +26,6 @@ Route::get('/course/create', function () {
 Route::get('/compare', 'HomeworkController@compare')->name('compare');
 Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
 
-Route::get('/forum', function () {
-    return view('forum');
-});
 
 Route::resource('homework', 'HomeworkController');
 
@@ -37,8 +34,8 @@ Route::resource('course', 'CourseController');
 
 Route::resource('upload', 'UploadController');
 
-Route::get('/messages', function() {
-    return view('messages');
+Route::get('/notifications', function() {
+    return view('notifications');
 });
 
 Route::get('/deadlines', 'DeadlineController@index');
@@ -47,9 +44,6 @@ Route::get('/request', function () {
     return view('request');
 });
 
-Route::get('/messages-sg', function() {
-    return view('messages-sg');
-});
 
 Route::get('/settings', function() {
     return view('settings');
@@ -58,6 +52,10 @@ Route::get('/settings', function() {
 
 Route::get('/contact', function () {
     return view('contact');
+});
+
+Route::get('/about', function () {
+    return view('about');
 });
 
 Route::get('/download/{path}', 'UploadController@download')->name('download');
