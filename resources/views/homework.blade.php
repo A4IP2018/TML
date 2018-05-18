@@ -16,17 +16,46 @@
 
             <div class="row">
                 <div class="col-12">
-
                     <div class="input-group">
-                        <!--search for homework-->
-                        <input name="homework-search" class="form-control" type="text" placeholder="Cauta tema...">
-                        <span class="input-group-append">
+            <!--search for homework-->
+            <input name="homework-search" class="form-control" type="text" placeholder="Cauta tema...">
+            <span class="input-group-append">
+                          <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
+
                           <button class="btn btn-primary" type="button">
                             <i class="fa fa-search"></i>
                           </button>
                       </span>
-                    </div>
-                    <br>
+          </div>
+          <div id="demo" class="collapse">
+            <div class="card">
+                <div class="card-body">            
+                    <form>
+                        <h6>Teme:&nbsp; </h6>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value=""> Noi
+                        </label> &ensp;
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value=""> Necorectate
+                        </label> &ensp;
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value=""> Corectate
+                        </label>
+                    </form>
+                    <form>
+                        <h6>Cursuri:&nbsp; </h6>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="">  Abonament
+                        </label> &ensp;
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="">  Toate
+                        </label> &ensp;
+                    </form>
+            </div>
+        </div>
+  </div>
+          
+<br>
                     @if (is_teacher(Auth::id()))
                         <!--press to create new homework <TEACHER>-->
                         <a href="{{ url('/homework/create') }}" class="btn btn-primary btn-lg btn-block">Tema noua</a>
