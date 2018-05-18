@@ -95,6 +95,18 @@
                                     <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
                                        class="btn btn-secondary">Editeaza</a>
                                     @endif
+                                    <button type="button" class="btn btn-primary btn-sm mr-2">
+                                        Necorectate <span class="badge badge-light">9</span>
+                                        <span class="sr-only">unread messages</span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm mr-2">
+                                        Corectate <span class="badge badge-light">9</span>
+                                        <span class="sr-only">unread messages</span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm mr-2">
+                                        Noi <span class="badge badge-light">9</span>
+                                        <span class="sr-only">unread messages</span>
+                                    </button>
                                 </div>
                             </div>
                             @endforeach
