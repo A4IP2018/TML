@@ -21,14 +21,71 @@
 
       <!--Course search-->
       <input name="course-search" class="form-control" type="text" placeholder="Cauta curs...">
+            <span class="input-group-append">
+                          <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
 
-      <span class="input-group-append">
-      <button class="btn btn-primary" type="button">
-      <i class="fa fa-search"></i>
-      </button>
-
-      </span>
-    </div>
+                          <button class="btn btn-primary" type="button">
+                            <i class="fa fa-search"></i>
+                          </button>
+                      </span>
+          </div>
+          <div id="demo" class="collapse">
+            <div class="card">
+                <div class="card-body">            
+                  <form>
+                    <h6>An:&nbsp; </h6>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio"> 1
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio"> 2
+                        </label>
+                     </div>
+                     <div class="form-check form-check-inline">
+                         <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio" > 3
+                         </label>
+                     </div>
+                </form>
+<hr>
+                    <form>
+                      <h6>Semestru:&nbsp; </h6>
+                        <div class="form-check form-check-inline">
+                         <label class="form-check-label">
+                           <input type="radio" class="form-check-input" name="optradio"> 1
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio"> 2
+                        </label>
+                     </div>
+                </form>
+<hr>
+                <form>
+                  <h6>Abonament:&nbsp; </h6>
+                    <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                       <input type="radio" class="form-check-input" name="optradio"> Da
+                      </label>
+                   </div>
+                   <div class="form-check form-check-inline">
+                      <label class="form-check-label">
+                       <input type="radio" class="form-check-input" name="optradio"> Nu
+                      </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                     <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optradio"> Toate
+                    </label>
+                  </div>
+              </form>
+        </div>
+      </div>
+  </div>
 
       @if (Auth::check() and is_teacher(Auth::id()))
         <!--Press to create new Course-->
