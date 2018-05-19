@@ -27,15 +27,15 @@
 
                         <div class="form-group">
                             <label for="name">Nume:</label>
-                            @if($user->role_id==3)
+                            @if($user->role_id==\App\Role::$TEACHER_RANK)
                             <input type="name" class="form-control" id="name" value="{{$userInfo->name}}" readonly>
                             @endif
-                            @if($user->role_id==1)
+                            @if($user->role_id==\App\Role::$ADMINISTRATOR_RANK)
                                 <input type="name" class="form-control" id="name" value="{{$userInfo->first_name.' '.$userInfo->last_name}}" readonly>
                             @endif
                         </div>
 
-                        @if($user->role_id==1)
+                        @if($user->role_id==\App\Role::$ADMINISTRATOR_RANK)
                         <div class="form-group">
                             <label for="email">An:</label>
                             <input type="email" class="form-control" id="an" value="{{$userInfo->year}}" readonly>

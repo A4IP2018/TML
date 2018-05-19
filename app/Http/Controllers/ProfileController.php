@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\StudentInformation;
 use App\TeacherInformation;
 use Illuminate\Http\Request;
@@ -20,10 +21,10 @@ class ProfileController extends Controller
         if (Auth::check()) {
 
             $user = \App\User::where('id', Auth::id())->first();
-            if($user->role_id == 3) {
+            if($user->role_id == Role::$TEACHER_RANK) {
                 $userInfo = \App\TeacherInformation::where('user_id', Auth::id())->first();
             }
-            else if($user->role_id == 1){
+            else if($user->role_id == Role::$ADMINISTRATOR_RANK){
                 $userInfo = \App\StudentInformation::where('user_id', Auth::id())->first();
             }
             return view('profile', compact('user','userInfo'));
