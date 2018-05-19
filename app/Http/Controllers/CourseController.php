@@ -72,8 +72,6 @@ class CourseController extends Controller
     public function edit($slug) {
 
         $course = Course::where('slug', $slug)->first();
-        if (!in_array($course->users->pluck('id'))) {
-        }
 
         return view('edit-course', compact('course'));
     }
