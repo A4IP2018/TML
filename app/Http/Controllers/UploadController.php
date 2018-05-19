@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 namespace App;
+namespace Carbon\Carbon;
 use App\Http\Requests\UploadRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Auth;
@@ -15,6 +16,14 @@ class UploadController extends Controller
 
     public function uploadSubmit(UploadRequest $request)
     {
+        $today->toDateTimeString();
+        $homework_id = Homework::where('slug',$homework_slug)->get();
+        $expiredate->Homework::where('deadline',$homework_id)-get();
+        if($today<$expiredate)
+        {
+            return 'You cannot upload homeworks after their deadlines'
+        }
+        
         foreach ($request->homework as $hw) {
             $filename = $hw->store('homework');
             $homework_slug = parse_url($request->url(),PHP_URL_PATH);
