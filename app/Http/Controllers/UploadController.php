@@ -11,18 +11,20 @@ class UploadController extends Controller
 {
     public function uploadForm()
     {
-        return view('upload-hw');
-    }
-
-    public function uploadSubmit(UploadRequest $request)
-    {
         $today->toDateTimeString();
         $homework_id = Homework::where('slug',$homework_slug)->get();
         $expiredate->Homework::where('deadline',$homework_id)-get();
         if($today<$expiredate)
         {
-            return 'You cannot upload homeworks after their deadlines'
+            return 'You cannot upload homeworks after their deadlines';
         }
+        else
+            return view('upload-hw');
+    }
+
+    public function uploadSubmit(UploadRequest $request)
+    {
+        
         
         foreach ($request->homework as $hw) {
             $filename = $hw->store('homework');
