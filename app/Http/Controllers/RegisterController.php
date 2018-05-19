@@ -81,10 +81,9 @@ class RegisterController extends Controller
     {
         $validator = $this->validate($request, [
             'email' => 'unique:users|required|max:255|email',
-            'password' => 'required|max:255',
             'first-name' => 'required|max:255',
-            'password' => 'required|max:255|confirmed|min:5',
-            'confirm-password' => '',
+            'password' => 'required|max:255|min:5|required_with:confirm-password|same:confirm-password',
+            'confirm-password' => 'required|max:255|min:5',
             'first-name' => 'required|max:255',
             'last-name' => 'required|max:255',
             'year' => 'required|integer',

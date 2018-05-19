@@ -87,4 +87,6 @@ Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('
 
 
 
+Route::get('/profile', 'ProfileController@index')->name('profile');
+
 
