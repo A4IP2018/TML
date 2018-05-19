@@ -141,7 +141,13 @@
                         <input type="hidden" name="homework-id" value="{{ $homework->id }}">
                         <br/>
                         <p>Fisiere tema :</p>
-
+                        @if (count($errors) > 0)
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
                         <div class="input-group" style="width: fit-content">
                             <div class="custom-file">
                                 <input name="fileToUpload" type="file" class="custom-file-input">

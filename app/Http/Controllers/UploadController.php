@@ -46,9 +46,15 @@ class UploadController extends Controller
     public function store(Request $request)
     {
         $path = public_path() . '/files/';
-        $image = $request->file('fileToUpload');
+        $file = $request->file('fileToUpload');
 
-        $filename = time() . '.' . str_replace(' ', '', $image->getClientOriginalName());
+        if ($file == null) {
+            return redirect()->back()->withErrors('Nu ati selectat niciun fisier.');
+        }
+        $filename = time() . '.' . str_replace(' ', '', $file->getClientOriginalName());
+//        if ($filename == null) {
+//            return redirect()->back()->withErrors('Fisier invalid.');
+//        }
         $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
         $fileExtension = $request->file('fileToUpload')->guessExtension();
 
@@ -81,7 +87,7 @@ class UploadController extends Controller
             return redirect()->back()->withErrors('Fisierul este prea mare.');
         }
 
-        if ($image->move($path, $filename)) {
+        if ($file->move($path, $filename)) {
 
             \App\File::create([
                 'user_id' => $user_id,
