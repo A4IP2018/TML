@@ -8,7 +8,18 @@
 <div class="content-wrapper">
   <div class="container-fluid">
   <!-- Breadcrumbs-->
-  <ol class="breadcrumb">
+    <div class="errors">
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+    </div>
+    <ol class="breadcrumb">
     <li class="breadcrumb-item">
       <a href="#">Bord</a>
     </li>

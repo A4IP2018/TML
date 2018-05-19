@@ -83,11 +83,13 @@ class RegisterController extends Controller
             'email' => 'unique:users|required|max:255|email',
             'password' => 'required|max:255',
             'first-name' => 'required|max:255',
+            'password' => 'required|max:255|confirmed|min:5',
+            'confirm-password' => '',
             'first-name' => 'required|max:255',
+            'last-name' => 'required|max:255',
             'year' => 'required|integer',
             'group' => 'required',
         ]);
-
         $password = Hash::make($request->input('password'));
 
         if (Hash::check($request->input('confirm-password'), $password))
