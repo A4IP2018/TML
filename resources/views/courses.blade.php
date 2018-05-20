@@ -2,6 +2,9 @@
 
 
 @section('content')
+    <style>a:hover {
+            background-color: yellow;
+        }</style>
 
 <!--MULTIPLE COURSES PAGE-->
 
@@ -115,6 +118,7 @@
                 <!--press to be sent to the course page-->
                 <a href="{{ url('/course/' . $course->slug) }}"><button type="button" class="btn btn-info">Detalii</button></a>
 
+
                 <!--press to follow course-->
                 @if (!in_array(Auth::id(), $course->subscriptions->pluck('id')->toArray()))
                   <button type="submit" href="" class="btn btn-primary">Aboneaza-te</button>
@@ -145,6 +149,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- /.container-fluid-->
 <!-- /.content-wrapper-->
