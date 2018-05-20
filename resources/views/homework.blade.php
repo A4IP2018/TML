@@ -83,7 +83,6 @@
                                 </div>
 
                                 <!--Homework deadline-->
-
                                 <div class="card-footer bg-transparent">Termen
                                     limita: {{ $homework->deadline }}</div>
                                 <div class="card-footer bg-transparent">
@@ -95,18 +94,34 @@
                                     <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
                                        class="btn btn-secondary">Editeaza</a>
                                     @endif
-                                    <button type="button" class="btn btn-primary">
+                                    <style>
+                                        .eticheta{
+                                            display:inline-block;
+                                            font-weight: 400;
+                                            text-align:center;
+                                            white-space:nowrap;
+                                            vertical-align:middle;
+                                            -moz-user-select:none;
+                                            border:1px solid transparent;
+                                            padding: .375rem .75rem;
+                                            font-size:1rem;
+                                            line-height:1.5;
+                                            border-radius:.25rem;
+                                            color:white;
+                                        }
+                                    </style>
+                                    <div class="bg-danger eticheta">
                                         Necorectate <span class="badge badge-light">9</span>
                                         <span class="sr-only">unread messages</span>
-                                    </button>
-                                    <button type="button" class="btn btn-primary">
+                                    </div>
+                                    <div class="bg-success eticheta">
                                         Corectate <span class="badge badge-light">9</span>
                                         <span class="sr-only">unread messages</span>
-                                    </button>
-                                    <button type="button" class="btn btn-primary">
+                                    </div>
+                                    <div class="bg-primary eticheta">
                                         Noi <span class="badge badge-light">9</span>
                                         <span class="sr-only">unread messages</span>
-                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             @endforeach
