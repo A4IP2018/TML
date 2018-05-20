@@ -81,13 +81,14 @@ class RegisterController extends Controller
     {
         $validator = $this->validate($request, [
             'email' => 'unique:users|required|max:255|email',
-            'password' => 'required|max:255',
             'first-name' => 'required|max:255',
+            'password' => 'required|max:255|min:5|required_with:confirm-password|same:confirm-password',
+            'confirm-password' => 'required|max:255|min:5',
             'first-name' => 'required|max:255',
+            'last-name' => 'required|max:255',
             'year' => 'required|integer',
             'group' => 'required',
         ]);
-
         $password = Hash::make($request->input('password'));
 
         if (Hash::check($request->input('confirm-password'), $password))

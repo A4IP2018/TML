@@ -32,6 +32,8 @@ Route::resource('homework', 'HomeworkController');
 Route::post('/course/{slug}/subscribe', 'CourseController@subscribe')->middleware('auth');
 Route::resource('course', 'CourseController');
 
+Route::get('filter-courses', 'CourseController@getFilteredCourses');
+
 Route::resource('upload', 'UploadController');
 
 Route::get('/notifications', function() {
@@ -86,5 +88,7 @@ Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
 
+
+Route::get('/profile', 'ProfileController@index')->name('profile');
 
 

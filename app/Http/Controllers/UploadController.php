@@ -45,6 +45,10 @@ class UploadController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $this->validate($request, [
+            'fileToUpload' => 'required',
+
+        ]);
         $path = public_path() . '/files/';
         $file = $request->file('fileToUpload');
 

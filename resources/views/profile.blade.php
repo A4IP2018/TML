@@ -3,6 +3,7 @@
 @section('content')
 <!--USER PROFILE PAGE-->
 
+
 <div class="content-wrapper">
   <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -22,25 +23,38 @@
             <div class="card">
                 <div class="card-body">
                     <form action="#">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                         <div class="form-group">
                             <label for="name">Nume:</label>
-                            <input type="name" class="form-control" id="name" value="Patlagica Ionut" readonly>
+                            @if($user->role_id==\App\Role::$TEACHER_RANK)
+                            <input type="name" class="form-control" id="name" value="{{$userInfo->name}}" readonly>
+                            @endif
+                            @if($user->role_id==\App\Role::$ADMINISTRATOR_RANK)
+                                <input type="name" class="form-control" id="name" value="{{$userInfo->first_name.' '.$userInfo->last_name}}" readonly>
+                            @endif
                         </div>
+
+                        @if($user->role_id==\App\Role::$ADMINISTRATOR_RANK)
                         <div class="form-group">
                             <label for="email">An:</label>
-                            <input type="email" class="form-control" id="an" value="2" readonly>
+                            <input type="email" class="form-control" id="an" value="{{$userInfo->year}}" readonly>
                         </div>
+                        @endif
+
                         <div class="form-group">
                             <label for="email">Nr. matricol:</label>
-                            <input type="email" class="form-control" id="nr_matr" value="37hfjshdf" readonly>
+                            <input type="email" class="form-control" id="nr_matr" value="{{$user->nr_matricol}}" readonly>
                         </div>
+
                         <label for="email">Adresa de mail:</label>
                         <div class="input-group">
-                            <input type="email" class="form-control" id="email" value="patlagica.ion@yahoo.com" readonly>
+                            <input type="email" class="form-control" id="email" value="{{$user->email}}" readonly>
                             <span class="input-group-append">
                                 <button data-toggle="collapse" data-target="#changeEmail" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
                             </span>
                         </div>
+
                         <label for="password">Parola:</label>
                         <div class="input-group">
                             <input type="text" class="form-control" id="pass" value="*******" readonly>
@@ -48,6 +62,7 @@
                                 <button data-toggle="collapse" data-target="#changePassword" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
                             </span>
                         </div>
+
                         <div id="changePassword" class="collapse">
                             <div class="card">
                                 <div class="card-body">

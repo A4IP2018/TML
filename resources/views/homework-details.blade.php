@@ -27,6 +27,17 @@
                 </li>
                 <li class="breadcrumb-item active">Tema (postata {{ ($now->diffInDays($start) == 0) ? "azi" : "zile in urma" }})</li>
             </ol>
+            <div class="errors">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
             <div class="row">
                 <div class="col-6">
                     <div class="progress">
