@@ -16,7 +16,7 @@ class CourseController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index','show']]);
+        $this->middleware('auth', ['except' => ['index','show', 'getFilteredCourses']]);
     }
 
 
@@ -41,6 +41,33 @@ class CourseController extends Controller
         return $teachers_string;
     }
 
+
+    public function getFilteredCourses(Request $request)
+    {
+        $searchedYear = $request->input('yearFilter') ? (int)$request->input('yearFilter') : null;
+        $searchedSemester = $request->input('semesterFilter') ? (int)$request->input('semesterFilter') : null;
+        $searchedSubscription = $request->input('subscriptionFilter') ? (int)$request->input('subscriptionFilter') : null;
+
+        $courses = Course::
+            when($searchedYear, function ($collection) use ($searchedYear) {
+                return $collection->where('year', $searchedYear);
+            })
+            ->when($searchedSemester, function ($collection) use ($searchedSemester) {
+                return $collection->where('semester', $searchedSemester);
+            })
+            ->when($searchedSubscription == 1, function ($collection) use ($searchedSemester) {
+                return $collection->has('subscriptions');
+            })
+            ->when($searchedSubscription == 0, function ($collection) use ($searchedSemester) {
+                return $collection->doesntHave('subscriptions');
+            })
+            ->with('subscriptions', 'users')
+            ->get();
+
+        return $courses;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +76,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('courses', compact('courses'));
+        return view('courses', compact('courses'))->render();
     }
 
     /**
