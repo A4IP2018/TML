@@ -1,10 +1,6 @@
 @extends('layouts.master')
 
 
-@section('content')
-    <style>a:hover {
-            background-color: yellow;
-        }</style>
 
 <!--MULTIPLE COURSES PAGE-->
 
