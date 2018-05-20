@@ -38,12 +38,12 @@
               <hr><p class="card-text">Description: {{ $course->description }}</p><hr>
 
                 <!--press to follow course-->
-                @if (!in_array(Auth::id(), $course->subscriptions->pluck('id')->toArray()))
+                @if (can_subscribe($course->id))
                   <button type="submit" class="btn btn-primary">Aboneaza-te</button>
                 @endif
 
-                @if (in_array(Auth::id(), $course->users->pluck('id')->toArray()))
-                  <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>;
+                @if (is_course_teacher($course->id))
+                  <a href="{{ url('/course/' . $course->slug . '/edit') }}" class="btn btn-secondary">Editeaza</a>
                 @endif
 
             </div>

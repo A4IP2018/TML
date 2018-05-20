@@ -9,14 +9,30 @@
 use App\User;
 use App\Rank;
 use App\Role;
+use App\TeacherCourse;
+use App\Course;
 
 if (! function_exists('is_teacher'))
 {
-    function is_teacher($id) {
-        return
-            User::where('id', $id)
-                ->first()
-                ->role->rank == Role::$TEACHER_RANK;
+    function is_teacher() {
+        if (Auth::check()) {
+            return User::where('id', Auth::id())
+                    ->first()
+                    ->role->rank == Role::$TEACHER_RANK;
+        }
+        return false;
+    }
+}
+
+if (! function_exists('is_course_teacher'))
+{
+    function is_course_teacher($course_id) {
+        if (Auth::check()) {
+            return TeacherCourse::where('user_id', Auth::id())
+                    ->where('course_id', $course_id)
+                    ->count() != 0;
+        }
+        return false;
     }
 }
 
@@ -27,6 +43,27 @@ if (! function_exists('is_homework_author'))
             return in_array(Auth::id(), $homework->course->users->pluck('id')->toArray());
         }
         return false;
+    }
+}
+
+if (! function_exists('is_subscribed_to_course'))
+{
+    function is_subscribed_to_course($course_id) {
+        if (Auth::check()) {
+            return Course::where('id', $course_id)
+                    ->first()
+                    ->subscriptions
+                    ->where('id', Auth::id())
+                    ->count() != 0;
+        }
+        return false;
+    }
+}
+
+if (! function_exists('can_subscribe'))
+{
+    function can_subscribe($course_id) {
+        return !is_course_teacher($course_id) and !is_subscribed_to_course($course_id);
     }
 }
 

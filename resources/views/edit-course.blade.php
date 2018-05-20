@@ -76,7 +76,7 @@
           <button name="course-del" type="submit" class="btn btn-primary">Sterge</button>
 
           <!--Cancel edit-->
-          <a href="{{ url('/courses') }}" class="btn btn-secondary">Inapoi</a>
+          <a href="{{ url('/course') }}" class="btn btn-secondary">Inapoi</a>
         </form>
 
       </div>
