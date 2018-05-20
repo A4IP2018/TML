@@ -111,12 +111,10 @@
                                         }
                                     </style>
                                     <div class="bg-danger eticheta">
-                                        Necorectate <span class="badge badge-light">9</span>
-                                        <span class="sr-only">unread messages</span>
+                                        Necorectate 
                                     </div>
                                     <div class="bg-success eticheta">
-                                        Corectate <span class="badge badge-light">9</span>
-                                        <span class="sr-only">unread messages</span>
+                                        Corectate
                                     </div>
                                     <div class="bg-primary eticheta">
                                         Noi <span class="badge badge-light">9</span>
