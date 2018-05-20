@@ -98,7 +98,7 @@
                               <i class="fa fa-fw fa-circle"></i>
                             </span>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+                        <div class="dropdown-menu" aria-labelledby="alertsDropdown" style="margin-left:-50px">
                             <h6 class="dropdown-header">Notificari noi:</h6>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ url('/notifications') }}">
