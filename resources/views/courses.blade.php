@@ -130,6 +130,7 @@
                                                     <a href="{{ url('/course/' . $course->slug . '/edit') }}"
                                                        class="btn btn-secondary">Editeaza</a>
                                                 @endif
+
                                             @endif
 
                                         </div>
@@ -176,7 +177,7 @@
                     success: function(result) {
 
                         var html = '';
-
+                        
                         @if (Auth::check())
                             var user = JSON.parse(JSON.stringify(<?= Auth::user() ?>) );
                         @endif
