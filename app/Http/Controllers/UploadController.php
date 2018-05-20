@@ -16,7 +16,7 @@ class UploadController extends Controller
         $expiredate->Homework::where('deadline',$homework_id)-get();
         if($today<$expiredate)
         {
-            return 'You cannot upload homeworks after their deadlines';
+            return view('deadline-exceeded');
         }
         else
             return view('upload-hw');
