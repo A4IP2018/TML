@@ -91,4 +91,7 @@ Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 
+Route::post('reset-password-action', 'ProfileController@resetPassword')->name('reset-password-action');
+
+Route::post('reset-email-action', 'ProfileController@resetEmail')->name('reset-email-action');
 
