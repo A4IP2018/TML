@@ -167,6 +167,7 @@ class HomeworkController extends Controller
             'name' => 'required|max:255',
             'description' => 'required|max:255',
             'deadline' => 'required',
+            'course'=>'required',
             'format' => 'required',
         ]);
 
@@ -224,6 +225,9 @@ class HomeworkController extends Controller
      */
     public function uploadComment(Request $request)
     {
+        $validator = $this->validate($request, [
+                        'comments' => 'required|min:5|max:60000',
+                    ]);
         $comment = $request->input('comments');
         $homeworkId = $request->input('homework-id');
 

@@ -81,8 +81,14 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update($slug) {
-        // TODO Validate input properly
+    public function update($slug,Request $request) {
+        $validator = $this->validate($request, [
+            'course_title' => 'required|max:50',
+            'year_select' => 'required|between:1,6',
+            'semester_select'=>'required|between:1,2',
+            'course_descr'=>'required|max:5000',
+            'course_teach'=>'required',
+        ]);
         $course = Course::where('slug', $slug)->first();
         $course->course_title = Input::get('course_title');
         $course->year = Input::get('year_select');
@@ -111,8 +117,14 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store() {
-        // TODO validate input properly
+    public function store(Request $request) {
+        $validator = $this->validate($request, [
+            'course_title' => 'required|max:50',
+            'year_select' => 'required|between:1,6',
+            'semester_select'=>'required|between:1,2',
+            'course_descr'=>'required|max:5000',
+            'course_teach'=>'required',
+        ]);
         $course = new Course();
         $course->course_title = Input::get('course_title');
         $course->year = Input::get('year_select');

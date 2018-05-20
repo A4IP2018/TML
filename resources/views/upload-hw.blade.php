@@ -7,12 +7,14 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-            @if (count($errors) > 0)
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
             <form action='/upload-hw' method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

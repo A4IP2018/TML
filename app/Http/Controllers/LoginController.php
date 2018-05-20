@@ -48,11 +48,18 @@ class LoginController extends Controller
      */
     protected function authenticate(Request $request)
     {
+        $validator = $this->validate($request, [
+                        'email' => 'required|max:255|email|exists:users,email',
+                        'password' => 'required|max:255',
+        ]);
+
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
             return Redirect::to($this->redirectTo);
         }
 
-        return redirect()->back();
+        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
+            'approve' => 'Wrong password or this account not approved yet.',
+        ]);
     }
 
 
