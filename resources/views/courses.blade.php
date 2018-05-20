@@ -171,7 +171,10 @@
                     success: function(result) {
 
                         var html = '';
-                        var user = JSON.parse(JSON.stringify(<?=  Auth::user()?>) );
+                        
+                        @if (Auth::check())
+                            var user = JSON.parse(JSON.stringify(<?= Auth::user() ?>) );
+                        @endif
 
                         jQuery.each(result, function(index, item) {
                             //now you can access properties using dot notation
@@ -200,13 +203,15 @@
                             html += '<div>'
                             html += '<a href="{{ url("/course/" . $course->slug) }}" class="btn btn-info">Detalii</a>';
 
-                            if ($.inArray(user.id, subscriptionIdList) === -1) {
-                                html += '<button type="submit" class="btn btn-primary">Aboneaza-te </button>';
-                            }
+                            @if (Auth::check())
+                                if ($.inArray(user.id, subscriptionIdList) === -1) {
+                                    html += '<button type="submit" class="btn btn-primary">Aboneaza-te </button>';
+                                }
 
-                            if ($.inArray(user.id, courseUsersIdList) !== -1) {
-                                html += '<a href="=/course/' + item.slug + '/edit"class="btn btn-secondary">Editeaza</a>';
-                            }
+                                if ($.inArray(user.id, courseUsersIdList) !== -1) {
+                                    html += '<a href="=/course/' + item.slug + '/edit"class="btn btn-secondary">Editeaza</a>';
+                                }
+                            @endif
 
                             html += '</div>';
                             html += '</div>';
