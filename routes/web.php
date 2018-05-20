@@ -40,11 +40,6 @@ Route::get('/notifications', function() {
 
 Route::get('/deadlines', 'DeadlineController@index');
 
-Route::get('/request', function () {
-    return view('request');
-});
-
-
 Route::get('/settings', function() {
     return view('settings');
 });
@@ -56,6 +51,10 @@ Route::get('/contact', function () {
 
 Route::get('/about', function () {
     return view('about');
+});
+
+Route::get('/grades-history', function () {
+    return view('grades-history');
 });
 
 Route::get('/download/{path}', 'UploadController@download')->name('download');
