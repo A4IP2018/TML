@@ -10,7 +10,7 @@ class Role extends Model
     use Notifiable;
 
     public static $ADMINISTRATOR_RANK = 1;
-    public static $TEACHER_RANK = 3;
+    public static $TEACHER_RANK = 5;
 
     /**
      * The attributes that are mass assignable.
