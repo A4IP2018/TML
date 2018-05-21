@@ -21,7 +21,7 @@ class UploadController extends Controller
     {
         if (Auth::check()) {
 
-            $files_grouped  = Auth::user()->files->groupBy('batch_id');
+            $files_grouped  = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
             return view('uploaded-files', compact('files_grouped'));
         }
         else {
@@ -89,6 +89,7 @@ class UploadController extends Controller
             'toUpload.*.requirement_id' => 'required',
             'homework-id' => 'required'
         ]);
+
 
         if (!Auth::check()) {
             return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
