@@ -4,6 +4,7 @@
 @section('content')
 
     <!--MULTIPLE HOMEWORK PAGE-->
+    <link href="{{ asset('css/tags.css') }}" rel="stylesheet" type="text/css" >
     <div class="content-wrapper">
         <div class="container-fluid">
             <!-- Breadcrumbs-->
@@ -136,22 +137,7 @@
                                     <a href="{{ url('/homework/' . $homework->slug . '/edit') }}"
                                        class="btn btn-secondary">Editeaza</a>
                                     @endif
-                                    <style>
-                                        .eticheta{
-                                            display:inline-block;
-                                            font-weight: 400;
-                                            text-align:center;
-                                            white-space:nowrap;
-                                            vertical-align:middle;
-                                            -moz-user-select:none;
-                                            border:1px solid transparent;
-                                            padding: .375rem .75rem;
-                                            font-size:1rem;
-                                            line-height:1.5;
-                                            border-radius:.25rem;
-                                            color:white;
-                                        } 
-                                    </style>
+
                                     <div class="bg-danger eticheta">
                                         Necorectate 
                                     </div>
@@ -172,7 +158,7 @@
 
 
                     <!--pagination
-                    
+
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -180,11 +166,11 @@
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item"><a class="page-link" href="#">4</a></li>
                         <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
-                    </ul>
+                    </ul>-->
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -216,39 +202,40 @@
                             //now you can access properties using dot notation
 
                             //var subscriptionIdList = [];
-                            var courseUsersIdList = [];
+                            // var courseUsersIdList = [];
 
-                            /*jQuery.each(item.subscriptions, function(index, subscriptionItem) {
-                                subscriptionIdList.push(subscriptionItem.id);
-                            });*/
+                            // jQuery.each(item.subscriptions, function(index, subscriptionItem) {
+                            //     subscriptionIdList.push(subscriptionItem.id);
+                            // });
 
-                            jQuery.each(item.users, function(index, userItem) {
-                                courseUsersIdList.push(userItem.id);
-                            });
-
+                            // jQuery.each(item.users, function(index, userItem) {
+                            //     courseUsersIdList.push(userItem.id);
+                            // });
 
                             html += '<div class="card mb-3">' ;
+                            html += '<div class="card-header bg-transparent">';
+                            html += '<a href="/course/' + item.cslug + '">' + item.cname + '</a>';
+                            html += '</div>';
                             html += '<div class="card-body text">';
                             html += '<h5 class="card-title">' + item.name + '</h5>' ;
                             html += '<p class="card-text">' + item.description + '</p>' ;
-                            html += '<div> class="card-footer bg-transparent">Termen limita: ' + item.deadline + '</div>';
+                            html += '<div class="card-footer bg-transparent">Termen limita: ' + item.deadline + '</div>';
                             html += '</div> <div class="card-footer bg-transparent border">';
+                            html += '<a href="/homework/' + item.hslug + '" class="btn btn-info">Detalii</a>';
 
-                            html += '<a href="{{ url("/homework/" . $homework->slug) }}" class="btn btn-info">Detalii</a>';
-                            //html += '<a href="{{ url("/homework/"' + item.slug + ') }}" class="btn btn-info">Detalii</a>';
+                            {{--@if (Auth::check())--}}
+                                {{--if ($.inArray(user.id, courseUsersIdList) !== -1) {--}}
+                                    {{--html += '<a href="=/homework/' + item.slug + '/edit" class="btn btn-secondary">Editeaza</a>';--}}
+                                {{--}--}}
+                            {{--@endif--}}
 
-                            @if (Auth::check() and is_homework_author(item))
-                                if ($.inArray(user.id, courseUsersIdList) !== -1) {
-                                    html += '<a href="=/homework/' + item.slug + '/edit" class="btn btn-secondary">Editeaza</a>';
-                                }
-                            @endif
 
-                            html += '</div>';
                             html += '<div class="bg-danger eticheta"> Necorectate </div>'; 
                             html += '<div class="bg-success eticheta"> Corectate </div>';
                             html += '<div class="bg-primary eticheta"> Noi ';
                             html += '<span class="badge badge-light">9</span>';
                             html += '<span class="sr-only">unread messages</span>';
+                            html += '</div>';
                             html += '</div>';
                             html += '</div>';
                         });

@@ -117,7 +117,8 @@ class HomeworkController extends Controller
         $searchedVerified = $request->input('verifiedFilter') ? (int)$request->input('verifiedFilter') : null;
 
         $homework = Homework::
-            when($searchedYear, function ($collection) use ($searchedYear) {
+            join('courses','homeworks.course_id','=','courses.id')
+            ->when($searchedYear, function ($collection) use ($searchedYear) {
                 return $collection->where('year', $searchedYear);
             })
             ->when($searchedSemester, function ($collection) use ($searchedSemester) {
@@ -129,7 +130,8 @@ class HomeworkController extends Controller
             ->when($searchedVerified = 1, function ($collection) use ($searchedSemester) {
                 return $collection->has('grades');
             })
-            ->with('course','grades')
+            ->select('homeworks.*','homeworks.slug as hslug','courses.slug as cslug','courses.course_title as cname')
+            ->with('grades')
             ->get();
 
         return $homework;
