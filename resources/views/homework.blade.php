@@ -11,8 +11,20 @@
                 <li class="breadcrumb-item">
                     <a href="#">Bord</a>
                 </li>
-                <li class="breadcrumb-item active">Teme {{ (is_teacher(Auth::id())) ? "publicate" : "la care te-ai abonat" }}</li>
+                <li class="breadcrumb-item active">Teme {{ (is_teacher()) ? "publicate" : "la care te-ai abonat" }}</li>
             </ol>
+
+            <div class="errors">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
 
             <div class="row">
                 <div class="col-12">
@@ -57,7 +69,7 @@
   </div>
           
 <br>
-                    @if (is_teacher(Auth::id()))
+                    @if (is_teacher())
                         <!--press to create new homework <TEACHER>-->
                         <a href="{{ url('/homework/create') }}" class="btn btn-primary btn-lg btn-block">Tema noua</a>
                         <!--press to compare homework <TEACHER>-->

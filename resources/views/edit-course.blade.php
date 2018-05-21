@@ -16,6 +16,17 @@
     <li class="breadcrumb-item active">Editeaza Curs</li>
   </ol>
 
+    <div class="errors">
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+    </div>
     <div class="row">
       <div class="col-12">
         <form action="{{ url('/course/' . $course->slug) }}" method = "POST">
@@ -65,7 +76,7 @@
           <button name="course-del" type="submit" class="btn btn-primary">Sterge</button>
 
           <!--Cancel edit-->
-          <a href="{{ url('/courses') }}" class="btn btn-secondary">Inapoi</a>
+          <a href="{{ url('/course') }}" class="btn btn-secondary">Inapoi</a>
         </form>
 
       </div>

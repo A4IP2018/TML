@@ -16,7 +16,7 @@ class CourseController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index','show']]);
+        $this->middleware('auth', ['except' => ['index','show', 'getFilteredCourses']]);
     }
 
 
@@ -41,6 +41,33 @@ class CourseController extends Controller
         return $teachers_string;
     }
 
+
+    public function getFilteredCourses(Request $request)
+    {
+        $searchedYear = $request->input('yearFilter') ? (int)$request->input('yearFilter') : null;
+        $searchedSemester = $request->input('semesterFilter') ? (int)$request->input('semesterFilter') : null;
+        $searchedSubscription = $request->input('subscriptionFilter') ? (int)$request->input('subscriptionFilter') : null;
+
+        $courses = Course::
+            when($searchedYear, function ($collection) use ($searchedYear) {
+                return $collection->where('year', $searchedYear);
+            })
+            ->when($searchedSemester, function ($collection) use ($searchedSemester) {
+                return $collection->where('semester', $searchedSemester);
+            })
+            ->when($searchedSubscription == 1, function ($collection) use ($searchedSemester) {
+                return $collection->has('subscriptions');
+            })
+            ->when($searchedSubscription == 0, function ($collection) use ($searchedSemester) {
+                return $collection->doesntHave('subscriptions');
+            })
+            ->with('subscriptions', 'users')
+            ->get();
+
+        return $courses;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +76,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('courses', compact('courses'));
+        return view('courses', compact('courses'))->render();
     }
 
     /**
@@ -72,8 +99,6 @@ class CourseController extends Controller
     public function edit($slug) {
 
         $course = Course::where('slug', $slug)->first();
-        if (!in_array($course->users->pluck('id'))) {
-        }
 
         return view('edit-course', compact('course'));
     }
@@ -83,8 +108,14 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update($slug) {
-        // TODO Validate input properly
+    public function update($slug,Request $request) {
+        $validator = $this->validate($request, [
+            'course_title' => 'required|max:50',
+            'year_select' => 'required|between:1,6',
+            'semester_select'=>'required|between:1,2',
+            'course_descr'=>'required|max:5000',
+            'course_teach'=>'required',
+        ]);
         $course = Course::where('slug', $slug)->first();
         $course->course_title = Input::get('course_title');
         $course->year = Input::get('year_select');
@@ -113,8 +144,14 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store() {
-        // TODO validate input properly
+    public function store(Request $request) {
+        $validator = $this->validate($request, [
+            'course_title' => 'required|max:50',
+            'year_select' => 'required|between:1,6',
+            'semester_select'=>'required|between:1,2',
+            'course_descr'=>'required|max:5000',
+            'course_teach'=>'required',
+        ]);
         $course = new Course();
         $course->course_title = Input::get('course_title');
         $course->year = Input::get('year_select');

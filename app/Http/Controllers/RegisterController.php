@@ -80,32 +80,28 @@ class RegisterController extends Controller
     protected function registerAction(Request $request)
     {
         $validator = $this->validate($request, [
-            'email' => 'unique:users|required|max:255|email',
-            'password' => 'required|max:255',
-            'first-name' => 'required|max:255',
-            'first-name' => 'required|max:255',
-            'year' => 'required|integer',
-            'group' => 'required',
+            'email' => 'unique:users|required|max:100|email',
+            'first-name' => 'required|max:50',
+            'password' => 'required|max:30|min:5|required_with:confirm-password|same:confirm-password',
+            'confirm-password' => 'required|max:30|min:5',
+            'last-name' => 'required|max:50',
         ]);
-
         $password = Hash::make($request->input('password'));
 
         if (Hash::check($request->input('confirm-password'), $password))
         {
 
-        $user = User::create([
-            'email' => $request->input('email'),
-            'password' => $password,
-            'role_id' => 1,
-        ]);
+            $user = User::create([
+                'email' => $request->input('email'),
+                'password' => $password,
+                'role_id' => 1,
+            ]);
 
-        StudentInformation::create([
-            'first_name' => $request->input('first-name'),
-            'last_name' => $request->input('last-name'),
-            'user_id' => $user->id,
-            'year' => (int) $request->input('year'),
-            'group_id' => $request->input('group')
-        ]);
+            StudentInformation::create([
+                'first_name' => $request->input('first-name'),
+                'last_name' => $request->input('last-name'),
+                'user_id' => $user->id,
+            ]);
             return Redirect::to($this->redirectTo);
         }
 

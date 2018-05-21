@@ -14,6 +14,8 @@
         <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
         <!-- Custom styles for this template-->
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+
+
     </head>
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
         <!-- Navigation-->
@@ -170,6 +172,7 @@
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('js/main.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.blockUI.min.js') }}"></script>
 
         <script>
             $('#changeThemeColor').click(function() {
