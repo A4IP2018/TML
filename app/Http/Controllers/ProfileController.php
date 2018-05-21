@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\StudentInformation;
 use App\TeacherInformation;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -34,6 +36,48 @@ class ProfileController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function resetPassword(Request $request)
+    {
+        $validator = $this->validate($request, [
+            'new-password' => 'required|max:255|min:5',
+        ]);
+        $oldPassword = $request->input('old-password');
+        $newPassword = Hash::make($request->input('new-password'));
+        $expectedPassword = \App\User::where('id', Auth::id())->value('password');
+        if(Hash::check($oldPassword,$expectedPassword)) {
+            User::updateOrCreate(['id' => Auth::id()],['password' => $newPassword]);
+            return redirect('/profile')->with("success","Parola a fost schimbata cu succes!");;}
+        else{
+            return redirect('/profile')->withErrors([
+                'approve' => 'Parola nu a putut fi schimbata!']);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function resetEmail(Request $request)
+    {
+        $validator = $this->validate($request, [
+        'new-email' => 'required|max:255|email',
+        ]);
+        $oldEmail = $request->input('old-email');
+        $newEmail = $request->input('new-email');
+        $expectedEmail = \App\User::where('id', Auth::id())->value('email');
+        if($oldEmail==$expectedEmail) {
+            User::updateOrCreate(['id' => Auth::id()],['email' => $newEmail]);
+            return redirect('/profile')->with("success","Adresa de mail a fost schimbata cu succes!");
+        }
+        else{
+            return redirect('/profile')->withErrors([
+                'approve' => 'Adresa de mail nu a putut fi schimbata!']);
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
