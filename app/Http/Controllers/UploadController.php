@@ -20,8 +20,9 @@ class UploadController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $files = \App\File::where('user_id', Auth::id())->get();
-            return view('uploaded-files', compact('files'));
+
+            $files_grouped  = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
+            return view('uploaded-files', compact('files_grouped'));
         }
         else {
             return redirect('/login');
@@ -39,16 +40,12 @@ class UploadController extends Controller
     }
 
 
-    public function uploadSingle($file_data, $homework_id, $requirement_id)
+    public function uploadSingle($file_data, $homework_id, $requirement_id, $batch_id)
     {
         $path = public_path() . '/files/';
-        $filename = time() . '.' . str_replace(' ', '', $file_data->getClientOriginalName());
+        $filename = time() . '_' . str_random(5) . '.' . str_replace(' ', '', $file_data->getClientOriginalName());
         $fileType = $file_data->getClientOriginalExtension();
         $fileExtension = $file_data->guessExtension();
-
-        if (!Auth::check()) {
-            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
-        }
 
         $user_id = Auth::id();
 
@@ -56,27 +53,27 @@ class UploadController extends Controller
         $required_extension = str_replace('.', '', $requirement->format->extension_name);
 
         if ($required_extension != $fileType) {
-            return redirect()->back()->withErrors('Extensie neacceptata.');
+            return ['Extensie neacceptata pentru fisierul ' . $file_data->getClientOriginalName(), []];
         }
 
         if ($file_data->getClientSize() > 500000) {
-            return redirect()->back()->withErrors('Fisierul este prea mare.');
+            return ['Fisierul este prea mare.', []];
         }
 
         if ($file_data->move($path, $filename)) {
-
-            \App\File::create([
-                'user_id' => $user_id,
-                'homework_id' => $homework_id,
-                'requirement_id' => $requirement_id,
-                'file_name' => $filename
-            ]);
-            return redirect()->back()->withErrors('Fisiere uploadat cu succes.');
-        } else {
-            return redirect()->back()->withErrors('Eroare la upload.');
+            return
+            [
+                'Fisier ' . $file_data->getClientOriginalName() . ' a fost incarcat cu succes!',
+                [
+                    'user_id' => $user_id,
+                    'homework_id' => $homework_id,
+                    'requirement_id' => $requirement_id,
+                    'file_name' => $filename,
+                    'batch_id' => $batch_id
+                ]
+            ];
         }
-
-        dd($file, $requirement_id);
+        return ['Eroare la incarcarea fisierului ' . $file_data->getClientOriginalName(), []];
     }
 
     /**
@@ -88,9 +85,15 @@ class UploadController extends Controller
     public function store(Request $request)
     {
         $validator = $this->validate($request, [
-            'toUpload' => 'required',
+            'toUpload.*.upload_file' => 'required',
+            'toUpload.*.requirement_id' => 'required',
             'homework-id' => 'required'
         ]);
+
+
+        if (!Auth::check()) {
+            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
+        }
 
         $homework_id = $request->input('homework-id');
         $homework = Homework::find($homework_id);
@@ -99,21 +102,28 @@ class UploadController extends Controller
             return redirect('/homework');
         }
 
-        $given_requirements = array_column ($request->input('toUpload'), 'requirement_id');
+        $given_requirements = array_column($request->input('toUpload'), 'requirement_id');
         $needed_requirements = $homework->requirements->pluck('id')->toArray();
         if ($given_requirements != $needed_requirements) {
             return redirect('/homework');
         }
 
-        $file_id = 0;
+        $batch_id = time() . str_random(5);
         $files = $request->file('toUpload');
+        $to_upload = [];
         foreach ($files as $id => $file) {
             $req_id = $request->input('toUpload')[$id];
-            if (!$this->uploadSingle($file['upload_file'], $homework_id, $req_id)) {
-                return redirect()->back()->withErrors('Exista o eroare la procesarea unor din fisiere');
+            $result = $this->uploadSingle($file['upload_file'], $homework_id, $req_id, $batch_id);
+            if (empty($result[1])) {
+                return redirect()->back()->withErrors($result[0]);
             }
+            array_push($to_upload, $result);
         }
-        return redirect()->back();
+
+        foreach ($to_upload as $query) {
+            File::create($query[1]);
+        }
+        return redirect()->back()->withErrors('OK!');
     }
 
     /**

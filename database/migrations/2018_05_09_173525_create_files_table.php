@@ -18,6 +18,7 @@ class CreateFilesTable extends Migration
             $table->integer('user_id');
             $table->integer('homework_id');
             $table->integer('requirement_id');
+            $table->string('batch_id');
             $table->string('file_name');
             $table->rememberToken();
             $table->timestamps();
