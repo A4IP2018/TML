@@ -186,5 +186,21 @@
         <script src="{{ asset('vendor/highlight/highlight.pack.js') }}"></script>
         <script>hljs.initHighlightingOnLoad();</script>
 
+        <script>
+            $("input.custom-file-input").change(function () {
+
+                var fieldVal = $(this).val();
+                // Change the node's value by removing the fake path (Chrome)
+                fieldVal = fieldVal.replace("C:\\fakepath\\", "");
+
+                console.log();
+                if (fieldVal != undefined || fieldVal != "") {
+                    $(this).parent().find('.custom-file-label').html(fieldVal);
+                }
+
+            });
+        </script>
+
+        @yield('scripts')
     </body>
 </html>

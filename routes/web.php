@@ -35,6 +35,9 @@ Route::resource('course', 'CourseController');
 Route::get('filter-courses', 'CourseController@getFilteredCourses');
 
 Route::resource('upload', 'UploadController');
+Route::get('/uploads/checked/{slug}', 'UploadController@getCheckedUploads');
+Route::get('/uploads/unchecked{slug}', 'UploadController@getUncheckedUploads');
+Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
 
 Route::get('/notifications', function() {
     return view('notifications');

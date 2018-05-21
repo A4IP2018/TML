@@ -111,4 +111,8 @@ class Homework extends Model
     public function course() {
         return $this->belongsTo('App\Course');
     }
+
+    public function requirements() {
+        return $this->hasMany('App\RequiredFormat');
+    }
 }

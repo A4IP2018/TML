@@ -101,7 +101,7 @@ return [
 
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'custom-message',
+            'rule-name' => 'custom-message'
         ],
     ],
 
@@ -116,6 +116,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'file.*.file_description' => 'file description'
+    ],
 
 ];

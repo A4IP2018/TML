@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFilesTable extends Migration
+class CreateRequiredFormatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('required_formats', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
             $table->integer('homework_id');
-            $table->integer('requirement_id');
-            $table->string('file_name');
-            $table->rememberToken();
+            $table->integer('format_id');
+            $table->string('description');
             $table->timestamps();
+            $table->rememberToken();
         });
     }
 
@@ -31,6 +30,6 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('required_formats');
     }
 }

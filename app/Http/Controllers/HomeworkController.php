@@ -12,6 +12,7 @@ use App\StudentInformation;
 use App\TeacherCourse;
 use App\User;
 use App\Grade;
+use App\RequiredFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -78,7 +79,8 @@ class HomeworkController extends Controller
             'name' => 'required|max:255',
             'description' => 'required|max:255',
             'deadline' => 'required',
-            'format' => 'required',
+            'file.*.file_description' => 'required|max:240',
+            'file.*.file_format' => 'required'
         ]);
 
         $selectedFormats = $request->input('format');
@@ -92,8 +94,6 @@ class HomeworkController extends Controller
 
         $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
 
-        $formats = Format::whereIn('id', $selectedFormats)->get();
-
         $homework = Homework::create([
             'course_id' => $course,
             'name' => $title,
@@ -104,7 +104,18 @@ class HomeworkController extends Controller
             'deadline' => $deadline,
         ]);
 
-        $homework->formats()->sync($formats);
+
+        $files = $request->input('file');
+        foreach($files as $file) {
+            if (Format::where('id', $file['file_format'])->count() > 0) {
+                $format = RequiredFormat::create([
+                    'homework_id' => $homework->id,
+                    'format_id' => $file['file_format'],
+                    'description' => $file['file_description']
+                ]);
+            }
+
+        }
 
         return redirect()->back()->withErrors($validator);
 
@@ -124,6 +135,7 @@ class HomeworkController extends Controller
             ->with('user', 'user.student_information')
             ->orderBy('id', 'desc')
             ->get();
+
         return view('homework-details', compact('comments', 'homework'));
 
     }

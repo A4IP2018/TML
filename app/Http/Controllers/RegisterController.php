@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/login';
+    protected $redirectPath = '/login';
 
     /**
      * Create a new controller instance.
@@ -102,7 +102,7 @@ class RegisterController extends Controller
                 'last_name' => $request->input('last-name'),
                 'user_id' => $user->id,
             ]);
-            return Redirect::to($this->redirectTo);
+            return Redirect::to($this->redirectPath);
         }
 
         return redirect()->back()->withErrors();
