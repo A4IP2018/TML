@@ -124,10 +124,10 @@ class HomeworkController extends Controller
             ->when($searchedSemester, function ($collection) use ($searchedSemester) {
                 return $collection->where('semester', $searchedSemester);
             })
-            ->when($searchedVerified = 0, function ($collection) use ($searchedSemester) {
+            ->when($searchedVerified == 0, function ($collection) use ($searchedVerified) {
                 return $collection->doesntHave('grades');
             })
-            ->when($searchedVerified = 1, function ($collection) use ($searchedSemester) {
+            ->when($searchedVerified == 1, function ($collection) use ($searchedVerified) {
                 return $collection->has('grades');
             })
             ->select('homeworks.*','homeworks.slug as hslug','courses.slug as cslug','courses.course_title as cname')
