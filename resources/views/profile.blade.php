@@ -17,7 +17,7 @@
     <div class="col-12">
 
         <div class="mb-0 mt-0">
-            <i class="fa fa-archive"></i> Setari cont</div>
+            <i class="fa fa-archive"></i>Setari cont</div>
         <hr class="mt-0">
         <div class="card card-register mx-auto mt-4">
             <div class="card">
@@ -40,15 +40,15 @@
 
                         <div class="form-group">
                             <label for="name">Nume:</label>
-                            @if($user->role_id==\App\Role::$TEACHER_RANK)
-                            <input type="name" class="form-control" id="name" value="{{$userInfo->name}}" readonly>
+                            @if($user->role_id == \App\Role::$TEACHER_RANK)
+                            <input type="name" class="form-control" id="name" value="{{ $userInfo->name }}" readonly>
                             @endif
-                            @if($user->role_id==\App\Role::$ADMINISTRATOR_RANK)
-                                <input type="name" class="form-control" id="name" value="{{$userInfo->first_name.' '.$userInfo->last_name}}" readonly>
+                            @if($user->role_id == \App\Role::$ADMINISTRATOR_RANK)
+                                <input type="name" class="form-control" id="name" value="{{ $userInfo->first_name.' '.$userInfo->last_name }}" readonly>
                             @endif
                         </div>
 
-                        @if($user->role_id==\App\Role::$ADMINISTRATOR_RANK)
+                        @if($user->role_id == \App\Role::$ADMINISTRATOR_RANK)
                         <div class="form-group">
                             <label for="email">An:</label>
                             <input type="email" class="form-control" id="an" value="{{$userInfo->year}}" readonly>
@@ -66,6 +66,22 @@
                             <span class="input-group-append">
                                 <button data-toggle="collapse" data-target="#changeEmail" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
                             </span>
+                        </div>
+                        <br>
+                        <div id="changeEmail" class="collapse">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="name">Adresa de mail veche:</label>
+                                        <input type="name" class="form-control" id="oldMail" placeholder="Scrie vechea ta adresa de mail">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Adresa de mail noua:</label>
+                                        <input type="name" class="form-control" id="newMail" placeholder="Scrie noua ta adresa de mail">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Salveaza</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div id="changeEmail" class="collapse">
@@ -96,10 +112,11 @@
                                 <button data-toggle="collapse" data-target="#changePassword" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
                             </span>
                         </div>
-
+                        <br>
                         <div id="changePassword" class="collapse">
                             <div class="card">
                                 <div class="card-body">
+
 
                                     <form action="{{ URL::to('reset-password-action') }}" method="POST">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -117,6 +134,7 @@
                                 </div>
                             </div>
                         </div>
+
                 </div>
             </div>
         </div>

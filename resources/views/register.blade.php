@@ -32,25 +32,6 @@
         </div>
 
         <div class="form-group">
-          <div class="form-row">
-            <div class="col-md-6">
-              <label for="year">An</label>
-              <input name="year" class="form-control" id="year" type="text" aria-describedby="nameHelp" placeholder="Introducere an">
-            </div>
-            <div class="col-md-6">
-              <label for="group">Grupa</label>
-
-              <select class="form-control" name="group" id="group">
-                @foreach ($groups as $index => $group)
-                  <option value="{{ $group->id }}">{{ $group->name }}</option>
-                @endforeach
-              </select>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
           <label for="exampleInputEmail1">Adresa Email</label>
           <input name="email" class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Introducere email">
         </div>

@@ -121,9 +121,10 @@
                         @foreach($comments as $comment)
                             <div class="card mb-3">
                                 <div class="card-body">
-                                    <h6 class="card-title mb-1"><a href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a></h6>
+                                    <h6 class="card-title mb-1"><a href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a> <small> 13:50 </small>
+                                    </h6>
                                     <p class="card-text small">
-                                        {{ $comment->comment }}
+                                    {{ $comment->comment }}
                                     </p>
                                 </div>
                                 <hr class="my-0">

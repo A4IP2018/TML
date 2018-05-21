@@ -17,7 +17,7 @@ $factory->define(App\StudentInformation::class, function (Faker $faker) {
     return [
         'user_id' => $faker->randomElement(\App\User::pluck('id')->toArray()),
         'year' => $faker->randomElement([1,2,3]),
-        'group_id' => $faker->randomElement(\App\Group::pluck('id')->toArray())
-
+        'group_id' => $faker->randomElement(\App\Group::pluck('id')->toArray()),
+        'nr_matricol' => str_random(18)
     ];
 });
