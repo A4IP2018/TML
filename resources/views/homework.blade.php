@@ -92,7 +92,6 @@
                                     </div>
 
                                     <!--Homework deadline-->
-
                                     <div class="card-footer bg-transparent">Termen
                                         limita: {{ $homework->deadline }}</div>
                                     <div class="card-footer bg-transparent">

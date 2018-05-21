@@ -3,6 +3,7 @@
 
 @section('content')
 
+
     <!--MULTIPLE COURSES PAGE-->
 
     <div class="content-wrapper">
