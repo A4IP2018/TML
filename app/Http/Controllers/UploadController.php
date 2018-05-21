@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\User;
+use App\RequiredFormat;
 use App\Homework;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,47 @@ class UploadController extends Controller
         //
     }
 
+
+    public function uploadSingle($file_data, $homework_id, $requirement_id)
+    {
+        $path = public_path() . '/files/';
+        $filename = time() . '.' . str_replace(' ', '', $file_data->getClientOriginalName());
+        $fileType = $file_data->getClientOriginalExtension();
+        $fileExtension = $file_data->guessExtension();
+
+        if (!Auth::check()) {
+            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
+        }
+
+        $user_id = Auth::id();
+
+        $requirement = \App\RequiredFormat::where('id', $requirement_id)->first();
+        $required_extension = str_replace('.', '', $requirement->format->extension_name);
+
+        if ($required_extension != $fileType) {
+            return redirect()->back()->withErrors('Extensie neacceptata.');
+        }
+
+        if ($file_data->getClientSize() > 500000) {
+            return redirect()->back()->withErrors('Fisierul este prea mare.');
+        }
+
+        if ($file_data->move($path, $filename)) {
+
+            \App\File::create([
+                'user_id' => $user_id,
+                'homework_id' => $homework_id,
+                'requirement_id' => $requirement_id,
+                'file_name' => $filename
+            ]);
+            return redirect()->back()->withErrors('Fisiere uploadat cu succes.');
+        } else {
+            return redirect()->back()->withErrors('Eroare la upload.');
+        }
+
+        dd($file, $requirement_id);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,56 +88,32 @@ class UploadController extends Controller
     public function store(Request $request)
     {
         $validator = $this->validate($request, [
-            'fileToUpload' => 'required',
-
+            'toUpload' => 'required',
+            'homework-id' => 'required'
         ]);
-        $path = public_path() . '/files/';
-        $image = $request->file('fileToUpload');
-
-        $filename = time() . '.' . str_replace(' ', '', $image->getClientOriginalName());
-        $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
-        $fileExtension = $request->file('fileToUpload')->guessExtension();
-
-
-
-        $user_id = Auth::id();
-
-        if ($user_id == null) {
-            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
-        }
 
         $homework_id = $request->input('homework-id');
-
         $homework = Homework::find($homework_id);
-        $extensions = $homework->formats;
 
-        $extensionOk = 0;
-        foreach ($extensions as $extension) {
-            if (str_replace('.', '', $extension->extension_name) == $fileType) {
-                $extensionOk = 1;
-                break;
+        if (is_null($homework)) {
+            return redirect('/homework');
+        }
+
+        $given_requirements = array_column ($request->input('toUpload'), 'requirement_id');
+        $needed_requirements = $homework->requirements->pluck('id')->toArray();
+        if ($given_requirements != $needed_requirements) {
+            return redirect('/homework');
+        }
+
+        $file_id = 0;
+        $files = $request->file('toUpload');
+        foreach ($files as $id => $file) {
+            $req_id = $request->input('toUpload')[$id];
+            if (!$this->uploadSingle($file['upload_file'], $homework_id, $req_id)) {
+                return redirect()->back()->withErrors('Exista o eroare la procesarea unor din fisiere');
             }
         }
-
-        if ($extensionOk == 0) {
-            return redirect()->back()->withErrors('Extensie neacceptata.');
-        }
-
-        if ($request->file('fileToUpload')->getClientSize() > 500000) {
-            return redirect()->back()->withErrors('Fisierul este prea mare.');
-        }
-
-        if ($image->move($path, $filename)) {
-
-            \App\File::create([
-                'user_id' => $user_id,
-                'homework_id' => $homework_id,
-                'file_name' => $filename
-            ]);
-            return redirect()->back()->withErrors('Fisier uploadat cu succes.');
-        } else {
-            return redirect()->back()->withErrors('Eroare la upload.');
-        }
+        return redirect()->back();
     }
 
     /**
@@ -150,5 +168,22 @@ class UploadController extends Controller
     {
         $path = public_path() . '/files/';
         return response()->download($path . $fileName);
+    }
+
+    public function getCheckedUploads($slug) {
+        if (Auth::check()) {
+            $current_user = Auth::id();
+            $homework = Homework::where('slug', $slug)->first();
+            $homework->count();
+            if (!is_null($homework) && is_homework_author($homework)) {
+                // TODO more stuff here
+            }
+            else {
+                return redirect('/homework');
+            }
+        }
+        else {
+            return redirect('/login');
+        }
     }
 }

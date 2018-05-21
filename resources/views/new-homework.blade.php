@@ -56,7 +56,7 @@
 
                         <div class="form-group row">
 
-                            <label for="example-date-input" class="col-1 col-form-label">Termen limita:</label>
+                            <label for="deadline" class="col-1 col-form-label">Termen limita:</label>
 
                             <!--Homework deadline-->
                             <div class="col-10">
@@ -65,33 +65,65 @@
                             </div>
                         </div>
 
-                        <!--Homework format-->
-                        <div class="format" style="text-align: center;">
-                            <h2>Format:</h2>
-
-                            @if ($formats)
-                                @foreach ($formats as $format)
-                                    <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input name="format[]" type="checkbox" class="form-check-input"
-                                                   value="{{ $format->id }}">
-                                            {{ $format->extension_name }}
-                                        </label>
+                        <br>
+                        <h5>Fisiere necesare</h5>
+                        <hr>
+                        <div class="filetype-selectots card-columns">
+                            <div class="card">
+                                <div class="card-header">Fisier 1</div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="file[0][file_description]">Descriere:</label>
+                                        <textarea class="form-control" type="text" rows="3"  maxlength="240" placeholder="Introdu o scurta descirere a fisierului" name="file[0][file_description]"></textarea>
+                                        <br>
+                                        <label for="file[0][file_format]">Format:</label>
+                                        <select name="file[0][file_format]" class="form-control">
+                                            @if ($formats)
+                                                @foreach ($formats as $format)
+                                                    <option value="{{ $format->id }}">{{ $format->extension_name }}</option>
+                                                @endforeach
+                                             @else
+                                                <option>Plain Text</option>
+                                            @endif
+                                        </select>
                                     </div>
-                                @endforeach
-                            @endif
-
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-primary add-more-files" type="button" >Mai multe fisiere</button>
+                                </div>
+                            </div>
                         </div>
 
-                        <button style="display: flex; margin: auto; margin-top: 30px;" type="submit"
-                                class="btn btn-primary">Salveaza
-                        </button>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary ">Salveaza
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
+            <br><br>
         </div>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var globalCounter = 0;
+            $(document).on('click', '.add-more-files', function(element) {
+                globalCounter += 1;
+                var original = element.target.parentElement.parentElement;
+                var newNode = original.cloneNode(true);
+                console.log(newNode.innerHTML.search(/file-description-\d+/));
+                newNode.innerHTML  = newNode.innerHTML.replace(/file\[\d+\]/g, 'file[' + globalCounter.toString() + ']');
+                newNode.innerHTML  = newNode.innerHTML.replace(/Fisier \d+/g, 'Fisier ' + globalCounter.toString());
+                console.log(newNode);
+                original.parentElement.appendChild(newNode);
+
+            });
+        });
+    </script>
 @endsection

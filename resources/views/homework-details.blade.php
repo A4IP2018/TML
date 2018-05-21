@@ -90,7 +90,7 @@
                         </div>
                     </div>
 
-                    @if (!in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
+                    @if (can_subscribe($homework->course->id))
                         <div class="card text-center">
                             <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaza-te la curs</a>
                         </div>
@@ -141,11 +141,6 @@
                         <i class="fa fa-newspaper-o"></i> Incarcare tema</div>
                     <hr class="mt-2">
 
-                    <p class="card-text">Formate acceptate:
-                        @foreach($homework->formats as $format)
-                            <span style="color: blue;">{{ $format->extension_name }}</span>
-                        @endforeach
-                    </p>
 
                     <form action="{{ url('/upload') }}" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -153,33 +148,25 @@
                         <br/>
                         <p>Fisiere tema :</p>
 
-                        <div class="input-group" style="width: fit-content">
-                            <div class="custom-file">
-                                <input name="fileToUpload" type="file" class="custom-file-input">
-                                <label class="custom-file-label" for="fileToUpload">Incarca</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">Upload</button>
-                            </div>
-                        </div>
-
-                        <br>
-                    </form>
-
-                    @if (Auth::check() and Auth::user()->files->count() > 0)
-                        <div class="card text-center">
-                            <ul class="list-group list-group-flush">
-                            @foreach (Auth::user()->files as $file)
-                                @if ($file->homework->id == $homework->id)
-                         <!--homework uploaded files-->
-                                <li class="list-group-item"><a href="{{ url('/upload/' . $file->file_name) }}">{{ $file->file_name }}</a></li>
-                                @endif
+                        <div class="card-columns">
+                            <?php $counter = 0; ?>
+                            @foreach ($homework->requirements as $requirement)
+                                <div class="card">
+                                    <div class="card-header">{{ $requirement->description }}</div>
+                                    <div class="card-body">
+                                        <div class="custom-file">
+                                            <input name="toUpload[{{ $counter }}][upload_file]" type="file" class="custom-file-input">
+                                            <input name="toUpload[{{ $counter }}][requirement_id]" type="hidden" value="{{ $requirement->id }}">
+                                            <label class="custom-file-label" for="toUpload{{ $counter }}">Incarca</label>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">Formatul necesar: {{ $requirement->format->extension_name }}</div>
+                                </div>
+                                <?php $counter++; ?>
                             @endforeach
-                            </ul>
                         </div>
-                    @endif
-
-
+                        <button type="submit" class="btn btn-primary" class="form-control">Incarca!</button>
+                    </form>
                 </div>
             </div>
         </div>
