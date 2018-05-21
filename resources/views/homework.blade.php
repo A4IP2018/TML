@@ -34,7 +34,7 @@
             <span class="input-group-append">
                           <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
 
-                          <button class="btn btn-primary" type="button">
+                          <button class="filter-search-button-homeworks btn btn-primary" type="button">
                             <i class="fa fa-search"></i>
                           </button>
                       </span>
@@ -110,7 +110,7 @@
                     @if ($homeworks->count() > 0)
                     <div class="card-columns">
                         @foreach ($homeworks as $homework)
-                            <!-- Example Homework Card-->
+                            <!-- Example Homework Cad-->
                             <div class="card mb-3">
                                 <div class="card-header bg-transparent">
                                     @if ($homework->course)
@@ -150,7 +150,7 @@
                                             line-height:1.5;
                                             border-radius:.25rem;
                                             color:white;
-                                        }
+                                        } 
                                     </style>
                                     <div class="bg-danger eticheta">
                                         Necorectate 
@@ -181,11 +181,85 @@
                         <li class="page-item"><a class="page-link" href="#">4</a></li>
                         <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
                     </ul>
-                    --->
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
+
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.filter-search-button-homeworks').on('click', function () {
+
+                $.blockUI({ css: { backgroundColor: '#fff', color: 'green'}, message: '<h4>Asteptati un moment...</h4>' });
+
+                var yearFilter = parseInt($('.year-filter:checked').val());
+                var semesterFilter = parseInt($('.semester-filter:checked').val());
+                var verifiedFilter = parseInt($('.verified-filter:checked').val());
+
+                $.ajax({
+                    url: '/filter-homeworks',
+                    type: 'get',
+                    data: {yearFilter: yearFilter, semesterFilter: semesterFilter, verifiedFilter: verifiedFilter},
+                    dataType: 'json', // ** ensure you add this line **
+                    success: function(result) {
+
+                        var html = '';
+                        
+                        @if (Auth::check())
+                            var user = JSON.parse(JSON.stringify(<?= Auth::user() ?>) );
+                        @endif
+
+                        jQuery.each(result, function(index, item) {
+                            //now you can access properties using dot notation
+
+                            //var subscriptionIdList = [];
+                            var courseUsersIdList = [];
+
+                            /*jQuery.each(item.subscriptions, function(index, subscriptionItem) {
+                                subscriptionIdList.push(subscriptionItem.id);
+                            });*/
+
+                            jQuery.each(item.users, function(index, userItem) {
+                                courseUsersIdList.push(userItem.id);
+                            });
+
+
+                            html += '<div class="card mb-3">' ;
+                            html += '<div class="card-body text">';
+                            html += '<h5 class="card-title">' + item.name + '</h5>' ;
+                            html += '<p class="card-text">' + item.description + '</p>' ;
+                            html += '<div> class="card-footer bg-transparent">Termen limita: ' + item.deadline + '</div>';
+                            html += '</div> <div class="card-footer bg-transparent border">';
+
+                            html += '<a href="{{ url("/homework/" . $homework->slug) }}" class="btn btn-info">Detalii</a>';
+                            //html += '<a href="{{ url("/homework/"' + item.slug + ') }}" class="btn btn-info">Detalii</a>';
+
+                            @if (Auth::check() and is_homework_author(item))
+                                if ($.inArray(user.id, courseUsersIdList) !== -1) {
+                                    html += '<a href="=/homework/' + item.slug + '/edit" class="btn btn-secondary">Editeaza</a>';
+                                }
+                            @endif
+
+                            html += '</div>';
+                            html += '<div class="bg-danger eticheta"> Necorectate </div>'; 
+                            html += '<div class="bg-success eticheta"> Corectate </div>';
+                            html += '<div class="bg-primary eticheta"> Noi ';
+                            html += '<span class="badge badge-light">9</span>';
+                            html += '<span class="sr-only">unread messages</span>';
+                            html += '</div>';
+                            html += '</div>';
+                        });
+
+                        $('.card-columns').html(html);
+                        $.unblockUI();
+                    }
+                })
+            });
+        });
+    </script>
 
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->

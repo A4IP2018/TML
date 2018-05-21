@@ -99,7 +99,6 @@ class UploadController extends Controller
                 'user_id' => $user_id,
                 'homework_id' => $homework_id,
                 'file_name' => $filename,
-                'grade' => null
             ]);
             return redirect()->back()->withErrors('Fisier uploadat cu succes.');
         } else {

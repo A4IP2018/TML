@@ -38,7 +38,7 @@ class HomeworkController extends Controller
             $query->where ('users.id', Auth::id());
         })->with('user', 'user.subscribed')->orWhere('user_id', Auth::id())->get();
 
-        return view('homework', compact('homeworks'));
+        return view('homework', compact('homeworks'))->render();
     }
 
     /**
@@ -107,6 +107,32 @@ class HomeworkController extends Controller
         $homework->formats()->sync($formats);
 
         return redirect()->back()->withErrors($validator);
+
+    }
+
+    public function getFilteredHomeworks(Request $request)
+    {
+        $searchedYear = $request->input('yearFilter') ? (int)$request->input('yearFilter') : null;
+        $searchedSemester = $request->input('semesterFilter') ? (int)$request->input('semesterFilter') : null;
+        $searchedVerified = $request->input('verifiedFilter') ? (int)$request->input('verifiedFilter') : null;
+
+        $homework = Homework::
+            when($searchedYear, function ($collection) use ($searchedYear) {
+                return $collection->where('year', $searchedYear);
+            })
+            ->when($searchedSemester, function ($collection) use ($searchedSemester) {
+                return $collection->where('semester', $searchedSemester);
+            })
+            ->when($searchedVerified = 0, function ($collection) use ($searchedSemester) {
+                return $collection->doesntHave('grades');
+            })
+            ->when($searchedVerified = 1, function ($collection) use ($searchedSemester) {
+                return $collection->has('grades');
+            })
+            ->with('course','grades')
+            ->get();
+
+        return $homework;
 
     }
 
