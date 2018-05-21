@@ -62,7 +62,9 @@ class UploadController extends Controller
         $fileType = $request->file('fileToUpload')->getClientOriginalExtension();
         $fileExtension = $request->file('fileToUpload')->guessExtension();
 
-
+        if ($fileExtension != $fileType){
+            return redirect()->back()->withErrors('Fisier invalid, extensia difera de continut.');
+        }
 
         $user_id = Auth::id();
 
@@ -96,7 +98,8 @@ class UploadController extends Controller
             \App\File::create([
                 'user_id' => $user_id,
                 'homework_id' => $homework_id,
-                'file_name' => $filename
+                'file_name' => $filename,
+                'grade' => null
             ]);
             return redirect()->back()->withErrors('Fisier uploadat cu succes.');
         } else {

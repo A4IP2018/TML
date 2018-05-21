@@ -41,29 +41,59 @@
           </div>
           <div id="demo" class="collapse">
             <div class="card">
-                <div class="card-body">            
+                <div class="card-body">
+                    <form>
+                        <h6>An:&nbsp; </h6>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="year-filter form-check-input" value="1" name="year-filter"> 1
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="year-filter form-check-input" value="2" name="year-filter"> 2
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="year-filter form-check-input" value="3" name="year-filter"> 3
+                            </label>
+                        </div>
+                    </form>
+                    <hr>
+                    <form>
+                        <h6>Semestru:&nbsp; </h6>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="semester-filter form-check-input" value="1" name="optradio"> 1
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="semester-filter form-check-input" value="2" name="optradio"> 2
+                            </label>
+                        </div>
+                    </form>
+                    <hr>
                     <form>
                         <h6>Teme:&nbsp; </h6>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value=""> Noi
-                        </label> &ensp;
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value=""> Necorectate
-                        </label> &ensp;
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value=""> Corectate
-                        </label>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="verified-filter form-check-input" value="0" name="optradio"> Necorectate
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="verified-filter form-check-input" value="1" name="optradio"> Corectate
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="verified-filter form-check-input" value="2" name="optradio"> Toate
+                            </label>
+                        </div>
                     </form>
-<hr>
-                    <form>
-                        <h6>Cursuri:&nbsp; </h6>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="">  Abonament
-                        </label> &ensp;
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="">  Toate
-                        </label> &ensp;
-                    </form>
+
             </div>
         </div>
   </div>

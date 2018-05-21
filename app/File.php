@@ -12,7 +12,7 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'homework_id', 'file_name', 'updated_at'
+        'user_id', 'homework_id', 'file_name', 'updated_at', 'grade'
     ];
 
     /**
