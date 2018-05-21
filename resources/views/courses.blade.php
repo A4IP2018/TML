@@ -3,6 +3,7 @@
 
 @section('content')
 
+
     <!--MULTIPLE COURSES PAGE-->
 
     <div class="content-wrapper">
@@ -88,7 +89,7 @@
                         </div>
                     </div>
 
-                @if (Auth::check() and is_teacher(Auth::id()))
+                @if (is_teacher())
                     <!--Press to create new Course-->
                         <br><a href="{{ url('/course/create') }}" class="btn btn-primary btn-lg btn-block">Curs nou</a>
                 @endif
@@ -112,27 +113,21 @@
                                             <p class="card-text">Description: {{ $course->description }}</p>
                                         </div>
                                         <div class="card-footer bg-transparent border">
+                                            <div class="btn-group">
+                                                <!--press to be sent to the course page-->
+                                                <a href="{{ url('/course/' . $course->slug) }}" class="btn btn-info">Detalii</a>
 
-                                            <!--press to be sent to the course page-->
-                                            <a href="{{ url('/course/' . $course->slug) }}">
-                                                <button type="button" class="btn btn-info">Detalii</button>
-                                            </a>
-
-                                            <!--press to follow course-->
-
-                                            @if (Auth::check())
-                                                @if (!in_array(Auth::id(), $course->subscriptions->pluck('id')->toArray()))
-                                                    <button type="submit" href="" class="btn btn-primary">Aboneaza-te
+                                                <!--press to follow course-->
+                                                @if (can_subscribe($course->id))
+                                                    <button type="submit" class="btn btn-primary">Aboneaza-te
                                                     </button>
                                                 @endif
 
-                                                @if (in_array(Auth::id(), $course->users->pluck('id')->toArray()))
+                                                @if (is_course_teacher($course->id))
                                                     <a href="{{ url('/course/' . $course->slug . '/edit') }}"
                                                        class="btn btn-secondary">Editeaza</a>
                                                 @endif
-
-                                            @endif
-
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -206,6 +201,7 @@
                             html += '<p class="card-text">Semestru: ' + item.semester + '</p>' ;
                             html += '<p class="card-text">Description: ' + item.description + '</p>' ;
                             html += '</div> <div class="card-footer bg-transparent border">';
+                            html += '<div>'
                             html += '<a href="{{ url("/course/" . $course->slug) }}" class="btn btn-info">Detalii</a>';
 
                             @if (Auth::check())
