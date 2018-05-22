@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div style="margin-top:1%;margin-left: 20%;margin-bottom: 40%">
                         <div class="col-md-10 col-md-offset-1 pull-right">
-                            <img class="img-error" src="images/not-found.png">
+                            <img class="img-error" src="{{ asset('images/not-found.png') }}">
                             <h1>404 Not Found</h1>
                             <p>Ne cerem scuze, pagina cautata nu a fost gasita!</p>
                             <div class="error-actions" style="margin-left: 20%">

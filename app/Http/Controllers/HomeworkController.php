@@ -312,7 +312,6 @@ class HomeworkController extends Controller
     public function compare()
     {
         $files = \App\File::all();
-
         return view('compare', compact('files'));
     }
 
