@@ -95,7 +95,12 @@ Route::get('/reset/{user_mail}/{token}', 'ProfileController@newPassword');
 Route::post('/reset', 'ProfileController@setNewPassword');
 
 Route::post('reset-password-action', 'ProfileController@changePassword')->name('reset-password-action');
+<<<<<<< HEAD
 
 Route::post('reset-email-action', 'ProfileController@changeEmail')->name('reset-email-action');
 
 Route::get('/admin', 'AdminController@index');
+=======
+
+Route::post('reset-email-action', 'ProfileController@changeEmail')->name('reset-email-action');
+>>>>>>> 63d1d8144060f52bf0e444fa774168e04caf53cf
