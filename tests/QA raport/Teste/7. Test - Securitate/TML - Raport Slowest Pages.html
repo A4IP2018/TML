@@ -1,0 +1,825 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="C:\Program Files (x86)\Netsparker\Resources\Images\" />
+    <style type="text/css">
+        body {
+    margin:0;
+    padding:0;
+    font-family: Verdana, Arial, sans-serif;
+}
+
+#container{
+    margin:0;
+    padding: 20px;
+    padding-bottom: 50px;
+}
+
+#header {margin:-20px -20px 20px;padding:15px 20px;background-color:#f9f9f9;align-items: center;justify-content: space-between;display:flex;}
+.header-critical {
+    border-bottom: 6px solid #f00;
+}
+.header-high {
+    border-bottom: 6px solid #F30;
+}
+.header-medium {
+    border-bottom: 6px solid #FF9900;
+}
+.header-low {
+    border-bottom: 6px solid #F3D70C;
+}
+.header-information {
+    border-bottom: 6px solid #3399FF;
+}
+
+div.fixed-vuln-section {height:35px;width:100%;background-color:#039c23;color:#fff;font-family:Verdana, sans-serif;font-size:14px;align-items: center;justify-content: center;display: flex;}
+.header-right {width:510px;font-family:Trebuchet MS, Verdana;font-size:18px;font-weight:600;text-align:center;}
+.header-right-box {align-items: center;justify-content: center;display: flex;padding:6px 0;border:2px solid #ddd;font-size:18px;float:right;margin-top:3px;margin-bottom:3px;}
+.header-ignored {width:130px;color:#fff;background-color:#bbb;border-color: #bbb;}
+.header-confirmed {width:150px;color:#4d4d4d;margin-left:4px;}
+.header-confirmed svg {width:18px;height:18px;margin-left:10px;}
+.header-severity {width:180px;color:#fff;margin-left:4px;}
+.header-severity svg {width:20px;height:20px;margin-left:10px;}
+.header-severity-critical {
+    background-color:#ff0000;
+    border-color:#f00;
+}
+.header-severity-high {
+    background-color: #F30;
+    border-color: #F30;
+}
+.header-severity-medium {
+    background-color: #FF9900;
+    border-color: #FF9900;
+}
+.header-severity-low {
+    background-color: #F3D70C;
+    border-color: #F3D70C;
+}
+.header-severity-information {
+    background-color: #3399FF;
+    border-color: #3399FF;
+}
+
+/* CLASSIFICATION */
+.classification-box {float:right;width:340px;box-shadow: 0 1px 6px 0 hsla(0, 0%, 0%, 0.4);background:#fff;font-family:Trebuchet MS, Verdana!important;color:#666!important;}
+.classification-top {padding:15px;position:relative;}
+.classification-box .main-title {font-size:20px;text-align:left;}
+.classification-box .main-title svg {width:18px;height:16px;}
+.classification-box table {border-top:1px solid #ddd;margin-top:10px;padding-top:10px;width:100%;}
+.classification-box th {font-size:18px;text-align:left;padding:5px 0 10px;}
+.classification-box td {font-size:16px;padding:2px 0;}
+.classification-table svg {width:15px;height:15px;vertical-align:bottom;}
+
+/* GENERAL */
+.text-left {text-align:left;}
+.text-right {text-align:right;}
+table {table-layout: fixed;}
+td {word-wrap:break-word;}
+.mt3 {margin-top:3px!important;}
+
+#body {width: calc(100% - 370px);}
+#vdb svg {width:16px;height:16px;}
+#vdb h3 {font-size:20px !important;}
+#vdb h4 {font-size:18px;padding-left:22px;}
+div#vdb div {padding-left:22px!important;}
+
+/* LOW SCREEN SIZES */
+@media (max-width:991px) {
+    table.summaryTable, .classification-box, #body {float:inherit;width:100%}	
+    .classification-box {margin-top:25px;box-shadow: 0 1px 6px 0 hsla(0, 0%, 0%, 0);}
+    .classification-top {margin:0 -20px;padding:20px;background-color:#f7f7f7;}
+    h1 {font-size:26px!important;}
+    .header-confirmed {width:180px;}
+}
+
+p, div, td, h1, h2, h3 {
+    font-size: 12px;
+}
+
+.summaryTable{
+	margin-left:-1px !important;
+	width: calc(100% - 370px);
+	float: left;
+}
+
+.summaryTable td{
+    font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+    font-size: 14px !important;	
+    color: #4d4d4d;
+    padding: 0 5px 0 5px;
+}
+
+.summaryTable td.tdhead {
+    font-size: 16px  !important;
+	font-family: Trebuchet MS, Verdana !important;
+	padding:3px 5px 3px 0 !important;
+    font-weight: bold;
+    color: #4d4d4d;
+    text-transform: uppercase;
+	width:210px;
+}
+
+.summaryTable td.tdcolon {
+    width: 1px;
+}
+
+.block, h1, h2, h3, h4, .rightb-container.head, .rightb-container span {
+    font-family: Trebuchet MS, Verdana;
+}
+
+.exploit {
+    background-color: #FFFF99;
+    line-height: 130%;
+}
+
+/*RIGHT BLOCKS */
+.rightb-container {
+	background-color: #EFEFEF;
+	width: 270px;
+	margin-bottom: 35px;
+}
+
+.rightb-container .head {
+    font-size: 24px;
+    border-bottom: 2px solid #CC0000;
+    background-color: #CCCCCC;
+    padding: 5px 10px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.rightb-container td.cls, .rightb-container td.val {
+    padding: 4px;
+    color: #666;
+    font-weight: bold;
+    font-family: Trebuchet MS, Verdana;
+    font-size: 14px;
+}
+
+.rightb-container td.cls {
+    background-color: #E0ECF8;
+    width: 76px;
+}
+	
+.rightb-container td.bg2 {
+    background-color: #c2dbf2;
+}
+	
+.rightb-container td.txl {
+	font-weight: normal;
+}
+
+.rightb-container td.val {
+    background-color: #FFF;
+	width: 100%;
+	max-width: 200px;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+	
+.rightb-container td.brd0 {
+    box-shadow: inset 0 -3px #a8f460;
+}
+.rightb-container td.brd1 {
+    box-shadow: inset 0 -3px #e2e882;
+}
+.rightb-container td.brd2 {
+    box-shadow: inset 0 -3px #fcda70;
+}
+.rightb-container td.brd3 {
+    box-shadow: inset 0 -3px #fab07f;
+}
+.rightb-container td.brd4 {
+    box-shadow: inset 0 -3px #f59395;
+}
+
+.rightb-container .head img {
+    margin-bottom: -2px;
+}
+
+.rightb-container .text {
+    padding: 8px;
+}
+
+.block {
+    color: #FFF;
+    font-size: 17px;
+    color: #FFF;
+    padding: 4px 8px 4px 8px;
+    margin-bottom: 1px;
+}
+
+/* Severities */
+.information {
+    background-color: #3399FF;
+}
+
+.medium {
+    background-color: #FF9900;
+}
+
+.critical {
+    background-color: #F00;
+}
+
+.high {
+    background-color: #FF491C;
+}
+
+.blockconfirmedcritical
+{
+    background-color: #C00;
+}
+.blockconfirmedhigh
+{
+    background-color: #E82F00;
+}
+.blockconfirmedmedium
+{
+    background-color: #DD8500;
+}
+.blockconfirmedlow
+{
+    background-color: #D7BD0B;
+}
+.blockconfirmedinformation
+{
+    background-color: #007EFD;
+}
+.blockignored
+{
+    background-color: #bbb;
+}
+
+.low {
+    background-color: #F3D70C;
+}
+
+/* Severity Borders */
+.border-passive, .border-information, .border-low, .border-medium, .border-critical, .border-high  {
+	border-top:solid 5px;
+}
+
+.border-passive {
+    border-color: #666666;
+}
+
+.border-information {
+    border-color: #3399FF;
+}
+
+.border-low {
+    border-color: #F3D70C;
+}
+
+.border-medium {
+    border-color: #FF9900;
+}
+
+.border-critical {
+    border-color: #F00;
+}
+
+.border-high {
+    border-color: #F30;
+}
+
+h1, h2, h3, h4 {
+    font-size: 32px;
+	padding-bottom:0px;
+}
+
+h1 {
+    color: #4d4d4d;
+    margin: 0;
+}
+
+h2 {
+    color: #444;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #dddddd;
+    text-transform: uppercase;
+	margin-top:30px;
+	padding-bottom:3px;
+}
+
+    h2#summary {
+        border-bottom-width: 2px;
+    }
+
+h3 {
+    color: #666;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+h4 {
+    color: #666;
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 0px;
+}
+
+.vuln-table-bottom {
+    border-bottom: 1px solid #CCC;
+    margin-top: -10px;
+    margin-bottom: 3px;
+}
+
+.bord {
+    border-bottom: 6px solid #CCC;
+}
+
+.vuln-perc {
+    font-weight: bold;
+    font-family: Trebuchet MS, Tahoma, sans-serif;
+}
+
+h2, .vuln-table-bottom , .bord, .summary-table {
+	border-bottom-color: #dddddd;
+}
+
+
+.infobox {
+    padding: 4px 8px 4px 8px;
+    border: 1px solid #FFF;
+    margin-bottom: 5px;
+    text-align: center;
+    color: #999;
+    width: 90px;
+}
+
+.infobox h3 {
+    margin: 0px;
+    font-weight: normal;
+    color: #4d4d4d;
+}
+
+.settingson, .settingsoff {
+    font-size: 15px;
+    padding: 4px 4px 4px 4px;
+    border: 1px solid #CCC;
+    margin-bottom: 1px;
+    text-align: center;
+    color: #999;
+    width: 120px;
+    color: #CCC;
+}
+
+.settingson {
+    background-color: #FFF;
+    color: #666;
+}
+
+/* VULNERABILITIES */
+
+.vulncount {
+    font-size: 60px;
+    font-family: Trebuchet MS, Tahoma, sans-serif;
+}
+
+.informational, .confirmed, .identified, .critical2 {
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: -10px;
+}
+
+.critical2 {
+    color: #F00;
+}
+
+.informational {
+    color: #3399FF;
+}
+
+.identified {
+    color: #000;
+}
+
+/* VULNERABILITY */
+.vuln-block, .vuln-block-count, .vulnerability {
+    font-family: Trebuchet MS, Tahoma, sans-serif;
+    font-size: 15px;
+}
+
+.vulnerability {
+    font-size: 20px;
+    color: #FFF;
+    padding: 5px 2px;
+    margin-left: 2px;
+    vertical-align: middle !important;
+}
+
+.vulnerability-svg svg{
+    width: 24px;
+    height: 24px;
+    vertical-align: middle !important;
+}
+
+.vuln-block-count {
+    color: #666;
+    text-align: right;
+}
+
+.vuln-block {
+    float: right;
+    width: 100px;
+    padding: 20px;
+}
+
+.vuln-block .block {
+    font-size: 14px;
+}
+
+.vuln-block-inner-count {
+    font-weight: normal;
+    margin-top: -10px;
+    margin-left: -3px;
+}
+
+.vc {
+    font: 9px Consolas, Lucida Console, Courier New, Courier, monospace;
+    border-left: 6px solid #CCC;
+    padding-left: 10px;
+    margin-left: 10px;
+    display: block;
+    overflow: hidden;
+}
+
+.vulndesc {
+    margin-top: 15px;
+}
+
+.vulndesc h2 {
+    font-size: 22px;
+    color: #4d4d4d;
+    margin-bottom: 2px;
+    border: 0;
+}
+
+.divider {
+    clear: both;
+}
+
+h3.extra {
+    color: #F60;
+}
+
+.customfield {
+    border-left: 6px solid #F60;
+    padding-left: 5px;
+    font: 12px Consolas, Lucida Console, Courier New, Courier, monospace;
+    margin-left: 10px;
+}
+
+.highlight {
+    font-weight: bold;
+    color: red;
+}
+
+/* Links */
+a:link, a:visited, a:hover, a:active, a:focus {
+    color: #417bb6;
+    font-weight: normal;
+}
+
+/* Certainty */
+.progress-container {
+    border: 1px solid #ccc;
+    width: 200px;
+    margin: 2px 5px 2px 0;
+    padding: 1px;
+    float: left;
+    background: #FFF;
+}
+
+.progress-container div {
+    background-color: #C00;
+    height: 12px;
+}
+
+/* CODE SAMPLES */
+pre {
+    font-size: 11px;
+    border: 1px solid #CCC;
+    background-color: #F7F7F7;
+    padding: 15px;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+}
+
+/* COMMAND PROMPT */
+.cprompt {
+	font-size: 14px;
+	background-color: #4d4d4d;
+	padding: 15px;
+	margin-top: 5px;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+	color:#fff;
+	word-wrap: break-word;
+}
+
+/* Extracted Data */
+.extracted-data {
+	font-size: 14px;
+	background-color: #F7F7F7;
+	padding: 15px;
+	margin-top: 5px;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+	color: #000;
+	width: 70%;
+	word-wrap: break-word;
+}
+
+/* Knowledge base */
+.kb-table {
+	margin-top: 15px;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.kb-table th {
+	padding-bottom: 15px;
+	text-align: left;
+	font-size: 15px;
+	font-weight: normal;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+}
+
+.kb-table th.header {
+	font-weight: bold;
+	border: 1px solid #CCC;
+	padding: 10px;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+}
+
+.kb-table td {
+	border: 1px solid #CCC;
+	padding: 10px;
+	page-break-inside: avoid;
+	word-wrap: break-word;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+}
+
+.kbitem {
+	cursor: pointer;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+}
+
+.kblink {
+	list-style-type : disc;
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+}
+
+.kbperfitem {
+		font-weight: bold;
+		vertical-align: top;
+	}
+
+.kbperfsubitem {
+	font-family: Consolas, Lucida Console, Courier New, Courier, monospace;
+	margin-top: 15px;
+	font-weight: normal;
+}
+
+.kbsearcheditem {
+    padding:1px 6px;
+    background: linear-gradient(#f4e600, #dec916);
+    border-radius:3px;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.9);
+}
+
+.kbselecteditem {
+    padding: 1px 6px;
+    background: linear-gradient(#4da6ff, #3399FF);
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.9);
+}
+
+.arrow-right {
+	width: 0;
+	height: 0;
+	border-bottom: 5px solid transparent;
+	border-top: 5px solid transparent;
+	border-left: 5px solid #2f2f2f;
+	font-size: 0;
+	line-height: 0;
+	margin-right: 10px;
+	margin-top: 2px;
+	float: left;
+}
+
+.arrow-down {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #2f2f2f;
+	font-size: 0;
+	line-height: 0;
+	margin-right: 5px;
+	margin-top: 4px;
+	float: left;
+}
+
+.ws-table {
+	margin: 4px 0 20px 0;
+	border: 1px solid #ccc;
+	width: 90%;
+	border-collapse: collapse;
+}
+
+.ws-table td {
+	padding: 4px;
+}
+
+.ws-table td.header {
+	border-bottom: 1px solid #ccc;
+	background: #fefefe;
+}
+
+#vdb svg {width:16px;height:16px;}
+#vdb h3 {font-size:20px !important;}
+#vdb h4 {font-size:18px;padding-left:22px;}
+div#vdb div {padding-left:22px!important;}
+    </style>
+    <script type="text/javascript">
+        var selectedIndex = 0;
+        var currentPosition = 0;
+        var htmlElement = null;
+
+        function kbToggle(index) {
+            var kblink = document.getElementById('kblink' + index);
+            var kbitem = document.getElementById('kbitem' + index);
+
+            if (kblink.style.display == 'none') {
+                kblink.style.display = 'block';
+                kbitem.firstChild.className = 'arrow-down';
+            }
+            else {
+                kblink.style.display = 'none';
+                kbitem.firstChild.className = 'arrow-right';
+            }
+        }
+
+        // Find and Highlight which matched with search string
+        function findAndHighlightText(searchString) {
+            removeSpanFromSearchedItems();
+
+            selectedIndex = 0;
+
+            if (searchString === "") {
+                return 0;
+            }
+
+            if (document.body.createTextRange) {
+                var textRange = document.body.createTextRange();
+                while (textRange.findText(searchString)) {
+                    var parentElement = textRange.parentElement();
+                    checkVisibilityOfElement(parentElement);
+                    textRange.pasteHTML("<span id='search-selected-" +
+                        selectedIndex +
+                        "' class='kbsearcheditem'>" +
+                        htmlEncode(textRange.text) +
+                        "</span>");
+                    textRange.collapse(false);
+                    selectedIndex++;
+                }
+            }
+
+            return selectedIndex;
+        }
+
+        function htmlEncode(value) {
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        // Searching click function
+        function checkVisibilityOfElement(parentElement) {
+            if (parentElement.tagName.toLowerCase() === 'li' && parentElement.parentElement && parentElement.parentElement.style.display.toLowerCase() === 'none') {
+                parentElement = parentElement.parentElement;
+                document.getElementById(parentElement.id.replace('kblink', 'kbitem')).click();
+            }
+        }
+
+        // Remove span's of previously matched items
+        function removeSpanFromSearchedItems() {
+            for (var j = 0; j <= selectedIndex; j++) {
+                var element = document.getElementById('search-selected-' + j);
+                if (element) {
+                    element.outerHTML = element.innerHTML;
+                }
+            }
+
+            currentPosition = 0;
+            htmlElement = null;
+        }
+
+        // Handle next and previous navigation
+        function handleNavigation(next) {
+            if (selectedIndex === 0) {
+                return false;
+            }
+
+            if (htmlElement == null) {
+                htmlElement = document.getElementById('search-selected-' + currentPosition);
+            }
+            else {
+                htmlElement.className = "kbsearcheditem";
+                if (currentPosition !== selectedIndex || currentPosition !== 0) {
+                    currentPosition = next ? currentPosition + 1 : currentPosition - 1;
+                    htmlElement = document.getElementById('search-selected-' + currentPosition);
+                }
+            }
+            if (htmlElement !== null) {
+                htmlElement.className = "kbselecteditem";
+                htmlElement.scrollIntoView(false);
+            }
+
+            return next ? currentPosition + 1 !== selectedIndex : currentPosition !== 0;
+        }
+
+        function copyToClipboard(id) {
+            document.getElementById(id).select();
+            document.execCommand("Copy");
+        }
+    </script>
+</head>
+<body lang="en">
+    <div id="container" class="information-severity">
+        <div id="header" class="header-information">
+            <h1>Slowest Pages</h1>
+            <div class="header-right">
+                <div class="header-right-box header-severity header-severity-information">
+                    INFORMATION
+                    <svg x="0px" y="0px" width="51.7992px" height="51.7992px" viewBox="0 0 51.7992 51.7992" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve">
+  <defs />
+  <circle cx="25.8995857" cy="25.8995857" r="25.8995857" fill="#FFFFFF" class="white" />
+  <circle cx="25.8995857" cy="25.8995857" r="21.5" fill="#3399FF" class="important" />
+  <path d="M29.9967461,38.2037621c0,2.2592506-1.8289661,4.0907173-4.0907822,4.0907173  c-2.2617531,0-4.1035385-1.8314667-4.1035385-4.0907173V25.9059639c0-2.2721348,1.8417854-4.1036015,4.1035385-4.1036015  c2.261816,0,4.0907822,1.8417244,4.0907822,4.1036015V38.2037621z M25.9059639,17.7116451  c-2.2617531,0-4.1035385-1.8417244-4.1035385-4.1034775s1.8417854-4.1034765,4.1035385-4.1034765  c2.261816,0,4.0907822,1.8417234,4.0907822,4.1034765S28.1677799,17.7116451,25.9059639,17.7116451z" fill="#FFFFFF" class="white" />
+  <path d="M25.9059639,21.8023624c-2.2617531,0-4.1035385,1.8314667-4.1035385,4.1036015v12.2977982  c0,2.2592506,1.8417854,4.0907173,4.1035385,4.0907173c2.261816,0,4.0907822-1.8314667,4.0907822-4.0907173V25.9059639  C29.9967461,23.6440868,28.1677799,21.8023624,25.9059639,21.8023624z" fill="#FFFFFF" class="white" />
+</svg>
+                </div>
+            </div>
+        </div>
+        <div style="clear: left; margin-top: 10px"></div>
+        
+
+<table class="kb-table">
+	<tr>
+		<th class="header">URL</th>
+		<th class="header">Response Time(ms)</th>
+	</tr>
+		<tr>
+			<td>http://192.168.0.129/course</td>
+			<td>3.600</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/vendor/highlight/styles/</td>
+			<td>2.431</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/profile</td>
+			<td>1.605</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/login</td>
+			<td>1.220</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/course/3-2-retele-petri</td>
+			<td>923</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/homework</td>
+			<td>923</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/register</td>
+			<td>817</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/</td>
+			<td>737</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/vendor/</td>
+			<td>594</td>
+		</tr>
+		<tr>
+			<td>http://192.168.0.129/vendor/highlight/</td>
+			<td>497</td>
+		</tr>
+</table>
+    </div>
+</body>
+</html>
