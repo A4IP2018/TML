@@ -97,3 +97,5 @@ Route::post('/reset', 'ProfileController@setNewPassword');
 Route::post('reset-password-action', 'ProfileController@changePassword')->name('reset-password-action');
 
 Route::post('reset-email-action', 'ProfileController@changeEmail')->name('reset-email-action');
+
+Route::get('/admin', 'AdminController@index');

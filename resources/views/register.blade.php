@@ -39,12 +39,20 @@
         <div class="form-group">
           <div class="form-row">
             <div class="col-md-6">
-              <label for="exampleInputPassword1">Parola</label>
-              <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Introduce&#539;i parola">
+              <label for="password">Parola</label>
+              <input name="password" class="form-control" type="password" placeholder="Introduce&#539;i parola">
             </div>
             <div class="col-md-6">
-              <label for="exampleConfirmPassword">Confirm&#259; parola</label>
-              <input name="confirm-password" class="form-control" id="exampleConfirmPassword" type="password" placeholder="Repeta&#539;i parola">
+              <label for="confirm-password">Confirm&#259; parola</label>
+              <input name="confirm-password" class="form-control" type="password" placeholder="Repeta&#539;i parola">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col-md-12">
+              <label for="code">Cod secret</label>
+              <input name="code" class="form-control" type="text" placeholder="Cod secret pentru &#238;nregistrare privilegiat&#259; (optional)">
             </div>
           </div>
         </div>
