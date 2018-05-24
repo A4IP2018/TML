@@ -80,11 +80,8 @@ Route::post('/login-action', 'LoginController@authenticate')->name('login-action
 Route::get('/logout', 'LoginController@logout')->name('logout');
 
 
-Route::get('register', 'RegisterController@index')->name('register');
-
-Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
-
-Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
+Route::get('/register', 'RegisterController@index')->name('register');
+Route::post('/register', 'RegisterController@register')->name('register');
 
 
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
@@ -92,6 +89,7 @@ Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('
 
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::get('/forgot', 'ProfileController@forgot')->name('forgot');
 
 Route::post('reset-password-action', 'ProfileController@resetPassword')->name('reset-password-action');
 

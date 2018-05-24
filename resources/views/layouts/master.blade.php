@@ -122,10 +122,10 @@
                     </li>
 
                     @if (Auth::check())
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/logout') }}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/logout') }}"><i class="fa fa-fw fa-sign-out"></i>Deconectare</a></li>
                     @else
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Logare</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">&#206;nregistrare</a></li>
                     @endif
 
                 </ul>

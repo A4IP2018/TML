@@ -48,17 +48,12 @@
                             @endif
                         </div>
 
-                        @if($user->role_id == \App\Role::$ADMINISTRATOR_RANK)
-                        <div class="form-group">
-                            <label for="email">An:</label>
-                            <input type="email" class="form-control" id="an" value="{{$userInfo->year}}" readonly>
-                        </div>
+                        @if ($user->role->rank == \App\Role::$MEMBER_RANK)
+                            <div class="form-group">
+                                <label for="email">Nr. matricol:</label>
+                                <input type="email" class="form-control" id="nr_matr" value="{{$user->nr_matricol}}" readonly>
+                            </div>
                         @endif
-
-                        <div class="form-group">
-                            <label for="email">Nr. matricol:</label>
-                            <input type="email" class="form-control" id="nr_matr" value="{{$user->nr_matricol}}" readonly>
-                        </div>
 
                         <label for="email">Adresa de mail:</label>
                         <div class="input-group">

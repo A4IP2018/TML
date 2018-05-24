@@ -77,7 +77,7 @@ class RegisterController extends Controller
      * @param Request $request
      * @return mixed
      */
-    protected function registerAction(Request $request)
+    protected function register(Request $request)
     {
         $validator = $this->validate($request, [
             'email' => 'unique:users|required|max:100|email',

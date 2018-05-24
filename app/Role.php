@@ -11,6 +11,7 @@ class Role extends Model
 
     public static $ADMINISTRATOR_RANK = 1;
     public static $TEACHER_RANK = 5;
+    public static $MEMBER_RANK = 10;
 
     /**
      * The attributes that are mass assignable.
