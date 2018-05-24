@@ -76,7 +76,7 @@
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <a class="nav-link" href="{{ url('/about') }}">
                             <i class="fa fa-fw fa-connectdevelop"></i>
-                            <span class="nav-link-text">About</span>
+                            <span class="nav-link-text">Despre</span>
                         </a>
                     </li>
 
@@ -126,6 +126,10 @@
                     @else
                         <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Logare</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">&#206;nregistrare</a></li>
+                    @endif
+
+                    @if (Auth::check() and Auth::user()->role->rank == \App\Role::$ADMINISTRATOR_RANK)
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/admin') }}">Administrare</a></li>
                     @endif
 
                 </ul>

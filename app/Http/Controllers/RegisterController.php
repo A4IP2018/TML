@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\StudentInformation;
+use App\TeacherInformation;
 use App\User;
+use App\Code;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -87,6 +89,23 @@ class RegisterController extends Controller
             'last-name' => 'required|max:50',
         ]);
         $password = Hash::make($request->input('password'));
+        $code = $request->input('code');
+        $rank = \App\Role::$MEMBER_RANK;
+        if (!is_null($code)) {
+            $found_code = Code::where('code', $code)->first();
+            if (!is_null($found_code)) {
+                $rank = $found_code->rank;
+                $found_code->delete();
+            }
+        }
+
+        $role_id = \App\Role::where('rank', $rank);
+        if (is_null($role_id)) {
+            $role_id = \App\Role::where('rank', \App\Role::$MEMBER_RANK);
+        }
+        else {
+            $role_id = $role_id->pluck('id')->first();
+        }
 
         if (Hash::check($request->input('confirm-password'), $password))
         {
@@ -94,15 +113,24 @@ class RegisterController extends Controller
             $user = User::create([
                 'email' => $request->input('email'),
                 'password' => $password,
-                'role_id' => 1,
+                'role_id' => $role_id,
                 'reset_token' => ''
             ]);
 
-            StudentInformation::create([
-                'first_name' => $request->input('first-name'),
-                'last_name' => $request->input('last-name'),
-                'user_id' => $user->id,
-            ]);
+            if ($rank == \App\Role::$TEACHER_RANK) {
+                TeacherInformation::create([
+                    'user_id' => $user->id,
+                    'name' => $request->input('first-name') . ' ' . $request->input('last-name')
+                ]);
+            }
+            else {
+                StudentInformation::create([
+                    'first_name' => $request->input('first-name'),
+                    'last_name' => $request->input('last-name'),
+                    'user_id' => $user->id,
+                ]);
+            }
+
             return Redirect::to($this->redirectPath);
         }
 
