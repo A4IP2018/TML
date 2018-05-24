@@ -95,6 +95,7 @@ class RegisterController extends Controller
                 'email' => $request->input('email'),
                 'password' => $password,
                 'role_id' => 1,
+                'reset_token' => ''
             ]);
 
             StudentInformation::create([

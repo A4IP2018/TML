@@ -34,7 +34,7 @@
       </form>
       <div class="text-center">
         <a class="d-block small mt-3" href="{{ url('/register') }}">&#206;nregistrare</a>
-        <a class="d-block small" href="{{ url('/login') }}">Logare</a>
+        <a class="d-block small" href="{{ url('/forgot') }}">A&#539;i uitat parola?</a>
       </div>
     </div>
   </div>

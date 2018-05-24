@@ -90,8 +90,10 @@ Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('
 
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::get('/forgot', 'ProfileController@forgot')->name('forgot');
+Route::post('/forgot', 'ProfileController@sendToken')->name('reset-password');
+Route::get('/reset/{user_mail}/{token}', 'ProfileController@newPassword');
+Route::post('/reset', 'ProfileController@setNewPassword');
 
-Route::post('reset-password-action', 'ProfileController@resetPassword')->name('reset-password-action');
+Route::post('reset-password-action', 'ProfileController@changePassword')->name('reset-password-action');
 
-Route::post('reset-email-action', 'ProfileController@resetEmail')->name('reset-email-action');
-
+Route::post('reset-email-action', 'ProfileController@changeEmail')->name('reset-email-action');

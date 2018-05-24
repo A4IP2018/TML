@@ -20,12 +20,12 @@
           <h4>A&#539;i uitat parola?</h4>
           <p>Introduce&#539;i adresa de email pentru a primi instruc&#539;iuni de redob&#226;ndire a accesului.</p>
         </div>
-        <form action="{{ url('/reset') }}" method="POST">
+        <form action="{{ url('/forgot') }}" method="POST">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="form-group">
-            <input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Introduce&#539;i adresa email">
+            <input class="form-control" name="user-email" type="email" aria-describedby="emailHelp" placeholder="Introduce&#539;i adresa email">
           </div>
-          <a class="btn btn-primary btn-block" href="{{ url('/reset') }}">Resetare parol&#259;</a>
+          <button type="submit" class="btn btn-primary form-control">Resetare parol&#259;</button>
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="{{ url('/register') }}">&#206;nregistrare</a>

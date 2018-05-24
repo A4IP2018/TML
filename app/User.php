@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nr_matricol', 'email', 'password','role_id', 'updated_at'
+        'nr_matricol', 'email', 'password','role_id', 'updated_at', 'reset_token'
     ];
     /**
      * The attributes that are not mass assignable.

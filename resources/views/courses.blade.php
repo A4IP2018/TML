@@ -202,7 +202,7 @@
                             html += '<p class="card-text">Description: ' + item.description + '</p>' ;
                             html += '</div> <div class="card-footer bg-transparent border">';
                             html += '<div>'
-                            html += '<a href="{{ url("/course/" . $course->slug) }}" class="btn btn-info">Detalii</a>';
+                            {{--html += '<a href="{{ url("/course/" . item.slug) }}" class="btn btn-info">Detalii</a>'; --}}
 
                             @if (Auth::check())
                                 if ($.inArray(user.id, subscriptionIdList) === -1) {
