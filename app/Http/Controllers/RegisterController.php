@@ -77,7 +77,7 @@ class RegisterController extends Controller
      * @param Request $request
      * @return mixed
      */
-    protected function registerAction(Request $request)
+    protected function register(Request $request)
     {
         $validator = $this->validate($request, [
             'email' => 'unique:users|required|max:100|email',
@@ -95,6 +95,7 @@ class RegisterController extends Controller
                 'email' => $request->input('email'),
                 'password' => $password,
                 'role_id' => 1,
+                'reset_token' => ''
             ]);
 
             StudentInformation::create([
