@@ -15,6 +15,7 @@
                 </button>
             </span>
         </div>
+        <br>
         <div id="demo" class="collapse">
             <div class="card">
                 <div class="card-body">
@@ -96,7 +97,12 @@
                 @endforeach
             </div>
         @else
-            <h4 class="text-center" >Nicio tema aici, incearca sa te abonezi la cateva <a href="{{ url('/course') }}">cursuri</a></h4>
+            <h4 class="text-center" >Nicio tem&#259; aici, &#238;ncearca s&#259; te abonezi la c&#226;teva <a href="{{ url('/course') }}">cursuri</a>
+                @if (is_teacher())
+                    sau sa
+                    <a href="{{ url('/homework/create') }}">creezi</a> una
+                @endif
+            </h4>
     @endif
 
 
