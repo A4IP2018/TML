@@ -32,6 +32,7 @@ class ProfileController extends Controller
             else {
                 $userInfo = \App\StudentInformation::where('user_id', Auth::id())->first();
             }
+
             return view('profile', compact('user','userInfo'));
         }
         else {

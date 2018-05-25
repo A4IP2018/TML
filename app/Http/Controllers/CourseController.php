@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\User;
 use App\UserCourse;
+use App\TeacherCourse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use \Carbon\Carbon as Carbon;
@@ -77,7 +78,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('courses', compact('courses'))->render();
+        return view('courses', compact('courses'));
     }
 
     /**
@@ -88,7 +89,6 @@ class CourseController extends Controller
     public function show($slug) {
         $course = Course::where('slug', $slug)->first();
         $elapsed_time = Carbon::parse($course->created_at);
-
         return view('course-details')->with(['course' => $course, 'elapsed_time' => $elapsed_time->diffForHumans(), 'teachers_string' => $this->get_teacher_names($course)]);
     }
 
@@ -100,8 +100,8 @@ class CourseController extends Controller
     public function edit($slug) {
 
         $course = Course::where('slug', $slug)->first();
-
-        return view('edit-course', compact('course'));
+        $teachers = User::whereHas('teacher')->get();
+        return view('edit-course', compact('course', 'teachers'));
     }
 
     /**
@@ -114,20 +114,33 @@ class CourseController extends Controller
             'course_title' => 'required|max:50',
             'year_select' => 'required|between:1,6',
             'semester_select'=>'required|between:1,2',
-            'course_descr'=>'required|max:5000',
-            'course_teach'=>'required',
+            'course_descr'=>'required|max:5000'
         ]);
         $course = Course::where('slug', $slug)->first();
         $course->course_title = Input::get('course_title');
         $course->year = Input::get('year_select');
         $course->semester = Input::get('semester_select');
         $course->description = Input::get('course_descr');
-
-        $course_teachers = Input::get('course_teach');
-        $teachers = explode(", ", $course_teachers);
-
         $course->save();
 
+        $teachers = User::whereIn('id', $request->input('teacher_checkbox', []))->get();
+        $to_delete = TeacherCourse::where('course_id', $course->id)->delete();
+
+        \DB::table('teacher_course')->insert([
+            'course_id' => $course->id,
+            'user_id' => Auth::id()
+        ]);
+
+        if (!is_null($teachers)) {
+            foreach ($teachers as $teacher) {
+                \DB::table('teacher_course')->insert([
+                    'course_id' => $course->id,
+                    'user_id' => $teacher->id
+                ]);
+            }
+        }
+
+        Session::flash('success', 'Cursul a fost editat');
         return redirect('/course');
     }
 
@@ -137,7 +150,10 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('new-course');
+        $teachers = User::where('id', '!=', Auth::id())->whereHas('role', function ($query) {
+            $query->where('rank', \App\Role::$TEACHER_RANK);
+        })->get();
+        return view('new-course', compact('teachers'));
     }
 
     /**
@@ -151,8 +167,8 @@ class CourseController extends Controller
             'year_select' => 'required|between:1,6',
             'semester_select'=>'required|between:1,2',
             'course_descr'=>'required|max:5000',
-            'course_teach'=>'required',
         ]);
+
         $course = new Course();
         $course->course_title = Input::get('course_title');
         $course->year = Input::get('year_select');
@@ -163,10 +179,22 @@ class CourseController extends Controller
 
         $course->save();
 
+        $teachers = User::whereIn('id', $request->input('teacher_checkbox'))->get();
+
         \DB::table('teacher_course')->insert([
             'course_id' => $course->id,
             'user_id' => Auth::id()
         ]);
+
+        if (!is_null($teachers)) {
+            foreach ($teachers as $teacher) {
+                \DB::table('teacher_course')->insert([
+                    'course_id' => $course->id,
+                    'user_id' => $teacher->id
+                ]);
+            }
+        }
+
 
         return redirect('/course');
     }

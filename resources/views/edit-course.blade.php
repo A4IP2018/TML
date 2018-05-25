@@ -38,12 +38,19 @@
       </div>
 
       <div class="form-group">
-
-        <!--Course teachers edit-->
-        <label for="course-teach">Profesori:</label>
-        <textarea name="course_teach" class="form-control" rows="5" id="hw-descr" placeholder="Alege profesorii de curs">{{ join(', ', $course->users->pluck('username')->toArray()) }}</textarea>
-
+        <!--Course teachers-->
+        <label for="hw-descr">Al&#539;i profesori:</label>
+        <br>
+        @foreach ($teachers as $teacher)
+          @if (Auth::check() and $teacher->id != Auth::id())
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" name="teacher_checkbox[]" value="{{ $teacher->id }}" {{ is_course_teacher_id($course->id, $teacher->id) ? 'checked' : '' }} type="checkbox"/>
+            <label class="form-check-label">{{ $teacher->teacher_information->name }}</label>
+          </div>
+          @endif
+        @endforeach
       </div>
+
 
       <!--Submit Course edit-->
       <button name="course-edit" type="submit" class="btn btn-primary">Salveaza</button>
