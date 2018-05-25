@@ -6,17 +6,15 @@
 <div class="row">
     <div class="col-12">
         <div class="input-group">
-            <!--Course search-->
             <input name="course-search" class="form-control" type="text" placeholder="Cauta curs...">
             <span class="input-group-append">
-              <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i
-                          class="fa fa-filter"></i></button>
-
-              <button class="filter-search-button btn btn-primary" type="button">
+                <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
+                <button class="btn btn-primary" type="button">
                 <i class="fa fa-search"></i>
-              </button>
-          </span>
+                </button>
+            </span>
         </div>
+        <br>
         <div id="demo" class="collapse">
             <div class="card">
                 <div class="card-body">
@@ -137,8 +135,6 @@
 @endsection
 
 @section ('scripts')
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {
