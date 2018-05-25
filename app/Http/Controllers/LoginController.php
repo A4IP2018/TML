@@ -53,12 +53,12 @@ class LoginController extends Controller
                         'password' => 'required|max:255',
         ]);
 
-        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'is_confirmed' => true])) {
             return Redirect::to($this->redirectTo);
         }
 
         return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-            'approve' => 'Parola gresita',
+            'approve' => 'Date incorecte sau utilizatorul necesita confirmare prie email'
         ]);
     }
 

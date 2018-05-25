@@ -74,7 +74,7 @@ Route::get('/logout', 'LoginController@logout')->name('logout');
 
 Route::get('/register', 'RegisterController@index')->name('register');
 Route::post('/register', 'RegisterController@register')->name('register');
-
+Route::get('/confirm/{token}', 'RegisterController@confirm');
 
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
