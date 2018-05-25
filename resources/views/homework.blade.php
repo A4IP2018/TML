@@ -9,7 +9,7 @@
             <!--search for homework-->
             <input name="homework-search" class="form-control" type="text" placeholder="Cauta tema...">
             <span class="input-group-append">
-                <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
+                <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary ">Filtru <i class="fa fa-filter"></i></button>
                 <button class="btn btn-primary" type="button">
                 <i class="fa fa-search"></i>
                 </button>
