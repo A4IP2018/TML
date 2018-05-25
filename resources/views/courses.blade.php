@@ -3,19 +3,7 @@
 
 @section('content')
 
-
-    <!--MULTIPLE COURSES PAGE-->
-
-    <div class="content-wrapper">
-        <div class="container-fluid">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Bord</a>
-                </li>
-                <li class="breadcrumb-item active">Cursuri</li>
-            </ol>
-            <div class="row">
+<div class="row">
                 <div class="col-12">
 
                     <div class="input-group">
@@ -148,9 +136,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
+@endsection
+
+@section ('scripts')
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -228,6 +217,4 @@
         });
     </script>
 
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
 @endsection

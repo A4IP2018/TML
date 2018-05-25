@@ -9,6 +9,7 @@ use App\Homework;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File as FileSystem;
+use Session;
 
 class UploadController extends Controller
 {
@@ -92,7 +93,8 @@ class UploadController extends Controller
 
 
         if (!Auth::check()) {
-            return redirect('/login')->withErrors('Trebuie sa fiti autentificat pentru a uploada o tema.');
+            Session::flash('error', 'Trebuie sa fiti autentificat pentru a uploada o tema.');
+            return redirect('/login');
         }
 
         $homework_id = $request->input('homework-id');
@@ -123,7 +125,9 @@ class UploadController extends Controller
         foreach ($to_upload as $query) {
             File::create($query[1]);
         }
-        return redirect()->back()->withErrors('OK!');
+
+        Session::flash('success', 'Fisierele au fost incarcate!');
+        return redirect()->back();
     }
 
     /**

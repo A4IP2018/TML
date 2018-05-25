@@ -8,6 +8,7 @@ use App\StudentInformation;
 use App\TeacherInformation;
 use App\User;
 use App\Code;
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -113,6 +114,8 @@ class RegisterController extends Controller
         if (Hash::check($request->input('confirm-password'), $password))
         {
 
+            Mail::to($request->input('email'))->send(new AccountConfirm($register_token));
+
             $user = User::create([
                 'email' => $request->input('email'),
                 'password' => $password,
@@ -122,8 +125,8 @@ class RegisterController extends Controller
                 'is_confirmed' => false
             ]);
 
-            Mail::to($user->email)->send(new AccountConfirm($register_token));
-
+            Session::flash('success', 'A fost trimis un mail de confirmare');
+          
             if ($rank == \App\Role::$TEACHER_RANK) {
                 TeacherInformation::create([
                     'user_id' => $user->id,
@@ -141,17 +144,18 @@ class RegisterController extends Controller
             return Redirect::to($this->redirectPath);
         }
 
-        return redirect()->back()->withErrors('approve', 'A fost trimis un mail de confirmare');
-
+        return redirect()->back();
     }
 
     public function confirm($token) {
         $user = \App\User::where('register_token', $token)->first();
         if (is_null($user)) {
-            return redirect('/register')->withErrors('approve', 'Adresa de confirmare este invalida');
+            Session::flash('error', 'Adresa de confirmare este invalida');
+            return redirect('/register');
         }
         $user->update(['is_confirmed' => true, 'register_token' => '']);
-        return redirect('/login')->withErrors('approve', 'Profilul a fost confirmat!');
+        Session::flash('success', 'Profilul a fost confirmat!');
+        return redirect('/login');
     }
 
 }

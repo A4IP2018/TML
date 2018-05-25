@@ -1,49 +1,20 @@
 @extends('layouts.master')
 
 @section('content')
-<!--USER PROFILE PAGE-->
 
-
-<div class="content-wrapper">
-  <div class="container-fluid">
-    <!-- Breadcrumbs-->
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href="#">Profil</a>
-      </li>
-    </ol>
-
-    <div class="row">
+<div class="row">
     <div class="col-12">
-
         <div class="mb-0 mt-0">
             <i class="fa fa-archive"></i> Setari cont</div>
         <hr class="mt-0">
         <div class="card card-register mx-auto mt-4">
             <div class="card">
                 <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
                     <div class="form-group">
                         <label for="name">Nume:</label>
-                        @if($user->role_id == \App\Role::$TEACHER_RANK)
-                        <input type="name" class="form-control" id="name" value="{{ $userInfo->name }}" readonly>
-                        @endif
-                        @if($user->role_id == \App\Role::$ADMINISTRATOR_RANK)
+                        @if($user->role->rank == \App\Role::$TEACHER_RANK)
+                            <input type="name" class="form-control" id="name" value="{{ $userInfo->name }}" readonly>
+                        @else
                             <input type="name" class="form-control" id="name" value="{{ $userInfo->first_name.' '.$userInfo->last_name }}" readonly>
                         @endif
                     </div>
@@ -54,10 +25,17 @@
                     </div>
 
                     @if ($user->role->rank == \App\Role::$MEMBER_RANK)
-                        <div class="form-group">
-                            <label for="email">Nr. matricol:</label>
-                            <input type="email" class="form-control" id="nr_matr" value="{{$user->nr_matricol}}" readonly>
-                        </div>
+                        <label for="nr_matricol">Nr. matricol:</label>
+                        <form action="{{ url('/change-nr-matricol') }}" METHOD="POST">
+                            <div class="input-group">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input name="nr-matricol" type="text" class="form-control" id="nr_matr" value="{{ $user->student_information->nr_matricol }}" >
+                                <span class="input-group-append">
+                                    <button data-toggle="collapse" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
+                                </span>
+                            </div>
+                        </form>
+                        <br>
                     @endif
 
                     <label for="email">Adresa de mail:</label>
@@ -135,10 +113,7 @@
                 </div>
             </div>
         </div>
-
-</div>
-</div>
-  </div>
+    </div>
 </div>
   
 @endsection
