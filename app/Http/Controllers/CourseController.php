@@ -63,8 +63,15 @@ class CourseController extends Controller
             ->when($searchedSubscription == 0, function ($collection) use ($searchedSemester) {
                 return $collection->doesntHave('subscriptions');
             })
-            ->with('subscriptions', 'users')
             ->get();
+
+        foreach ($courses as $course) {
+            $course['subscribe_url'] = url('/course/' . $course->slug . '/subscribe');
+            $course['detail_url'] = url('/course/' . $course->slug);
+            $course['edit_url'] = url('/course' . $course->slug . '/edit');
+            $course['can_subscribe'] = can_subscribe($course->id);
+            $course['is_teacher'] = is_course_teacher($course->id);
+        }
 
         return $courses;
 
@@ -124,16 +131,27 @@ class CourseController extends Controller
         $course->save();
 
         $teachers = User::whereIn('id', $request->input('teacher_checkbox', []))->get();
-        $to_delete = TeacherCourse::where('course_id', $course->id)->delete();
+        TeacherCourse::where('course_id', $course->id)->delete();
+        UserCourse::whereIn('user_id', $request->input('teacher_checkbox', []))->where('course_id', $course->id)->delete();
 
-        \DB::table('teacher_course')->insert([
+        TeacherCourse::create([
+            'course_id' => $course->id,
+            'user_id' => Auth::id()
+        ]);
+
+        UserCourse::create([
             'course_id' => $course->id,
             'user_id' => Auth::id()
         ]);
 
         if (!is_null($teachers)) {
             foreach ($teachers as $teacher) {
-                \DB::table('teacher_course')->insert([
+                TeacherCourse::create([
+                    'course_id' => $course->id,
+                    'user_id' => $teacher->id
+                ]);
+
+                UserCourse::create([
                     'course_id' => $course->id,
                     'user_id' => $teacher->id
                 ]);
@@ -181,14 +199,24 @@ class CourseController extends Controller
 
         $teachers = User::whereIn('id', $request->input('teacher_checkbox'))->get();
 
-        \DB::table('teacher_course')->insert([
+        TeacherCourse::create([
+            'course_id' => $course->id,
+            'user_id' => Auth::id()
+        ]);
+
+        UserCourse::create([
             'course_id' => $course->id,
             'user_id' => Auth::id()
         ]);
 
         if (!is_null($teachers)) {
             foreach ($teachers as $teacher) {
-                \DB::table('teacher_course')->insert([
+                TeacherCourse::create([
+                    'course_id' => $course->id,
+                    'user_id' => $teacher->id
+                ]);
+
+                UserCourse::create([
                     'course_id' => $course->id,
                     'user_id' => $teacher->id
                 ]);

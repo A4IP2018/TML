@@ -16,14 +16,12 @@
           <hr><p class="card-text">An: {{ $course->year }}</p>
           <!--Course semester-->
           <hr><p class="card-text">Semestru: {{ $course->semester }}</p>
-          <!--Course credits-->
-          <hr><p class="card-text">Credite: {{ $course->credits }}</p>
           <!--Course teachers-->
           <hr>
           <p class="card-text">Profesori: {{ $teachers_string }}</p>
           <hr>
           <!--Course description-->
-          <hr><p class="card-text">Description: {{ $course->description }}</p><hr>
+          <hr><p class="card-text">Descriere: {{ $course->description }}</p><hr>
 
             <!--press to follow course-->
             @if (can_subscribe($course->id))
