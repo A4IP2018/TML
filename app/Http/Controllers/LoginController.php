@@ -58,7 +58,7 @@ class LoginController extends Controller
         }
 
         return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-            'approve' => 'Date incorecte sau utilizatorul necesita confirmare prie email',
+            'approve' => 'Date incorecte sau utilizatorul necesita confirmare prie email'
         ]);
     }
 
