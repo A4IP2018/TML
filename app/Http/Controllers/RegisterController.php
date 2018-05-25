@@ -126,7 +126,7 @@ class RegisterController extends Controller
             ]);
 
             Session::flash('success', 'A fost trimis un mail de confirmare');
-
+          
             if ($rank == \App\Role::$TEACHER_RANK) {
                 TeacherInformation::create([
                     'user_id' => $user->id,
@@ -145,7 +145,6 @@ class RegisterController extends Controller
         }
 
         return redirect()->back();
-
     }
 
     public function confirm($token) {

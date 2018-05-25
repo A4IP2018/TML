@@ -58,9 +58,9 @@ class LoginController extends Controller
             return Redirect::to($this->redirectTo);
         }
 
+
         Session::flash('error', 'Date incorecte sau utilizatorul necesita confirmare prie email');
         return redirect()->back()->withInput($request->only('email', 'remember'));
-
     }
 
 
