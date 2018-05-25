@@ -93,6 +93,10 @@
                     <!--Press to create new Course-->
                         <br><a href="{{ url('/course/create') }}" class="btn btn-primary btn-lg btn-block">Curs nou</a>
                 @endif
+                </div> {{--/.col-12--}}
+            </div> {{--/.row--}}
+            <div class="row smaller">
+                <div class="col-12">
                 <!--Multiple Courses-->
                     <div class="mb-0 mt-4">
 
