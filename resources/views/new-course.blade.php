@@ -39,8 +39,14 @@
 
       <div class="form-group">
         <!--Course teachers-->
-        <label for="hw-descr">Profesori:</label>
-        <textarea name="course_teach" class="form-control" rows="5" id="hw-descr" placeholder="Alege o descriere"></textarea>
+        <label for="hw-descr">Al&#539;i profesori:</label>
+        <br>
+        @foreach ($teachers as $teacher)
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" name="teacher_checkbox[]" value="{{ $teacher->id }}" type="checkbox"/>
+            <label class="form-check-label">{{ $teacher->teacher_information->name }}</label>
+          </div>
+        @endforeach
       </div>
 
       <!--Submit Course-->

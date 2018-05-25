@@ -11,6 +11,9 @@ use App\Rank;
 use App\Role;
 use App\TeacherCourse;
 use App\Course;
+use Carbon\Carbon;
+
+Carbon::setLocale('ro');
 
 if (! function_exists('is_teacher')) {
     function is_teacher() {
@@ -23,10 +26,33 @@ if (! function_exists('is_teacher')) {
     }
 }
 
+
+if (! function_exists('is_administrator')) {
+    function is_administrator() {
+        if (Auth::check()) {
+            return User::where('id', Auth::id())
+                    ->first()
+                    ->role->rank == Role::$ADMINISTRATOR_RANK;
+        }
+        return false;
+    }
+}
+
 if (! function_exists('is_course_teacher')) {
     function is_course_teacher($course_id) {
         if (Auth::check()) {
             return TeacherCourse::where('user_id', Auth::id())
+                    ->where('course_id', $course_id)
+                    ->count() != 0;
+        }
+        return false;
+    }
+}
+
+if (! function_exists('is_course_teacher_id')) {
+    function is_course_teacher_id($course_id, $user_id) {
+        if (Auth::check()) {
+            return TeacherCourse::where('user_id', $user_id)
                     ->where('course_id', $course_id)
                     ->count() != 0;
         }
