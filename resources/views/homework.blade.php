@@ -4,7 +4,7 @@
 @section('content')
 
     <!--MULTIPLE HOMEWORK PAGE-->
-    <div class="content-wrapper">
+    <div class="content-wrapper" >
         <div class="container-fluid">
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
@@ -26,49 +26,51 @@
                 @endif
             </div>
 
-            <div class="row">
+            <div class="row smaller">
                 <div class="col-12">
                     <div class="input-group">
-            <!--search for homework-->
-            <input name="homework-search" class="form-control" type="text" placeholder="Cauta tema...">
-            <span class="input-group-append">
-                          <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
-
-                          <button class="btn btn-primary" type="button">
-                            <i class="fa fa-search"></i>
-                          </button>
-                      </span>
-          </div>
-          <div id="demo" class="collapse">
-            <div class="card">
-                <div class="card-body">            
-                    <form>
-                        <h6>Teme:&nbsp; </h6>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value=""> Noi
-                        </label> &ensp;
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value=""> Necorectate
-                        </label> &ensp;
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value=""> Corectate
-                        </label>
-                    </form>
-<hr>
-                    <form>
-                        <h6>Cursuri:&nbsp; </h6>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="">  Abonament
-                        </label> &ensp;
-                        <label class="checkbox-inline">
-                            <input type="checkbox" value="">  Toate
-                        </label> &ensp;
-                    </form>
-            </div>
-        </div>
-  </div>
-          
-<br>
+                        <!--search for homework-->
+                        <input name="homework-search" class="form-control" type="text" placeholder="Cauta tema...">
+                        <span class="input-group-append">
+                            <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="demo" class="collapse">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <h6>Teme:&nbsp; </h6>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value=""> Noi
+                                    </label> &ensp;
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value=""> Necorectate
+                                    </label> &ensp;
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value=""> Corectate
+                                    </label>
+                                </form>
+                                <hr>
+                                <form>
+                                    <h6>Cursuri:&nbsp; </h6>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="">  Abonament
+                                    </label> &ensp;
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="">  Toate
+                                    </label> &ensp;
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div> {{--/.col-12--}}
+            </div> {{--/.row--}}
+                <div class="row smaller">
+                    <div class="col-12">
                     @if (is_teacher())
                         <!--press to create new homework <TEACHER>-->
                         <a href="{{ url('/homework/create') }}" class="btn btn-primary btn-lg btn-block">Tema noua</a>
@@ -78,11 +80,12 @@
                     @endif
 
                     @if ($homeworks->count() > 0)
+
                     <div class="card-columns">
                         @foreach ($homeworks as $homework)
                             <!-- Example Homework Card-->
                             <div class="card mb-3">
-                                <div class="card-header bg-transparent">
+                                <div class="card-header bg-transparent h5 font-weight-normal">
                                     @if ($homework->course)
                                     <a href="{{ url('/course/' . $homework->course->slug) }}">{{ $homework->course->course_title }}</a>
                                     @endif
@@ -139,19 +142,17 @@
                     @else
                         <h4 class="text-center" >Nicio tema aici, incearca sa te abonezi la cateva <a href="{{ url('/course') }}">cursuri</a></h4>
                     @endif
+                        <!--pagination
 
-
-                    <!--pagination
-                    
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
-                    </ul>
-                    --->
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
+                        </ul>
+                        --->
                 </div>
             </div>
         </div>
