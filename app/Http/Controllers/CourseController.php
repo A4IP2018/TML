@@ -160,6 +160,10 @@ class CourseController extends Controller
         }
 
         Session::flash('success', 'Cursul a fost editat');
+        send_notification(
+            $course->subscriptions->pluck('id')->toArray(),
+            'Cursul ' . '<a href="' . url('/course/' . $course->slug) . '">' . $course->course_title . '</a> a fost modificat'
+        );
         return redirect('/course');
     }
 
@@ -225,23 +229,28 @@ class CourseController extends Controller
             }
         }
 
+        send_notification(
+            User::all()->pluck('id')->toArray(),
+            'A fost creat un curs nou: <a href="'. url('/course/' . $course->slug) .'">'. $course->course_title . '</a>'
+        );
 
         return redirect('/course');
     }
 
 
     public function subscribe($slug) {
-        $course_id = Course::where('slug', $slug)->first()->id;
+        $course = Course::where('slug', $slug)->first();
         $current_user = User::where('id', Auth::id())->first();
 
-        if (!in_array($course_id, $current_user->subscribed->pluck('id')->toArray()))
+        if (!in_array($course->id, $current_user->subscribed->pluck('id')->toArray()))
         {
             $new_entry = new UserCourse();
             $new_entry->user_id = $current_user->id;
-            $new_entry->course_id = $course_id;
+            $new_entry->course_id = $course->id;
             $new_entry->save();
         }
 
+        Session::flash('success', 'Ai fost abonat la cursul ' . $course->course_title);
         return redirect()->back();
     }
 }
