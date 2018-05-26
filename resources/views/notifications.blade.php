@@ -12,15 +12,17 @@
                     <a href="#">Notificari</a>
                 </li>
             </ol>
-            <div class="row">
-                <div class="col-12">
-                    <div class="mb-0 mt-0">
-                        <i class="fa fa-bell"></i> Notificarile mele</div>
-                    <hr class="mt-2">
+      <div class="row">
+        <div class="mb-2" style="width:100%"></div>
+        <div class="col-sm-6">
+          <div class="card-header">
+            <i class="fa fa-bell"></i>Notificările mele</div>
+          <div class="list-group list-group-flush-small " style="height:350px; overflow-y:scroll">
+                <hr class="mt-2">
                     <!--notifications list-->
-                    <div class="card" style="width: auto;">
+                <div class="media>
                         <ul class="list-group list-group-flush">
-                            <br>
+                        
                             <li class="list-group-item>
                                 <span class="text-success">
                                     <i class="fa fa-envelope fa-fw"></i>Comentariu nou la
@@ -59,16 +61,18 @@
                             <hr>
                             </li>
                         </ul>
-                    </div>
-
-
+                        </div>
                 </div>
-            </div>
+        <div class="card-footer small text-muted">Ultima notificare 11:59 PM</div>
         </div>
-        <br>
+      </div> <!--/.row-->
     </div>
+  </div>
+
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
+
 
 
 
