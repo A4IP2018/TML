@@ -91,11 +91,11 @@
                                 <form action="{{ url('/change-email') }}" method="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="form-group">
-                                        <label for="name">Adresa de mail veche:</label>
+                                        <label for="old-email">Adresa de mail veche:</label>
                                         <input name="old-email" type="name" class="form-control" id="oldMail" placeholder="Scrie vechea ta adresa de mail">
                                     </div>
                                     <div class="form-group">
-                                        <label for="name">Adresa de mail noua:</label>
+                                        <label for="new-email">Adresa de mail noua:</label>
                                         <input name="new-email" type="name" class="form-control" id="newMail" placeholder="Scrie noua ta adresa de mail">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Salveaza</button>
