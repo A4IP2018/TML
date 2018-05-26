@@ -52,15 +52,23 @@
         </div>
         <br>
         <div class="card text-center">
-            <div class="card-header">Termen limita</div>
+            <div class="card-header">Termen limit&#259;</div>
             <div class="card-body">
                 <h5 class="card-title">{{ $homework->deadline }}</h5>
             </div>
         </div>
+        <br>
+        @if (is_course_teacher($homework->course->id))
+        <div class="card text-center">
+            <div class="card-body">
+                <a class="btn btn-info" href="{{ url('/homework/' . $homework->slug . '/edit') }}">Editeaz&#259;</a>
+            </div>
+        </div>
+        @endif
 
         @if (can_subscribe($homework->course->id))
             <div class="card text-center">
-                <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaza-te la curs</a>
+                <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaz&#259;-te la curs</a>
             </div>
         @endif
 
