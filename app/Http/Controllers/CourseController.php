@@ -10,6 +10,7 @@ use App\UserCourse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use \Carbon\Carbon as Carbon;
+use Session;
 
 class CourseController extends Controller
 {

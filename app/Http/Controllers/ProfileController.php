@@ -12,6 +12,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail as Mail;
+use Session;
 
 class ProfileController extends Controller
 {
@@ -25,10 +26,10 @@ class ProfileController extends Controller
         if (Auth::check()) {
 
             $user = \App\User::where('id', Auth::id())->first();
-            if($user->role_id == Role::$TEACHER_RANK) {
+            if($user->role->rank == Role::$TEACHER_RANK) {
                 $userInfo = \App\TeacherInformation::where('user_id', Auth::id())->first();
             }
-            else if($user->role_id == Role::$ADMINISTRATOR_RANK){
+            else {
                 $userInfo = \App\StudentInformation::where('user_id', Auth::id())->first();
             }
             return view('profile', compact('user','userInfo'));
@@ -51,11 +52,13 @@ class ProfileController extends Controller
         $newPassword = Hash::make($request->input('new-password'));
         $expectedPassword = \App\User::where('id', Auth::id())->value('password');
         if(Hash::check($oldPassword,$expectedPassword)) {
-            User::updateOrCreate(['id' => Auth::id()],['password' => $newPassword]);
-            return redirect('/profile')->with("success","Parola a fost schimbata cu succes!");;}
-        else{
-            return redirect('/profile')->withErrors([
-                'approve' => 'Parola nu a putut fi schimbata!']);
+            User::updateOrCreate(['id' => Auth::id()], ['password' => $newPassword]);
+            Session::flash('success', 'Parola a fost schimbata cu succes!');
+            return redirect('/profile');
+        }
+        else {
+            Session::flash('error', 'Parola nu a putut fi schimbata!');
+            return redirect('/profile');
         }
     }
 
@@ -73,12 +76,32 @@ class ProfileController extends Controller
         $expectedEmail = \App\User::where('id', Auth::id())->value('email');
         if($oldEmail==$expectedEmail) {
             User::updateOrCreate(['id' => Auth::id()],['email' => $newEmail]);
-            return redirect('/profile')->with("success","Adresa de mail a fost schimbata cu succes!");
+            Session::flash('success', 'Adresa de mail a fost schimbata cu succes!');
+            return redirect('/profile');
         }
         else{
-            return redirect('/profile')->withErrors([
-                'approve' => 'Adresa de mail nu a putut fi schimbata!']);
+            Session::flash('error', 'Adresa de mail nu a putut fi schimbata!');
+            return redirect('/profile');
         }
+    }
+
+    public function changeNrMatricol(Request $request)
+    {
+        $validator = $this->validate($request, [
+            'nr-matricol' => 'required|min:5|max:40',
+        ]);
+
+        $new_nr_matricol = $request->input('nr-matricol');
+        $user = \App\User::where('id', Auth::id())->first();
+        if ($user->role->rank != \App\Role::$MEMBER_RANK) {
+            Session::flash('error', 'Doar studentii pot avea numar matricol');
+            return redirect('/profile');
+        }
+
+        $user->student_information->update(['nr_matricol' => $new_nr_matricol]);
+
+        Session::flash('success', 'Numarul matricol a fost schimbat cu succes!');
+        return redirect('/profile')->with(['user' => $user->student_information]);
     }
 
     public function forgot() {
@@ -94,7 +117,8 @@ class ProfileController extends Controller
         $user = \App\User::where('email', $user_email)->first();
 
         if (is_null($user)) {
-            return redirect()->back()->withErrors('approve', 'Nu exista un utilizator cu asa email');
+            Session::flash('error', 'Nu exista un utilizator cu asa email');
+            return redirect()->back();
         }
 
         $token = generate_random_string(30);
@@ -102,21 +126,24 @@ class ProfileController extends Controller
         $user->update(['reset_token' => $token_hash]);
         Mail::to($user->email)->send(new PasswordReset($user->email, $token));
 
-        return redirect()->back()->withErrors([
-            'approve' => 'Instruc&#539;iunile au fost trimise']);
+        Session::flash('success', 'Instruc&#539;iunile au fost trimise');
+        return redirect()->back();
     }
 
     public function newPassword($user_mail, $token) {
         $user = User::where('email', $user_mail)->first();
         if (is_null($user)) {
-            return redirect('/forgot')->withErrors('accept', 'Utilizator inexistent');
+            Session::flash('error', 'Utilizator inexistent');
+            return redirect('/forgot');
         }
         if (Hash::check($token, $user->reset_token)) {
             $user->update(['reset_token' => '']);
+            Session::flash('success', 'Token valid, puteti schimba parola');
             return view('reset-password')->with(['email' => $user_mail]);
         }
         else {
-            return redirect('/forgot')->withErrors('accept', 'Token gre&#x219;it');
+            Session::flash('error', 'Token gre&#x219;it');
+            return redirect('/forgot');
         }
     }
 
@@ -129,6 +156,7 @@ class ProfileController extends Controller
         $new_password = $request->input('new-password');
         $hash = Hash::make($new_password);
         User::where('email', $request->input('_email'))->first()->update(['password', $hash]);
-        return redirect('/login')->withErrors('accept', 'Parola a fost modificata cu succes');
+        Session::flash('success', 'Parola a fost modificata cu succes');
+        return redirect('/login');
     }
 }

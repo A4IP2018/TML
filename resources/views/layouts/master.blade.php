@@ -135,8 +135,45 @@
                 </ul>
             </div>
         </nav>
-
-        @yield('content')
+        <!--ABOUT PAGE-->
+        <div class="content-wrapper">
+            <div class="container-fluid p-4">
+                @if (isset($errors) and $errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (Session::get('message'))
+                    <div class="alert alert-info alert-dismissible fade show">
+                        {{ Session::get('message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {{ Session::get('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (Session::get('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{ Session::get('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @yield('content')
+            </div>
+        </div>
 
         <footer class="sticky-footer">
             <div class="container">

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Session;
 
 class LoginController extends Controller
 {
@@ -57,9 +58,8 @@ class LoginController extends Controller
             return Redirect::to($this->redirectTo);
         }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-            'approve' => 'Date incorecte sau utilizatorul necesita confirmare prie email',
-        ]);
+        Session::flash('error', 'Date incorecte sau utilizatorul necesita confirmare prie email');
+        return redirect()->back()->withInput($request->only('email', 'remember'));
     }
 
 

@@ -87,9 +87,10 @@ Route::post('/reset', 'ProfileController@setNewPassword');
 /* PASSWORD RESET */
 
 /* PROFILE */
-Route::get('/profile', 'ProfileController@index')->name('profile');
-Route::post('change-password', 'ProfileController@changePassword')->name('reset-password-action');
-Route::post('change-email', 'ProfileController@changeEmail')->name('reset-email-action');
+Route::get('/profile', 'ProfileController@index')->name('profile')->middleware('auth');
+Route::post('change-password', 'ProfileController@changePassword')->name('reset-password-action')->middleware('auth');
+Route::post('change-email', 'ProfileController@changeEmail')->name('reset-email-action')->middleware('auth');
+Route::post('change-nr-matricol', 'ProfileController@changeNrMatricol')->name('reset-nr-matricol')->middleware('auth');
 /* PROFILE */
 
 Route::get('/admin', 'AdminController@index');
