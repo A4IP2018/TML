@@ -21,7 +21,7 @@
           <p class="card-text">Profesori: {{ $teachers_string }}</p>
           <hr>
           <!--Course description-->
-          <hr><p class="card-text">Descriere: {{ $course->description }}</p><hr>
+          <p class="card-text">Descriere: {{ $course->description }}</p><hr>
 
             <!--press to follow course-->
             @if (can_subscribe($course->id))
