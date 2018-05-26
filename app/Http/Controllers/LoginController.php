@@ -58,7 +58,7 @@ class LoginController extends Controller
         }
 
         return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-            'approve' => 'Wrong password or this account not approved yet.',
+            'approve' => 'Parola gresita',
         ]);
     }
 

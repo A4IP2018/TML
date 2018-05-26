@@ -99,6 +99,23 @@ if (! function_exists('generate_random_string')) {
     }
 }
 
+if (! function_exists('get_role')) {
+    function get_role() {
+        if (Auth::check()) {
+            $rank = User::where('id', Auth::id())->first()->role->rank;
+            if ($rank == \App\Role::$TEACHER_RANK) {
+                return 'Profesor';
+            }
+            else if ($rank == \App\Role::$ADMINISTRATOR_RANK) {
+                return 'Administrator';
+            }
+            else if ($rank == \App\Role::$MEMBER_RANK) {
+                return 'Membru';
+            }
+        }
+    }
+}
+
 
 
 

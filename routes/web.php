@@ -15,14 +15,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/profile', function () {
-    return view('profile');
-});
-
-Route::get('/course/create', function () {
-    return view('new-course');
-});
-
 Route::get('/compare', 'HomeworkController@compare')->name('compare');
 Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
 
@@ -87,15 +79,17 @@ Route::post('/register', 'RegisterController@register')->name('register');
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
 
-
-Route::get('/profile', 'ProfileController@index')->name('profile');
+/* PASSWORD RESET */
 Route::get('/forgot', 'ProfileController@forgot')->name('forgot');
 Route::post('/forgot', 'ProfileController@sendToken')->name('reset-password');
 Route::get('/reset/{user_mail}/{token}', 'ProfileController@newPassword');
 Route::post('/reset', 'ProfileController@setNewPassword');
+/* PASSWORD RESET */
 
-Route::post('reset-password-action', 'ProfileController@changePassword')->name('reset-password-action');
-
-Route::post('reset-email-action', 'ProfileController@changeEmail')->name('reset-email-action');
+/* PROFILE */
+Route::get('/profile', 'ProfileController@index')->name('profile');
+Route::post('change-password', 'ProfileController@changePassword')->name('reset-password-action');
+Route::post('change-email', 'ProfileController@changeEmail')->name('reset-email-action');
+/* PROFILE */
 
 Route::get('/admin', 'AdminController@index');
