@@ -115,4 +115,8 @@ class Homework extends Model
     public function requirements() {
         return $this->hasMany('App\RequiredFormat');
     }
+
+    public function events() {
+        return $this->hasMany('App\HomeworkEvent')->orderBy('created_at', 'DESC');
+    }
 }

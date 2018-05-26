@@ -56,21 +56,12 @@
                     </div>
                 </div>
             @endif
-
-            @if ($homework->category)
-                <div class="card mb-3 text-center">
-                    <div class="card-header">Categorie</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $homework->category->name }}</h5>
-                    </div>
-                </div>
-            @endif
         </div>
 
         <div class="card text-center">
             <div class="card-header">Descriere</div>
             <div class="card-body ">
-                <h5 class="card-title">{{ $homework->course->description }}</h5>
+                <h5 class="card-title">{{ $homework->description }}</h5>
             </div>
         </div>
         <br>
@@ -88,6 +79,20 @@
         @endif
 
         <br>
+
+        <div class="card text-center">
+            <div class="card-header">Evenimente</div>
+            <div class="card-body">
+                <ul class="list-group">
+                @foreach ($events as $event)
+                        <li class="list-group-item">
+                            {!! $event->event !!}
+                        </li>
+                @endforeach
+                </ul>
+            </div>
+        </div>
+
         <div class="card text-center">
             <div class="card-header">Adauga un comentariu</div>
             <div class="card-body">
@@ -105,6 +110,7 @@
             </div>
         </div>
         <br>
+
 
         <!--COMMENTS TEST-->
 
