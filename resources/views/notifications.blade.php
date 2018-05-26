@@ -9,7 +9,7 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Notificari</a>
+                    <a href="#">Notificări</a>
                 </li>
             </ol>
       <div class="row">
@@ -26,63 +26,63 @@
                             <li class="list-group-item>
                                 <span class="text-success">
                                     <i class="fa fa-envelope fa-fw"></i>Comentariu nou la
-                                    <a href="#">Tema 5</a> (materie: <a href="#">Programare Avansata</a>)
+                                    <a href="#">Tema 5</a> (materie: <a href="#">Programare Avansată</a>)
                                 </span>
                             <hr>
                             </li>
                             <li class="list-group-item>
                                 <span class="text-success">
-                                    <i class="fa fa-arrow-up fa-fw"></i>O noua <a href="#">tema</a> a fost adaugata la materia <a href="#">Introducere in Criptografie</a>
+                                    <i class="fa fa-arrow-up fa-fw"></i>O nouă <a href="#">temă</a> a fost adaugată la materia <a href="#">Introducere în Criptografie</a>
                                 </span>
                             <hr>
                             </li>
                             <li class="list-group-item>
                                 <span class="text-success">
-                                    <i class="fa fa-arrow-circle-o-up fa-fw"></i>Un nou comentariu a fost adaugat la o <a href="#">tema</a> incarcata de tine!
+                                    <i class="fa fa-arrow-circle-o-up fa-fw"></i>Un nou comentariu a fost adăugat la o <a href="#">temă</a> incărcată de tine!
                                 </span>
                             <hr>
                             </li>
                             <li class="list-group-item>
                                 <span class="text-success">
-                                     <i class="fa fa-calendar-times-o fa-fw"></i>Mai sunt 3 zile pana la termenul limita de postare a <a href="#">temei</a>! (materie: <a href="#">PSGBD</a>)
+                                     <i class="fa fa-calendar-times-o fa-fw"></i>Mai sunt 3 zile până la termenul limită de postare a <a href="#">temei</a>! (materie: <a href="#">PSGBD</a>)
                                 </span>
                             <hr>
                             </li>
                             <li class="list-group-item>
                                 <span class="text-success">
-                                    <i class="fa fa-check-square fa-fw"></i>Ai primit o nota la <a href="#">Tema 7</a>! (materie: <a href="#">PSGBD</a>)
+                                    <i class="fa fa-check-square fa-fw"></i>Ai primit o notă la <a href="#">Tema 7</a>! (materie: <a href="#">Introducere în Criptografie</a>)
                                 </span>
                             <hr>
                             </li>
                             
                             <li class="list-group-item>
                                 <span class="text-success">
+                                    <i class="fa fa-arrow-up fa-fw"></i>O nouă <a href="#">temă</a> a fost adaugată la materia <a href="#">PSGBD</a>
+                                </span>
+                            <hr>
+                            </li>
+                                <li class="list-group-item>
+                                <span class="text-success">
                                     <i class="fa fa-envelope fa-fw"></i>Comentariu nou la
-                                    <a href="#">Tema 5</a> (materie: <a href="#">Programare Avansata</a>)
+                                    <a href="#">Tema 3</a> (materie: <a href="#">Programare Avansată</a>)
                                 </span>
                             <hr>
                             </li>
                             <li class="list-group-item>
                                 <span class="text-success">
-                                    <i class="fa fa-arrow-up fa-fw"></i>O noua <a href="#">tema</a> a fost adaugata la materia <a href="#">Introducere in Criptografie</a>
+                                    <i class="fa fa-arrow-circle-o-up fa-fw"></i>Un nou comentariu a fost adăugat la o <a href="#">temă</a> incărcată de tine!
                                 </span>
                             <hr>
                             </li>
                             <li class="list-group-item>
                                 <span class="text-success">
-                                    <i class="fa fa-arrow-circle-o-up fa-fw"></i>Un nou comentariu a fost adaugat la o <a href="#">tema</a> incarcata de tine!
+                                     <i class="fa fa-calendar-times-o fa-fw"></i>Mai sunt 5 zile până la termenul limită de postare a <a href="#">temei</a>! (materie: <a href="#">Limbaje formale, automate și compilatoare</a>)
                                 </span>
                             <hr>
                             </li>
                             <li class="list-group-item>
                                 <span class="text-success">
-                                     <i class="fa fa-calendar-times-o fa-fw"></i>Mai sunt 3 zile pana la termenul limita de postare a <a href="#">temei</a>! (materie: <a href="#">PSGBD</a>)
-                                </span>
-                            <hr>
-                            </li>
-                            <li class="list-group-item>
-                                <span class="text-success">
-                                    <i class="fa fa-check-square fa-fw"></i>Ai primit o nota la <a href="#">Tema 7</a>! (materie: <a href="#">PSGBD</a>)
+                                    <i class="fa fa-check-square fa-fw"></i>Ai primit o notă la <a href="#">Tema 2</a>! (materie: <a href="#">PSGBD</a>)
                                 </span>
                             <hr>
                             <li class="list-group-item>
