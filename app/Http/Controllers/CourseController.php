@@ -133,6 +133,7 @@ class CourseController extends Controller
         $teachers = User::whereIn('id', $request->input('teacher_checkbox', []))->get();
         TeacherCourse::where('course_id', $course->id)->delete();
         UserCourse::whereIn('user_id', $request->input('teacher_checkbox', []))->where('course_id', $course->id)->delete();
+        UserCourse::where('user_id', Auth::id())->where('course_id', $course->id)->delete();
 
         TeacherCourse::create([
             'course_id' => $course->id,
