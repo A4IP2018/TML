@@ -49,6 +49,8 @@ class CourseController extends Controller
         $searchedYear = $request->input('yearFilter') ? (int)$request->input('yearFilter') : null;
         $searchedSemester = $request->input('semesterFilter') ? (int)$request->input('semesterFilter') : null;
         $searchedSubscription = $request->input('subscriptionFilter') ? (int)$request->input('subscriptionFilter') : null;
+        $courseSearch = $request->input('courseSearchFilter') ? $request->input('courseSearchFilter') : null;
+
 
         $courses = Course::
             when($searchedYear, function ($collection) use ($searchedYear) {
@@ -59,6 +61,9 @@ class CourseController extends Controller
             })
             ->when($searchedSubscription == 1, function ($collection) use ($searchedSemester) {
                 return $collection->has('subscriptions');
+            })
+            ->when($courseSearch, function ($collection) use ($courseSearch) {
+                return $collection->where('course_title', 'LIKE', '%' . $courseSearch . '%');
             })
             ->when($searchedSubscription == 0, function ($collection) use ($searchedSemester) {
                 return $collection->doesntHave('subscriptions');

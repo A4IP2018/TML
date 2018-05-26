@@ -21,11 +21,7 @@
         </div>
 
         <div class="card-footer bg-transparent border">
-        <!--go to homework page-->
           <a href="{{ url('/upload/' . $file->file_name ) }}" class="btn btn-info">Detalii</a>
-          <!--Grade homework-->
-          <button type="button" class="btn btn-primary">Noteaza</button>
-          <input type="number" name="grade-stud" style="width: 50px">
         </div>
 
 

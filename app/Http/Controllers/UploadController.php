@@ -139,9 +139,10 @@ class UploadController extends Controller
      */
     public function show($slug)
     {
-        $file = \App\File::where('file_name', $slug)->first();
+        $file = \App\File::where('file_name', $slug)->with('grade')->first();
         $content = mb_convert_encoding(FileSystem::get(public_path() . '/files/' . $file->file_name), 'UTF-16LE', 'UTF-8');
-        return view('uploaded-file-details')->with(['file' => $file, 'content' => $content]);
+
+        return view('uploaded-file-details', compact('file', 'content'));
     }
 
     /**

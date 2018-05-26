@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-12">
         <div class="input-group">
-            <input name="course-search" class="form-control" type="text" placeholder="Cauta curs...">
+            <input name="course-search" class="course-search form-control" type="text" placeholder="Cauta curs...">
             <span class="input-group-append">
                 <button data-toggle="collapse" data-target="#demo" class="btn btn-secondary">Filtru <i class="fa fa-filter"></i></button>
                 <button class="btn btn-primary filter-search-button" type="button">
@@ -144,12 +144,13 @@
 
                 var yearFilter = parseInt($('.year-filter:checked').val());
                 var semesterFilter = parseInt($('.semester-filter:checked').val());
+                var courseSearchFilter = $('.course-search').val();
                 var subscriptionFilter = parseInt($('.subscription-filter:checked').val());
 
                 $.ajax({
                     url: '/filter-courses',
                     type: 'get',
-                    data: {yearFilter: yearFilter, semesterFilter: semesterFilter, subscriptionFilter: subscriptionFilter},
+                    data: {courseSearchFilter: courseSearchFilter, yearFilter: yearFilter, semesterFilter: semesterFilter, subscriptionFilter: subscriptionFilter},
                     dataType: 'json',
                     success: function(result) {
                         var html = '';
