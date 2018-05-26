@@ -72,8 +72,7 @@ class RegisterController extends Controller
      */
     protected function index()
     {
-        $groups = Group::all();
-        return view('register', compact('groups'));
+        return view('register');
     }
 
     /**
