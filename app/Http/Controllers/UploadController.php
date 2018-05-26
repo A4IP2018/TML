@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File as FileSystem;
 use Session;
+use Carbon\Carbon;
 
 class UploadController extends Controller
 {
@@ -99,6 +100,11 @@ class UploadController extends Controller
 
         $homework_id = $request->input('homework-id');
         $homework = Homework::find($homework_id);
+
+        if (!is_course_teacher($homework->course->id) && $homework->deadline < Carbon::now()) {
+            Session::flash('error', 'Termenul limit&#259; a fost dep&#259;&#x219;it. Nu se mai pot &#238;nc&#259;rca fi&#x219;iere');
+            return redirect()->back();
+        }
 
         if (is_null($homework)) {
             return redirect('/homework');
