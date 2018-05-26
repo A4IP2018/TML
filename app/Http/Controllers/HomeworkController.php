@@ -71,6 +71,10 @@ class HomeworkController extends Controller
      */
     public function create()
     {
+        if (Auth::check() and Auth::user()->courses->count() == 0) {
+            Session::flash('error', 'Trebui&#259; sa creezi un <a href="'. url('/course/create') .'">curs</a>, pentru a ad&#259;uga o tem&#259;');
+            return redirect()->back();
+        }
         $formats = Format::all();
 
         $currentTeacher = User::where('id', Auth::id())->whereHas('role', function ($query) {
