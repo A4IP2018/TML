@@ -12,6 +12,8 @@ use App\Role;
 use App\TeacherCourse;
 use App\Course;
 use Carbon\Carbon;
+use App\Notification;
+use App\Http\Controllers\NotificationController as Notifications;
 
 Carbon::setLocale('ro');
 
@@ -138,6 +140,19 @@ if (! function_exists('get_role')) {
             else if ($rank == \App\Role::$MEMBER_RANK) {
                 return 'Membru';
             }
+        }
+    }
+}
+
+if (! function_exists('send_notification'))
+{
+    function send_notification($user_ids, $message) {
+        foreach ($user_ids as $user_id) {
+            Notification::create([
+                'user_id' => $user_id,
+                'message' => $message,
+                'seen' => false
+            ]);
         }
     }
 }

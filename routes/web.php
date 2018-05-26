@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'HomeController@main');
 
 Route::get('/compare', 'HomeworkController@compare')->name('compare');
 Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
@@ -30,10 +28,6 @@ Route::resource('upload', 'UploadController');
 Route::get('/uploads/checked/{slug}', 'UploadController@getCheckedUploads');
 Route::get('/uploads/unchecked{slug}', 'UploadController@getUncheckedUploads');
 Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
-
-Route::get('/notifications', function() {
-    return view('notifications');
-});
 
 Route::get('/deadlines', 'DeadlineController@index');
 
@@ -92,5 +86,11 @@ Route::post('change-password', 'ProfileController@changePassword')->name('reset-
 Route::post('change-email', 'ProfileController@changeEmail')->name('reset-email-action')->middleware('auth');
 Route::post('change-nr-matricol', 'ProfileController@changeNrMatricol')->name('reset-nr-matricol')->middleware('auth');
 /* PROFILE */
+
+/* NOTIFICATIONS */
+Route::get('/notifications', 'NotificationController@index')->middleware('auth');
+Route::post('/notifications/remove', 'NotificationController@remove')->middleware('auth');
+/* NOTIFICATIONS */
+
 
 Route::get('/admin', 'AdminController@index');

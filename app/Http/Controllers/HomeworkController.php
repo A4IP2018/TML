@@ -14,6 +14,7 @@ use App\User;
 use App\Grade;
 use App\HomeworkEvent;
 use App\RequiredFormat;
+use App\Http\Controllers\NotificationController as Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -218,6 +219,13 @@ class HomeworkController extends Controller
         ]);
 
         Session::flash('success', 'Tema a fost modificat&#259; cu succes');
+
+        $subscribed_users = $currentHomework->course->subscriptions->pluck('id')->toArray();
+
+        send_notification(
+            $subscribed_users,
+            'Tema ' . '<a href="' . url('/homework/' . $currentHomework->slug) . '">' . $currentHomework->name . '</a> a fost modificat&#259;'
+        );
         return redirect()->route('homework.edit', $slug)->withErrors($validator);
     }
 

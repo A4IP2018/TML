@@ -110,5 +110,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Homework');
     }
 
+    public function notifications() {
+        return $this->hasMany('App\Notification')->orderBy('created_at', 'DESC');
+    }
+
 
 }

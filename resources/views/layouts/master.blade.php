@@ -1,3 +1,19 @@
+<?php
+
+    $notifications = null;
+    if (Auth::check()) {
+        $notifications = App\Notification::where('user_id', Auth::id())->where('seen', false)->orderBy('created_at', 'DESC')->get();
+        if ($notifications->count() > 5) {
+            $notifications = $notifications->take(5);
+        }
+        if ($notifications->count() == 0) {
+            $notifications = null;
+        }
+    }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -90,31 +106,41 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                    @if (Auth::check())
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
-                            <span class="d-lg-none">Notificari
-                              <span class="badge badge-pill badge-warning">6 New</span>
+                            <span class="d-lg-none">Notific&#259;ri
+                              <span class="badge badge-pill badge-warning">{{ (!is_null($notifications) ? $notifications->count() . ' noi' : '') }}</span>
                             </span>
+                            @if (!is_null($notifications))
                             <span class="indicator text-warning d-none d-lg-block">
                               <i class="fa fa-fw fa-circle"></i>
                             </span>
+                            @endif
                         </a>
                         <div class="dropdown-menu" aria-labelledby="alertsDropdown" style="margin-left:-50px">
-                            <h6 class="dropdown-header">Notificari noi:</h6>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url('/notifications') }}">
-                                <span class="text-success">
-                                    <strong>
-                                    <i class="fa fa-envelope fa-fw"></i>Comentariu nou la Tema 5</strong>
-                                </span>
-                                <span class="small float-right text-muted">11:21 AM</span>
-                                <div class="dropdown-message small">Un nou comentariu adaugat la Tema 5.</div>
-                            </a>
-                            <div class="dropdown-divider"></div>
+                            @if (!is_null($notifications))
+                                <h6 class="dropdown-header">Notific&#259;ri noi:</h6>
+                                <div class="dropdown-divider"></div>
+                                @foreach ($notifications as $notification)
+                                <a class="dropdown-item small text-muted" href="{{ url('/notifications') }}">
+                                    {{ $notification->created_at }}
+                                </a>
+
+                                <div class="dropdown-item small">
+                                    {!! html_entity_decode($notification->message) !!}
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                @endforeach
+
+                            @else
+                                <span class="small text-muted dropdown-item">Nu ai notificari noi</span>
+                            @endif
                             <a class="dropdown-item small" href="{{ url('/notifications') }}">Vizualizeaza toate</a>
                         </div>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link mr-lg-2" id="changeThemeColor" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-moon-o"></i>
