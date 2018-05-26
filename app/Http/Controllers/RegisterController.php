@@ -9,6 +9,7 @@ use App\TeacherInformation;
 use App\User;
 use App\Code;
 use Session;
+use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -112,8 +113,15 @@ class RegisterController extends Controller
         $register_token = generate_random_string(30);
         if (Hash::check($request->input('confirm-password'), $password))
         {
+            $is_confirmed = false;
+            if (Config::get('values.register_debug') == 'true') {
+                $is_confirmed = true;
+                $register_token = '';
+            }
+            else {
+                Mail::to($request->input('email'))->send(new AccountConfirm($register_token));
+            }
 
-//            Mail::to($request->input('email'))->send(new AccountConfirm($register_token));
 
             $user = User::create([
                 'email' => $request->input('email'),
@@ -121,7 +129,7 @@ class RegisterController extends Controller
                 'role_id' => $role_id,
                 'reset_token' => '',
                 'register_token' => $register_token,
-                'is_confirmed' => false
+                'is_confirmed' => $is_confirmed
             ]);
 
             Session::flash('success', 'A fost trimis un mail de confirmare');
