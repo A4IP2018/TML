@@ -15,7 +15,7 @@ class Grade extends Model
      * @var array
      */
     protected $fillable = [
-        'grade', 'user_id','homework_id', 'updated_at'
+        'grade', 'user_id','file_id', 'updated_at'
     ];
 
     /**
@@ -41,12 +41,18 @@ class Grade extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function grades_users() {
-        return $this->belongsTo('App\User');
-	 }
-	 public function grades_homeworks() {
-        return $this->belongsTo('App\Homework');
+//    public function grades_users() {
+//        return $this->belongsTo('App\User');
+//	 }
+
+    /**
+     * Grade -> File relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+	 public function file() {
+        return $this->belongsTo('App\File');
     }
-    
+
 
 }

@@ -23,6 +23,7 @@ Route::post('/course/{slug}/subscribe', 'CourseController@subscribe')->middlewar
 Route::resource('course', 'CourseController');
 
 Route::get('filter-courses', 'CourseController@getFilteredCourses');
+Route::get('filter-homework', 'HomeworkController@getFilteredHomeworks');
 
 Route::resource('upload', 'UploadController');
 Route::get('/uploads/checked/{slug}', 'UploadController@getCheckedUploads');

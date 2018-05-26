@@ -114,7 +114,7 @@ class RegisterController extends Controller
         if (Hash::check($request->input('confirm-password'), $password))
         {
 
-            Mail::to($request->input('email'))->send(new AccountConfirm($register_token));
+//            Mail::to($request->input('email'))->send(new AccountConfirm($register_token));
 
             $user = User::create([
                 'email' => $request->input('email'),

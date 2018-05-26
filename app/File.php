@@ -51,4 +51,13 @@ class File extends Model
     public function homework(){
         return $this->belongsTo('App\Homework');
     }
+
+    /**
+     * File -> Grade relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function grade(){
+        return $this->HasOne('App\Grade');
+    }
 }

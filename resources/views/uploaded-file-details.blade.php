@@ -24,6 +24,16 @@
             <a href="{{ url('/download/' . $file->file_name) }}">Descarca</a>
         </div>
     </div>
+    @if($file->grade && $file->grade->grade)
+        <div class="card mb-3 text-center">
+            <div class="card-header">Nota</div>
+            <div class="card-body">
+                <div class="grade">
+                    <span style="color: <?= $file->grade->grade >= 5 ? 'green' : 'red' ?>">{{ $file->grade->grade }}</span>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
 
 <br>

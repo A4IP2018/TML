@@ -455,6 +455,10 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   max-width: 40rem;
 }
 
+.card-footer .btn {
+  margin-right: 5px;
+}
+
 footer.sticky-footer {
   position: absolute;
   right: 0;
