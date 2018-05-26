@@ -459,6 +459,14 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   margin-right: 5px;
 }
 
+.dropdown-menu {
+  min-width: 19rem !important;
+}
+
+.dropdown-item  {
+  white-space: unset !important;
+}
+
 footer.sticky-footer {
   position: absolute;
   right: 0;
