@@ -11,6 +11,87 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@main');
+
+Route::get('/compare', 'HomeworkController@compare')->name('compare');
+Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
+
+
+Route::resource('homework', 'HomeworkController');
+
+Route::post('/course/{slug}/subscribe', 'CourseController@subscribe')->middleware('auth');
+Route::resource('course', 'CourseController');
+
+Route::get('filter-courses', 'CourseController@getFilteredCourses');
+Route::get('filter-homework', 'HomeworkController@getFilteredHomeworks');
+
+Route::resource('upload', 'UploadController');
+Route::get('/uploads/checked/{slug}', 'UploadController@getCheckedUploads');
+Route::get('/uploads/unchecked{slug}', 'UploadController@getUncheckedUploads');
+Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
+
+Route::get('/deadlines', 'DeadlineController@index');
+
+Route::get('/settings', function() {
+    return view('settings');
 });
+
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/grades-history', function () {
+    return view('grades-history');
+});
+
+Route::get('/download/{path}', 'UploadController@download')->name('download');
+
+Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
+
+Route::get('/upload/{slug}', 'HomeworkController@uploadView');
+
+Route::get('/stud-uploads', 'HomeworkController@studentUploadsView');
+
+Route::get('/stud-uploads/{user_id}/{slug}', 'HomeworkController@studentUploadView');
+
+Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
+
+Route::get('/login', 'LoginController@index')->name('login');
+Route::post('/login-action', 'LoginController@authenticate')->name('login-action');
+
+Route::get('/logout', 'LoginController@logout')->name('logout');
+
+
+Route::get('/register', 'RegisterController@index')->name('register');
+Route::post('/register', 'RegisterController@register')->name('register');
+Route::get('/confirm/{token}', 'RegisterController@confirm');
+
+Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
+
+
+/* PASSWORD RESET */
+Route::get('/forgot', 'ProfileController@forgot')->name('forgot');
+Route::post('/forgot', 'ProfileController@sendToken')->name('reset-password');
+Route::get('/reset/{user_mail}/{token}', 'ProfileController@newPassword');
+Route::post('/reset', 'ProfileController@setNewPassword');
+/* PASSWORD RESET */
+
+/* PROFILE */
+Route::get('/profile', 'ProfileController@index')->name('profile')->middleware('auth');
+Route::post('change-password', 'ProfileController@changePassword')->name('reset-password-action')->middleware('auth');
+Route::post('change-email', 'ProfileController@changeEmail')->name('reset-email-action')->middleware('auth');
+Route::post('change-nr-matricol', 'ProfileController@changeNrMatricol')->name('reset-nr-matricol')->middleware('auth');
+/* PROFILE */
+
+/* NOTIFICATIONS */
+Route::get('/notifications', 'NotificationController@index')->middleware('auth');
+Route::post('/notifications/remove', 'NotificationController@remove')->middleware('auth');
+/* NOTIFICATIONS */
+
+
+Route::get('/admin', 'AdminController@index');
