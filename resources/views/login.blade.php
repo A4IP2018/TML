@@ -16,11 +16,6 @@
           <label for="exampleInputPassword1">Parola</label>
           <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Introduce&#539;i parola">
         </div>
-        <div class="form-group">
-          <div class="form-check">
-            <label for="remember-password" class="form-check-label"><input name="remember-password" class="form-check-input" type="checkbox">&#538;ine-ma minte</label>
-          </div>
-        </div>
         <button type="submit" class="btn btn-primary btn-block">Logare</button>
       </form>
       <div class="text-center">
