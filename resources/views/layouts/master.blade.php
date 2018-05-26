@@ -168,14 +168,14 @@
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                                <li>{!! $error !!} </li>
                             @endforeach
                         </ul>
                     </div>
                 @endif
                 @if (Session::get('message'))
                     <div class="alert alert-info alert-dismissible fade show">
-                        {{ Session::get('message') }}
+                        {!! Session::get('message') !!}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -183,7 +183,7 @@
                 @endif
                 @if (Session::get('success'))
                     <div class="alert alert-success alert-dismissible fade show">
-                        {{ Session::get('success') }}
+                        {!! Session::get('success') !!}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -191,7 +191,7 @@
                 @endif
                 @if (Session::get('error'))
                     <div class="alert alert-danger alert-dismissible fade show">
-                        {{ Session::get('error') }}
+                        {!! Session::get('error') !!}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

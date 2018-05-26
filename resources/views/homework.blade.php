@@ -46,7 +46,7 @@
             </div>
 
             <br>
-            @if (is_teacher())
+            @if (Auth::check() and is_teacher() and Auth::user()->courses->count() > 0)
                 <a href="{{ url('/homework/create') }}" class="btn btn-primary btn-lg btn-block">Tema noua</a>
                 <a href="{{ url('/compare') }}" class="btn btn-secondary btn-lg btn-block">Compara</a>
                 <hr class="mt-2">
