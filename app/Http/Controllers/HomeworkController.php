@@ -12,6 +12,7 @@ use App\StudentInformation;
 use App\TeacherCourse;
 use App\User;
 use App\Grade;
+use App\HomeworkEvent;
 use App\RequiredFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -27,6 +28,18 @@ class HomeworkController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function createEvent($homework, $attribute, $from, $to) {
+        $user = User::where('id', Auth::id())->first();
+        HomeWorkEvent::create([
+            'homework_id' => $homework->id,
+            'user_id' => Auth::id(),
+            'event' => 'Utilizatorul <span class="badge">' . $user->teacher_information->name .
+                '</span> a modificat <span class="badge">' . $attribute . '</span> de la ' .
+                '<span class="badge">' . $from . '</span> ' .
+                'la <span class="badge">' . $to  . '</span>'
+         ]);
     }
 
     /**
@@ -118,6 +131,7 @@ class HomeworkController extends Controller
 
         }
 
+        Session::flash('success', 'Tema a fost creat&#259;!');
         return redirect()->back()->withErrors($validator);
 
     }
@@ -137,7 +151,9 @@ class HomeworkController extends Controller
             ->orderBy('id', 'desc')
             ->get();
 
-        return view('homework-details', compact('comments', 'homework'));
+        $events = $homework->events->all();
+
+        return view('homework-details', compact('comments', 'homework', 'events'));
 
     }
 
@@ -151,18 +167,22 @@ class HomeworkController extends Controller
     {
         $formats = Format::all();
         $homework = Homework::where('slug', $slug)->with('formats')->first();
+        $required_formats = $homework->requirements->all();
 
         $currentTeacher = User::where('id', Auth::id())->whereHas('role', function ($query) {
             $query->where('rank', Role::$TEACHER_RANK);
         })->first();
-
-        if ($currentTeacher) {
-            $teacherCourses = $currentTeacher->courses;
-
-            return view('edit-homework', compact('homework', 'formats', 'currentTeacher', 'teacherCourses'));
+        if (is_null($currentTeacher)) {
+            Session::flash('error', 'Nu esti profesorul acestui curs!');
+            return redirect()->back();
         }
 
+        if (is_course_teacher($homework->course->id)) {
+            $teacherCourses = $currentTeacher->courses;
+            return view('edit-homework', compact('homework', 'formats', 'required_formats', 'teacherCourses'));
+        }
         else {
+            Session::flash('error', 'Trebuie sa fii profesorul cursului ' . $homework->course->course_title . ' pentru a-l edita');
             return redirect()->back();
         }
     }
@@ -177,43 +197,27 @@ class HomeworkController extends Controller
     public function update(Request $request, $slug)
     {
         $validator = $this->validate($request, [
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
             'deadline' => 'required',
-            'course'=>'required',
-            'format' => 'required',
         ]);
 
 
         $currentHomework = Homework::where('slug', $slug)->first();
-      
-        $selectedFormats = $request->input('format');
+
         $deadline = $request->input('deadline');
-        $description = $request->input('description');
-        $course = $request->input('course');
-        $title = $request->input('name');
 
-        $slug = str_slug($title);
-        $count = Homework::where('slug', $slug)->where('id', '!=', $currentHomework->id)->count();
-
-        $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
-
-        $formats = Format::whereIn('id', $selectedFormats)->get();
-
+        if ($deadline != $currentHomework->deadline) {
+            if ($deadline < $currentHomework->deadline) {
+                Session::flash('error', 'Termenul limita nu poate fi mic&#x219;orat');
+                return redirect()->back();
+            }
+            $this->createEvent($currentHomework, 'termenul limita', $currentHomework->deadline, $deadline);
+        }
 
         $homework = Homework::updateOrCreate(['id' => $currentHomework->id],  [
-            'course_id' => $course,
-            'name' => $title,
-            'description' => $description,
-            'slug' => $slug,
-            'category_id' => 1,
-            'user_id' => Auth::id(),
             'deadline' => $deadline,
         ]);
-
-        $homework->formats()->sync($formats);
-
-
+        
+        Session::flash('success', 'Tema a fost modificat&#259; cu succes');
         return redirect()->route('homework.edit', $slug)->withErrors($validator);
     }
 

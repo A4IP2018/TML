@@ -117,7 +117,8 @@ class UploadController extends Controller
             $req_id = $request->input('toUpload')[$id];
             $result = $this->uploadSingle($file['upload_file'], $homework_id, $req_id, $batch_id);
             if (empty($result[1])) {
-                return redirect()->back()->withErrors($result[0]);
+                Session::flash('error', $result[0]);
+                return redirect()->back();
             }
             array_push($to_upload, $result);
         }

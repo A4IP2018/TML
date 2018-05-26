@@ -41,7 +41,11 @@
             </div>
 
             <br>
-            <h5>Fisiere necesare</h5>
+            <div>
+                <h5>Fisiere necesare</h5>
+                <button class="btn btn-primary add-more-files" type="button" >Mai multe fisiere</button>
+            </div>
+
             <hr>
             <div class="filetype-selectots card-columns">
                 <div class="card">
@@ -63,9 +67,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary add-more-files" type="button" >Mai multe fisiere</button>
-                    </div>
                 </div>
             </div>
 
@@ -81,17 +82,16 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            var globalCounter = 0;
+            var globalCounter = 1;
             $(document).on('click', '.add-more-files', function(element) {
                 globalCounter += 1;
-                var original = element.target.parentElement.parentElement;
-                var newNode = original.cloneNode(true);
-                console.log(newNode.innerHTML.search(/file-description-\d+/));
+                var original = $('.filetype-selectots')[0];
+                var newNode = original.children[0].cloneNode(true);
+
+                console.log(newNode);
                 newNode.innerHTML  = newNode.innerHTML.replace(/file\[\d+\]/g, 'file[' + globalCounter.toString() + ']');
                 newNode.innerHTML  = newNode.innerHTML.replace(/Fisier \d+/g, 'Fisier ' + globalCounter.toString());
-                console.log(newNode);
-                original.parentElement.appendChild(newNode);
-
+                original.appendChild(newNode);
             });
         });
     </script>
