@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
 		    $table->string('password');
 		    $table->integer('role_id');
 		    $table->string('reset_token');
+		    $table->string('register_token');
+		    $table->boolean('is_confirmed');
 		    $table->rememberToken();
 		    $table->timestamps();
 		

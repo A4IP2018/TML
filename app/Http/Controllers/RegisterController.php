@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Mail\AccountConfirm;
 use App\StudentInformation;
 use App\TeacherInformation;
 use App\User;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail as Mail;
 
 class RegisterController extends Controller
 {
@@ -107,6 +109,7 @@ class RegisterController extends Controller
             $role_id = $role_id->pluck('id')->first();
         }
 
+        $register_token = generate_random_string(30);
         if (Hash::check($request->input('confirm-password'), $password))
         {
 
@@ -114,8 +117,12 @@ class RegisterController extends Controller
                 'email' => $request->input('email'),
                 'password' => $password,
                 'role_id' => $role_id,
-                'reset_token' => ''
+                'reset_token' => '',
+                'register_token' => $register_token,
+                'is_confirmed' => false
             ]);
+
+            Mail::to($user->email)->send(new AccountConfirm($register_token));
 
             if ($rank == \App\Role::$TEACHER_RANK) {
                 TeacherInformation::create([
@@ -134,9 +141,17 @@ class RegisterController extends Controller
             return Redirect::to($this->redirectPath);
         }
 
-        return redirect()->back()->withErrors();
+        return redirect()->back()->withErrors('approve', 'A fost trimis un mail de confirmare');
 
     }
 
+    public function confirm($token) {
+        $user = \App\User::where('register_token', $token)->first();
+        if (is_null($user)) {
+            return redirect('/register')->withErrors('approve', 'Adresa de confirmare este invalida');
+        }
+        $user->update(['is_confirmed' => true, 'register_token' => '']);
+        return redirect('/login')->withErrors('approve', 'Profilul a fost confirmat!');
+    }
 
 }
