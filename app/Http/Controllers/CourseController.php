@@ -197,8 +197,9 @@ class CourseController extends Controller
 
         $course->save();
 
-        $teachers = User::whereIn('id', $request->input('teacher_checkbox'))->get();
+        $teachers = User::whereIn('id', $request->input('teacher_checkbox', []))->get();
 
+        
         TeacherCourse::create([
             'course_id' => $course->id,
             'user_id' => Auth::id()

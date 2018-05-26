@@ -216,7 +216,7 @@ class HomeworkController extends Controller
         $homework = Homework::updateOrCreate(['id' => $currentHomework->id],  [
             'deadline' => $deadline,
         ]);
-        
+
         Session::flash('success', 'Tema a fost modificat&#259; cu succes');
         return redirect()->route('homework.edit', $slug)->withErrors($validator);
     }

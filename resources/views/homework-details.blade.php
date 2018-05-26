@@ -18,25 +18,11 @@
 
     ?>
 
-<div class="errors">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-</div>
+
 <div class="row">
     <div class="col-6">
-        <div class="progress">
-            <!--deadline time left bar-->
-            <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $new_width . '%' ?>;"  aria-valuenow="{{ $wholeDif - $remainingDif }} "
-                 aria-valuemin="0" aria-valuemax="{{ $wholeDif }}">
-                {{ $remainingDif }} zile ramase
-            </div>
+        <div class="{{ ($remainingDif < 3) ? 'bg-danger' : (($remainingDif < 5) ? 'bg-warning' : 'bg-primary') }} text-white text-center">
+            {{ $remainingDif }} zile ramase
         </div>
         <br>
 
