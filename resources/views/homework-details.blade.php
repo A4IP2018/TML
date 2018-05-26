@@ -12,20 +12,29 @@
 
     $wholeDif = $deadline->diffInDays($start);
 
-    $remainingDif = $deadline->diffInDays($now);
+    if ($deadline < \Carbon\Carbon::now()) {
+        $remainingDif = "termenul a expirat";
+    }
+    else {
+        $remainingDif = $deadline->diffForHumans($now);
+    }
 
-    $new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
+    $realDiff = $deadline->diffInDays($now);
+    if ($deadline < $now) {
+        $realDiff = 0;
+    }
+
+    //$new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
 
     ?>
 
 
 <div class="row">
     <div class="col-6">
-        <div class="{{ ($remainingDif < 3) ? 'bg-danger' : (($remainingDif < 5) ? 'bg-warning' : 'bg-primary') }} text-white text-center">
-            {{ $remainingDif }} zile ramase
+        <div class="{{ ($realDiff == 0) ? 'bg-secondary' : (($realDiff < 3) ? 'bg-danger' : (($realDiff < 5) ? 'bg-warning' : 'bg-primary')) }} text-white text-center">
+            {{ $remainingDif }}
         </div>
         <br>
-
         <div class="card-group">
             <div class="card mb-3 text-center">
                 <div class="card-header">Tema</div>
@@ -54,7 +63,7 @@
         <div class="card text-center">
             <div class="card-header">Termen limit&#259;</div>
             <div class="card-body">
-                <h5 class="card-title">{{ $homework->deadline }}</h5>
+                <h5 class="{{ ($homework->deadline < Carbon\Carbon::now()) ? 'text-danger' : '' }}">{{ $homework->deadline }}</h5>
             </div>
         </div>
         <br>
