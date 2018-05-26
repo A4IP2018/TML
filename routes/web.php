@@ -94,4 +94,4 @@ Route::post('/notifications/remove', 'NotificationController@remove')->middlewar
 /* NOTIFICATIONS */
 
 
-Route::get('/admin', 'AdminController@index');
+Route::get('/admin', 'AdminController@index')->middleware('admin');
