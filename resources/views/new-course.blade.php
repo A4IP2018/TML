@@ -37,6 +37,7 @@
 
       </div>
 
+      @if ($teachers->count() > 0)
       <div class="form-group">
         <!--Course teachers-->
         <label for="hw-descr">Al&#539;i profesori:</label>
@@ -48,6 +49,7 @@
           </div>
         @endforeach
       </div>
+      @endif
 
       <!--Submit Course-->
       <button name="course-create" type="submit" class="btn btn-primary">Salveaza</button>

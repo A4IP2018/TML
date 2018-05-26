@@ -144,6 +144,8 @@ class HomeworkController extends Controller
         }
 
         Session::flash('success', 'Tema a fost creat&#259;!');
+        return redirect('/homework/' . $homework->slug);
+
         return redirect()->back()->withErrors($validator);
 
     }

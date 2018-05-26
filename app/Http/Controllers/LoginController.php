@@ -50,8 +50,8 @@ class LoginController extends Controller
     protected function authenticate(Request $request)
     {
         $validator = $this->validate($request, [
-                        'email' => 'required|max:255|email|exists:users,email',
-                        'password' => 'required|max:255',
+            'email' => 'required|max:255|email|exists:users,email',
+            'password' => 'required|max:255',
         ]);
 
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'is_confirmed' => true])) {
@@ -59,8 +59,8 @@ class LoginController extends Controller
         }
 
 
-        Session::flash('error', 'Date incorecte sau utilizatorul necesita confirmare prie email');
-        return redirect()->back()->withInput($request->only('email', 'remember'));
+        Session::flash('error', 'Date incorecte sau utilizatorul necesita confirmare prin email');
+        return redirect()->back()->withInput($request->only('email'));
     }
 
 

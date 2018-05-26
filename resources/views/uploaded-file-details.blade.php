@@ -47,6 +47,7 @@
 
 <br>
 
+@if (is_course_teacher($file->homework->course->id))
 <div class="card">
     <div class="card-header">Nota</div>
     <div class="card-body">
@@ -66,6 +67,6 @@
         </form>
     </div>
 </div>
-
+@endif
 
 @endsection
