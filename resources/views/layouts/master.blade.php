@@ -17,7 +17,7 @@
 
 
     </head>
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top" style="margin-left: -100px">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 
@@ -29,7 +29,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <ul class="navbar-nav navbar-sidenav" id="exampleAccordion" style="width: 150px; font-size: 14px">
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                         <a class="nav-link" href="{{ url('/') }}">
                             <i class="fa fa-fw fa-dashboard"></i>
@@ -83,13 +83,9 @@
 
                 </ul>
                 <ul class="navbar-nav sidenav-toggler">
-                    <li class="nav-item">
-                        <a class="nav-link text-center" id="sidenavToggler">
-                            <i class="fa fa-fw fa-angle-left"></i>
-                        </a>
-                    </li>
+
                 </ul>
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto" style="font-size: 14px">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
