@@ -16,7 +16,7 @@ return [
     'password' => 'Parolele trebuie să aiba minim 6 caractere.',
     'reset' => 'Parola dumneavoastră a fost resetată!',
     'sent' => 'V-am trimis e-mail cu link pentru resetarea parolei!',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that e-mail address.",
+    'token' => 'Tokenul de resetare al parolei este invalid.',
+    'user' => "Nu putem găsi un utilizator cu adresa de e-mail specificată.",
 
 ];

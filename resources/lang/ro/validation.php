@@ -56,8 +56,8 @@ return [
         'string'  => 'Atributul :attribute nu poate avea mai mult de :max caractere.',
         'array'   => 'Atributul :attribute nu poate avea mai mult de :max itemi.',
     ],
-    'mimes'                => 'The :attribute must be a file of type: :values.',
-    'mimetypes'            => 'The :attribute must be a file of type: :values.',
+    'mimes'                => 'Atributul :attribute trebuie să fie un fișier de tipul: :values.',
+    'mimetypes'            => 'Atributul :attribute trebuie să fie un fișier de tipul: :values.',
     'min'                  => [
         'numeric' => 'Atributul :attribute trebuie să fie măcar :min.',
         'file'    => 'Atributul :attribute trebuie să aibă măcar :min kilobiți.',
@@ -69,24 +69,24 @@ return [
     'present'              => 'Câmpul :attribute trebuie să existe.',
     'regex'                => 'Formatul atributului :attribute este invalid.',
     'required'             => 'Câmpul :attribute este necesar.',
-    'required_if'          => 'The :attribute field is required when :other is :value.',
-    'required_unless'      => 'The :attribute field is required unless :other is in :values.',
-    'required_with'        => 'The :attribute field is required when :values is present.',
-    'required_with_all'    => 'The :attribute field is required when :values is present.',
-    'required_without'     => 'The :attribute field is required when :values is not present.',
-    'required_without_all' => 'The :attribute field is required when none of :values are present.',
-    'same'                 => 'The :attribute and :other must match.',
+    'required_if'          => 'Câmpul :attribute este necesar când :other are valoarea :value.',
+    'required_unless'      => 'Câmpul :attribute este necesar când :other nu este în :values.',
+    'required_with'        => 'Câmpul :attribute este necesar când :values există.',
+    'required_with_all'    => 'Câmpul :attribute este necesar când :values există.',
+    'required_without'     => 'Câmpul :attribute este necesar când :values nu există.',
+    'required_without_all' => 'Câmpul :attribute este necesar când nicio valoare din :values nu există.',
+    'same'                 => 'Atributul :attribute și :other trebuie să fie identice.',
     'size'                 => [
-        'numeric' => 'The :attribute must be :size.',
-        'file'    => 'The :attribute must be :size kilobytes.',
-        'string'  => 'The :attribute must be :size characters.',
-        'array'   => 'The :attribute must contain :size items.',
+        'numeric' => 'Atributul :attribute trebuie să fie :size.',
+        'file'    => 'Atributul :attribute trebuie să aibă :size kilobiți.',
+        'string'  => 'Atributul :attribute trebuie să aibă :size caractere.',
+        'array'   => 'Atributul :attribute trebuie să conțină :size itemi.',
     ],
-    'string'               => 'The :attribute must be a string.',
-    'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
-    'uploaded'             => 'The :attribute failed to upload.',
-    'url'                  => 'The :attribute format is invalid.',
+    'string'               => 'Atributul :attribute trebuie să fie un șir de caractere.',
+    'timezone'             => 'Atributul :attribute trebuie să fie o zonă validă.',
+    'unique'               => 'Atributul :attribute există deja.',
+    'uploaded'             => 'Atributul :attribute nu a putut fi uploadat.',
+    'url'                  => 'Formatul atributului :attribute este invalid.',
 
     /*
     |--------------------------------------------------------------------------
@@ -117,9 +117,20 @@ return [
     */
 
     'attributes' => [
-        'file.*.file_description' => 'file description',
-        'password' => 'parola',
-        'confirm-password' => 'confirmarea parolei'
+        'file.*.file_description' => 'de descriere a fișierului',
+        'password' => 'cu parola',
+        'confirm-password' => 'de confirmare a parolei',
+        'last-name' => 'prenume',
+        'first-name' => 'nume',
+        'description' => 'de descriere',
+        'file description' => 'de descriere a fisierului',
+        'course title' => 'cu titlul cursului',
+        'year select' => 'de selectare a anului',
+        'semester select' => 'de selectare a semestrului',
+        'course descr' => 'de descriere a cursului',
+        'name' => 'nume',
+        'new-password' => 'parola noua',
+
     ],
 
 ];

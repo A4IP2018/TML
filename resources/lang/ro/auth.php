@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Credidențialele nu pot fi găsite în baza de date.',
+    'throttle' => 'Prea multe încercări de logare. Vă rugăm să reîncercați în :seconds secunde.',
 
 ];
