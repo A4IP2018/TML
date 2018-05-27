@@ -26,6 +26,11 @@
       </div>
 
       <div class="form-group">
+        <label for="student-identifier">Num&#259;r Matricol</label>
+        <input name="student-identifier" class="form-control" id="student-identifier" type="text" aria-describedby="emailHelp" placeholder="Introduce&#539;i num&#259;rul matricol">
+      </div>
+
+      <div class="form-group">
         <div class="form-row">
           <div class="col-md-6">
             <label for="password">Parola</label>

@@ -90,7 +90,30 @@ class RegisterController extends Controller
             'password' => 'required|max:30|min:5|required_with:confirm-password|same:confirm-password',
             'confirm-password' => 'required|max:30|min:5',
             'last-name' => 'required|max:50',
+        ], [
+            'email.required' => 'Campul email este necesar pentru a continua',
+            'email.max' => 'Campul email trebuie sa aiba maxim 100 de caractere',
+            'email.unique' => 'Acest email este deja folosit',
+            'first-name.required' => 'Prenumele este necesar pentru a continua',
+            'first-name.max' => 'Prenumele necesita maxim 50 de caractere',
+            'last-name.required' => 'Numele este necesar pentru a continua',
+            'last-name.max' => 'Numele necesita maxim 50 de caractere',
+            'confirm-password.required' => 'Confirmarea parolei este necesara pentru a continua',
+            'password.required' => 'Parola este necesara pentru a continua',
+            'password.min' => 'Parola necesita minim 5 caractere',
+            'password.max' => 'Parola necesita maxim 30 de caractere',
+            'password.required_with' => 'Campurile parola si confirmarea parolei trebuie sa fie asemanatoare ',
+            'password.same' => 'Campurile parola si confirmarea parolei trebuie sa fie asemanatoare',
         ]);
+
+        if (!$request->input('code')) {
+            $validator = $this->validate($request, [
+                'student-identifier' => 'required',
+                ], [
+                    'student-identifier.required' => 'Numarul matricol sau codul unic este necesar pentru a continua'
+            ]);
+        }
+
         $password = Hash::make($request->input('password'));
         $code = $request->input('code');
         $rank = \App\Role::$MEMBER_RANK;
@@ -145,6 +168,7 @@ class RegisterController extends Controller
                     'first_name' => $request->input('first-name'),
                     'last_name' => $request->input('last-name'),
                     'user_id' => $user->id,
+                    'nr_matricol' => $request->input('student-identifier')
                 ]);
             }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Grade;
+use App\Role;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use App\Code;
@@ -31,6 +32,21 @@ class AdminController extends Controller
         return view('admin')->with(['teacher_codes' => $teacher_codes, 'admin_codes' => $admin_codes]);
     }
 
+    public function studentsPassedStatistics($course, $meta)
+    {
+        return Course::where('id', $course->id)->whereHas('homeworks.grades', function($query) use ($meta) {
+            $query
+                ->when($meta === 'failed', function ($collection) {
+                    $collection->where('grades.grade', '<=', 4);
+                })
+                ->when($meta === 'passed', function ($collection) {
+                    $collection->where('grades.grade', '>=', 5);
+                });
+
+
+        })->count();
+    }
+
     public function pdfGenerate()
     {
         $dir = storage_path() . '/fonts';
@@ -47,11 +63,26 @@ class AdminController extends Controller
             ->withCount('homeworks')
             ->with('users', 'users.teacher_information')->get();
 
+        $allGrades = Grade::with('file.user.student_information', 'file.homework.course', 'file.user.teacher_information')->get();
+
         foreach($myCourses as $myCourse) {
+
+            $numberOfStudentSubscriptions = Course::
+                where('id', $myCourse->id)
+                ->whereHas('subscriptions.role', function($collection) {
+                    $collection->where('rank', Role::$MEMBER_RANK);
+                })
+                ->count();
+
             $myCourse->teacherNames = get_teacher_names($myCourse);
+
+            $myCourse->failedStudents = $this->studentsPassedStatistics($myCourse, 'failed');
+            $myCourse->passedStudents = $this->studentsPassedStatistics($myCourse, 'passed');
+            $myCourse->subscriptionsStudents = $numberOfStudentSubscriptions;
+
         }
 
-        $pdf = \PDF::loadView('pdf.pdf-generate', compact('grades', 'myCourses'));
+        $pdf = \PDF::loadView('pdf.pdf-generate', compact('grades', 'myCourses', 'allGrades'));
 
         return $pdf->download('pdf-generate.pdf');
 //        return view('pdf.pdf-generate');
