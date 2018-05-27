@@ -33,6 +33,12 @@ class AdminController extends Controller
 
     public function pdfGenerate()
     {
+        $dir = storage_path() . '/fonts';
+
+        if (!file_exists($dir) && !is_dir($dir)) {
+            mkdir($dir);
+        }
+
         $grades = Grade::with('file', 'file.homework', 'file.homework.course')->where('user_id', Auth::id())->get();
 
         $myCourses = Course::whereHas('subscriptions', function($query) {

@@ -107,13 +107,14 @@
                         </a>
                     </li>
 
-                   <li class="nav-item" data-toggle="tooltip" data-placement="right">
-                        <a class="nav-link" href="{{ url('/pdf-generator') }}">
-                            <i class="fa fa-fw fa-connectdevelop"></i>
-                            <span class="nav-link-text">Generare statistici</span>
-                        </a>
-                    </li>
-
+                    @if(Auth::check())
+                       <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                            <a class="nav-link" href="{{ url('/pdf-generator') }}">
+                                <i class="fa fa-fw fa-connectdevelop"></i>
+                                <span class="nav-link-text">Generare statistici</span>
+                            </a>
+                        </li>
+                    @endif
 
                 </ul>
                 <ul class="navbar-nav sidenav-toggler">
