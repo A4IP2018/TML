@@ -31,9 +31,9 @@
 <body>
 
 
-
+@if ($grades && count($grades) > 0)
 <div class="container-fluid">
-    <h2>Toate notele</h2>
+    <h2>Notele mele</h2>
     <table class="table table-dark table-striped">
         <thead>
         <tr>
@@ -56,6 +56,9 @@
     </table>
 </div>
 <div class="page-break"></div>
+@endif
+
+@if ($myCourses && count($myCourses) > 0)
 
 <div class="container-fluid">
     <h2>Cursurile mele</h2>
@@ -65,6 +68,11 @@
             <th>Curs</th>
             <th>Profesori</th>
             <th>Nr Teme</th>
+            @if (is_teacher())
+                <th>Nr picati</th>
+                <th>Nr trecuti</th>
+                <th>Nr studenti abonati</th>
+            @endif
         </tr>
         </thead>
         <tbody>
@@ -72,8 +80,13 @@
         @foreach($myCourses as $myCourse)
             <tr>
                 <td>{{ $myCourse->course_title }}</td>
-                <td>{{ $myCourse->teacherNames }}</td>
+                <td>{!! implode('<br>' ,explode(', ', $myCourse->teacherNames)) !!}</td>
                 <td>{{ $myCourse->homeworks_count }}</td>
+                @if (is_teacher())
+                    <td>{{ $myCourse->failedStudents }}</td>
+                    <td>{{ $myCourse->passedStudents }}</td>
+                    <td>{{ $myCourse->subscriptionsStudents }}</td>
+                @endif
             </tr>
         @endforeach
 
@@ -81,7 +94,41 @@
     </table>
 </div>
 <div class="page-break"></div>
+@endif
 
+@if ($allGrades && count($allGrades) > 0 && is_administrator())
+
+<div class="container-fluid">
+    <h2>Toate notele</h2>
+    <table class="table table-dark table-striped">
+        <thead>
+        <tr>
+            <th>Persoana</th>
+            <th>Curs</th>
+            <th>Tema</th>
+            <th>Nota</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach($allGrades as $grade)
+            <tr>
+                @if ($grade->user->student_information)
+                    <td>{{ $grade->user->student_information->nr_matricol }}</td>
+                @else
+                    <td>{{ $grade->user->teacher_information->name }}</td>
+                @endif
+                <td>{{ $grade->file->homework->course->course_title }}</td>
+                <td>{{ $grade->file->homework->name }}</td>
+                <td>{{ $grade->grade }}</td>
+            </tr>
+        @endforeach
+
+        </tbody>
+    </table>
+</div>
+<div class="page-break"></div>
+@endif
 
 </body>
 </html>
