@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header">Num&#259;rul de parechi suspecte  </div>
+                        <div class="card-header">Num&#259;rul de perechi suspecte  </div>
                         <div class="card-body">{{ $all_comparisons->count() ? $all_comparisons->count() : 0 }}</div>
                     </div>
 
