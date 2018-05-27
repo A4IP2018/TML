@@ -9,14 +9,20 @@
         <div class="card card-register mx-auto mt-5">
         <div class="card">
             <div class="card-body">
-        <form action="/action_page.php">
+        <!--<form action="/action_page.php">-->
+        <form method="POST" action="{{ url('/contact') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group">
-                <label for="name">Nume:</label>
-                <input type="name" class="form-control" placeholder="Introdu numele t&#259;u" id="name">
+                <label for="prenumeInput">Prenume:</label>
+                <input name="first_name" class="form-control" placeholder="Introdu numele t&#259;u" id="prenumeInput">
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" placeholder="Introdu adresa de mail" id="email">
+                <label for="numeInput">Nume:</label>
+                <input name="last_name" class="form-control" placeholder="Introdu prenumele t&#259;u" id="numeInput">
+            </div>
+            <div class="form-group">
+                <label for="emailInput">Email:</label>
+                <input name="email" class="form-control" placeholder="Introdu adresa de mail" id="emailInput" required>
             </div>
             <div class="form-group">
                 <label for="pwd">Mesaj:</label>

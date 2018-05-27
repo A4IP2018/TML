@@ -37,9 +37,10 @@ Route::get('/settings', function() {
 });
 
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/contact', 'ContactController@index')->name('contact');
+
+Route::post('/contact', 'ContactController@sendMessage')->name('contact');
+
 
 Route::get('/about', function () {
     return view('about');
