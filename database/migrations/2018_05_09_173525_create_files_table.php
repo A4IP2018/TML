@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->integer('requirement_id');
             $table->string('batch_id');
             $table->string('file_name');
+            $table->string('storage_path');
             $table->rememberToken();
             $table->timestamps();
         });

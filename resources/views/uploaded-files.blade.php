@@ -21,7 +21,7 @@
         </div>
 
         <div class="card-footer bg-transparent border">
-          <a href="{{ url('/upload/' . $file->file_name ) }}" class="btn btn-info">Detalii</a>
+          <a href="{{ url('/upload/' . basename($file->storage_path) ) }}" class="btn btn-info">Detalii</a>
         </div>
 
 

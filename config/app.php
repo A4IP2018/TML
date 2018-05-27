@@ -230,4 +230,6 @@ return [
 
     ],
 
+    'upload_dir' => env('UPLOAD_DIR', 'uploaded_homeworks')
+
 ];

@@ -21,7 +21,7 @@
     <div class="card mb-3 text-center">
         <div class="card-header">Fisier</div>
         <div class="card-body">
-            <a href="{{ url('/download/' . $file->file_name) }}">Descarca</a>
+            <a href="{{ url('/download/' . basename($file->storage_path)) }}">Descarca</a>
         </div>
     </div>
     @if($file->grade && $file->grade->grade)
