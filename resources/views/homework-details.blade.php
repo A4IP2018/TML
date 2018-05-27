@@ -18,7 +18,7 @@
 
     ?>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="font-size: 15px">
         <div class="container-fluid">
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
@@ -52,8 +52,8 @@
                     <div class="card-group">
                         <div class="card mb-3 text-center">
                             <div class="card-header">Tema</div>
-                            <div class="card-body ">
-                                <h5 class="card-title">{{ $homework->name }}</h5>
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 14px">{{ $homework->name }}</h5>
                             </div>
                         </div>
 
@@ -61,7 +61,7 @@
                             <div class="card mb-3 text-center">
                                 <div class="card-header">Curs</div>
                                 <div class="card-body ">
-                                    <h5><a href="{{ url('/course/' . $homework->course->slug) }}">{{ $homework->course->course_title }}</a></h5>
+                                    <h5><a href="{{ url('/course/' . $homework->course->slug) }}" style="font-size: 14px">{{ $homework->course->course_title }}</a></h5>
                                 </div>
                             </div>
                         @endif
@@ -70,7 +70,7 @@
                             <div class="card mb-3 text-center">
                                 <div class="card-header">Categorie</div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $homework->category->name }}</h5>
+                                    <h5 class="card-title" style="font-size: 14px">{{ $homework->category->name }}</h5>
                                 </div>
                             </div>
                         @endif
@@ -79,14 +79,14 @@
                     <div class="card text-center">
                         <div class="card-header">Descriere</div>
                         <div class="card-body ">
-                            <h5 class="card-title">{{ $homework->course->description }}</h5>
+                            <h5 class="card-title" style="font-size: 14px">{{ $homework->course->description }}</h5>
                         </div>
                     </div>
                     <br>
                     <div class="card text-center">
                         <div class="card-header">Termen limita</div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ $homework->deadline }}</h5>
+                            <h5 class="card-title" style="font-size: 14px">{{ $homework->deadline }}</h5>
                         </div>
                     </div>
 
