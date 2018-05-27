@@ -4,7 +4,7 @@
 @section('content')
 
 <?php
-    $homeworks = Auth::user()->published_homeworks;
+    $homeworks = get_teacher_homeworks();
 ?>
 <div class="row">
     <div class="col-12">
@@ -14,7 +14,7 @@
             <footer class="blockquote-footer">Toti sau 2</footer>
         </blockquote>
 
-        @if ($homeworks->count() > 0)
+        @if (!is_null($homeworks) and $homeworks->count() > 0)
             <div class="form-group">
                 <form action="{{ url('/compare') }}" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
