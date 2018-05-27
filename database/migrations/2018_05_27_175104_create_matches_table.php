@@ -18,6 +18,7 @@ class CreateMatchesTable extends Migration
             $table->integer('comparison_id');
             $table->integer('start');
             $table->integer('length');
+            $table->char('side');
             $table->rememberToken();
             $table->timestamps();
         });

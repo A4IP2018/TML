@@ -1,27 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Teo
- * Date: 5/5/2018
- * Time: 4:36 PM
- */
 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-class Comparison extends Model
+class Match extends Model
 {
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'file_id_1', 'file_id_2', 'match_count', 'token_count', 'similarityA', 'similarityB'
+        'start', 'length', 'comparison_id', 'side'
     ];
 
     /**
@@ -49,7 +35,7 @@ class Comparison extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
 
-    public function matches() {
-        return $this->hasMany('App\Match');
+    public function comparison() {
+        return belongsTo('App\Comparison');
     }
 }

@@ -6,6 +6,7 @@ use App\File;
 use App\Jobs\CompareUpload;
 use App\User;
 use App\RequiredFormat;
+use Storage;
 use App\Homework;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,8 +46,7 @@ class UploadController extends Controller
 
     public function uploadSingle($file_data, $homework_id, $requirement_id, $batch_id)
     {
-        $path = public_path() . '/files/';
-        $filename = time() . '_' . str_random(5) . '.' . str_replace(' ', '', $file_data->getClientOriginalName());
+        $filename = $file_data->getClientOriginalName();
         $fileType = $file_data->getClientOriginalExtension();
         $fileExtension = $file_data->guessExtension();
 
@@ -63,7 +63,8 @@ class UploadController extends Controller
             return ['Fisierul este prea mare.', []];
         }
 
-        if ($file_data->move($path, $filename)) {
+        $path = $file_data->store(config('app.upload_dir'));
+        if (!is_null($path) and $path != '') {
             return
             [
                 'Fisier ' . $file_data->getClientOriginalName() . ' a fost incarcat cu succes!',
@@ -72,6 +73,7 @@ class UploadController extends Controller
                     'homework_id' => $homework_id,
                     'requirement_id' => $requirement_id,
                     'file_name' => $filename,
+                    'storage_path' => $storage_path = $path,
                     'batch_id' => $batch_id
                 ]
             ];
@@ -137,7 +139,8 @@ class UploadController extends Controller
                 'homework_id' => $query[1]['homework_id'],
                 'requirement_id' => $query[1]['requirement_id'],
                 'file_name' => $query[1]['file_name'],
-                'batch_id' => $query[1]['batch_id']
+                'batch_id' => $query[1]['batch_id'],
+                'storage_path' => $query[1]['storage_path']
             ]);
         }
 
@@ -154,8 +157,8 @@ class UploadController extends Controller
      */
     public function show($slug)
     {
-        $file = \App\File::where('file_name', $slug)->with('grade')->first();
-        $content = mb_convert_encoding(FileSystem::get(public_path() . '/files/' . $file->file_name), 'UTF-16LE', 'UTF-8');
+        $file = \App\File::where('storage_path', config('app.upload_dir') . '/' . $slug)->with('grade')->first();
+        $content = mb_convert_encoding(Storage::get($file->storage_path), 'UTF-16LE', 'UTF-8');
 
         return view('uploaded-file-details', compact('file', 'content'));
     }
@@ -195,10 +198,22 @@ class UploadController extends Controller
     }
 
 
-    public function download($fileName)
+    public function download($storage_name)
     {
-        $path = public_path() . '/files/';
-        return response()->download($path . $fileName);
+        $file = File::where('storage_path', config('app.upload_dir') . '/' . $storage_name)->first();
+        if (is_null($file)) {
+            Session::flash('Fi&#x219;ierul nu exist&#259;');
+            return redirect()->back();
+        }
+
+        if (Auth::check() and (Auth::id() == $file->user_id or is_course_teacher($file->homework->course->id)))
+        {
+            return response()->download(storage_path('app' . '/' . $file->storage_path), $file->file_name);
+        }
+
+        Session::flash('error', 'Nu ai acces la acest fisier');
+        return redirect()->back();
+
     }
 
     public function getCheckedUploads($slug) {

@@ -8,7 +8,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\File;
-use Illuminate\Support\Facades\File as FileSystem;
+use App\Match;
+use Storage;
+use App\Comparison;
+use Illuminate\Support\Facades\File as FileSys;
 
 class CompareUpload implements ShouldQueue
 {
@@ -37,32 +40,89 @@ class CompareUpload implements ShouldQueue
         if (is_null($user_files)) return;
 
         $homework = $user_files[0]->first()->homework;
+        $upload_dir = config('app.upload_dir');
 
         foreach ($user_files as $requirement) {
+            $requirement_dir_name = $homework->slug . '_' . $requirement->requirement_id;
             $all_homework_files = $homework->files->where('requirement_id', $requirement->requirement_id);
 
-            $temp_folder = public_path('compare/' . generate_random_string(20));
-            FileSystem::makeDirectory($temp_folder);
-            foreach ($all_homework_files as $file) {
-                $old_file = public_path('files/' . $file->file_name);
-                $new_file = $temp_folder . '/' . $file->file_name;
-                FileSystem::copy($old_file, $new_file);
+            $temp_folder = 'app/comparisons/' . $requirement_dir_name;
+            $temp_folder_full = storage_path($temp_folder);
+            $current_file_full = storage_path('app/' . $requirement->storage_path);
+
+            if (!Storage::exists($temp_folder))
+            {
+                foreach ($all_homework_files as $file) {
+                    $name = basename($file->storage_path);
+                    Storage::copy($file->storage_path, $temp_folder . '/' . $name);
+                }
             }
 
             $command = sprintf("\"%s\" \"%s\"  --detailed --againstdir -d=\"%s\" ",
                 app_path('Console/OSPC/OSPC.exe'),
-                public_path('files/' . $requirement->file_name),
-                $temp_folder
+                $current_file_full,
+                $temp_folder_full
             );
 
             $result = shell_exec($command);
             $result = trim($result, "\n\r\t.");
-            FileSystem::deleteDirectory($temp_folder);
 
             $object = json_decode(utf8_encode($result), true);
+            $normalized_path_files = str_replace('\\', '/', dirname($current_file_full) . '/');
+            $normalized_path_temp = str_replace('\\', '/', $temp_folder_full . '/');
+
             if (is_null($object)) continue;
             foreach ($object['results'] as $result) {
-                // Do something
+                $file_name_1 = config('app.upload_dir') . '/' . str_replace($normalized_path_files, '', $result['fileA']);
+                $file_name_2 = config('app.upload_dir') . '/' . str_replace($normalized_path_temp, '', $result['fileB']);
+
+                $file_1 = File::where('storage_path', $file_name_1)->first();
+                $file_2 = File::where('storage_path', $file_name_2)->first();
+                if (is_null($file_1) or is_null($file_2)) continue;
+
+                $comparison = Comparison::updateOrCreate(
+                    [
+                        'file_id_1' => $file_1->id,
+                        'file_id_2' => $file_2->id
+                    ],
+                    [
+                        'file_id_1' => $file_1->id,
+                        'file_id_2' => $file_2->id,
+                        'match_count' => $result['matchCount'],
+                        'token_count' => $result['tokenCount'],
+                        'similarityA' => $result['simmA'],
+                        'similarityB' => $result['simmB']
+                    ]
+                );
+
+                $matchesComp = [
+                    [
+                        'side' => 'A',
+                        'arr' => $result['matchesA']
+                    ],
+                    [
+                        'side' => 'B',
+                        'arr' => $result['matchesB']
+                    ]
+                ];
+
+                foreach ($matchesComp as $matchArr) {
+                    foreach ($matchArr['arr'] as $match) {
+                        Match::updateOrCreate(
+                            [
+                                'comparison_id' => $comparison->id,
+                                'side' => $matchArr['side'],
+                                'start' => $match['start']
+                            ],
+                            [
+                                'comparison_id' => $comparison->id,
+                                'side' => $matchArr['side'],
+                                'start' => $match['start'],
+                                'length' => $match['length']
+                            ]
+                        );
+                    }
+                }
             }
         }
     }

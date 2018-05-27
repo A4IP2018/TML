@@ -70,17 +70,28 @@
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                         <a class="nav-link" href="{{ url('/homework') }}">
                             <i class="fa fa-fw fa-table"></i>
-                            <span class="nav-link-text">Teme disponibile</span>
+                            <span class="nav-link-text">Teme</span>
                         </a>
                     </li>
 
+                    @if (!is_teacher())
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <!--student uploads for this homework <TEACHER>-->
                         <a class="nav-link" href="{{ url('/upload') }}">
                             <i class="fa fa-fw fa-upload"></i>
-                            <span class="nav-link-text">Teme incarcate</span>
+                            <span class="nav-link-text">Teme &#238;nc&#259;rcate</span>
                         </a>
                     </li>
+                    @endif
+
+                    @if (is_teacher())
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                        <a class="nav-link" href="{{ url('/compare') }}">
+                            <i class="fa fa-fw fa-book"></i>
+                            <span class="nav-link-text">Compar&#259;</span>
+                        </a>
+                    </li>
+                    @endif
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <a class="nav-link" href="{{ url('/contact') }}">
