@@ -121,7 +121,7 @@
 
       {{--NOUTATI--}}
       <div class="row">
-        <div class="mb-0 mt-4 ml-4">
+        <div class="mb-0 mt-2 ml-4">
           <i class="fa fa-newspaper-o"></i> Noutăți
         </div>
       </div>
@@ -144,6 +144,7 @@
           <div class="card-footer small text-muted">Ultima modificare 11:59 PM</div>
         </div>
       </div> <!--/.row-->
+        <br>
     </div>
   </div>
   <!-- /.container-fluid-->

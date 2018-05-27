@@ -17,8 +17,8 @@
             <div class="row">
                 <div class="col-12">
                     <br>
-                    <p class="text-center" style="font-size: 30px">Ai nelămuriri? Intreabă-ne!</p>
-                    <div class="card card-register mx-auto mt-5">
+                    <p class="text-center" style="font-size: 23px">Ai nelămuriri? Intreabă-ne!</p>
+                    <div class="card card-register mx-auto mt-3">
                     <div class="card">
                         <div class="card-body">
                     <form action="/action_page.php">
