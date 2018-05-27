@@ -95,3 +95,5 @@ Route::post('/notifications/remove', 'NotificationController@remove')->middlewar
 
 
 Route::get('/admin', 'AdminController@index')->middleware('admin');
+
+Route::get('/pdf-generator', 'AdminController@pdfGenerate');

@@ -22,26 +22,7 @@ class CourseController extends Controller
     }
 
 
-    public function get_teacher_names($course) {
-        $teachers_string = null;
-        if (!is_null($course->users))
-        {
-            $teachers_string = implode(", ", $course->users
-                ->map(function($user) {
-                    if (!is_null($user->teacher_information)) {
-                        return $user->teacher_information->name;
-                    }
-                    return null;
-                })
-                ->filter(function($str) { return is_null($str) ? false : true; })
-                ->toArray());
 
-        }
-        if (is_null($teachers_string)) {
-            $teachers_string = 'Nici un profesor specificat';
-        }
-        return $teachers_string;
-    }
 
 
     public function getFilteredCourses(Request $request)

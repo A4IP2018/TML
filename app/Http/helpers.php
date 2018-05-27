@@ -6,6 +6,7 @@
  * Time: 9:38 PM
  */
 
+use App\Grade;
 use App\User;
 use App\Rank;
 use App\Role;
@@ -14,6 +15,7 @@ use App\Course;
 use Carbon\Carbon;
 use App\Notification;
 use App\Http\Controllers\NotificationController as Notifications;
+use Illuminate\Support\Facades\Auth;
 
 Carbon::setLocale('ro');
 
@@ -25,6 +27,57 @@ if (! function_exists('is_teacher')) {
                     ->role->rank == Role::$TEACHER_RANK;
         }
         return false;
+    }
+}
+
+if (! function_exists('get_teacher_names')) {
+    function get_teacher_names($course)
+    {
+        $teachers_string = null;
+        if (!is_null($course->users)) {
+            $teachers_string = implode(", ", $course->users
+                ->map(function ($user) {
+                    if (!is_null($user->teacher_information)) {
+                        return $user->teacher_information->name;
+                    }
+                    return null;
+                })
+                ->filter(function ($str) {
+                    return is_null($str) ? false : true;
+                })
+                ->toArray());
+
+        }
+        if (is_null($teachers_string)) {
+            $teachers_string = 'Nici un profesor specificat';
+        }
+        return $teachers_string;
+    }
+}
+
+if (! function_exists('is_student')) {
+    function is_student() {
+        if (Auth::check()) {
+            return User::where('id', Auth::id())
+                    ->first()
+                    ->role->rank == Role::$TEACHER_RANK;
+        }
+        return false;
+    }
+}
+
+if (! function_exists('isAlreadyMarked')) {
+    function isAlreadyMarked($homework) {
+        $check = false;
+        if (Auth::check()) {
+            $userGrades = Grade::where('user_id', Auth::id())->with('file.homework')->get();
+            foreach($userGrades as $userGrade) {
+                if ($userGrade->file && $userGrade->file->homework->id === $homework->id) {
+                    $check = true;
+                }
+            }
+        }
+        return $check;
     }
 }
 
