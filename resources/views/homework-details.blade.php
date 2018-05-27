@@ -137,37 +137,38 @@
 
     </div>
 
-    <div class="col-6">
-        <div class="mb-0 mt-4">
-            <i class="fa fa-newspaper-o"></i> Incarcare tema</div>
-        <hr class="mt-2">
+    @if($homework->deadline <= Carbon\Carbon::now() || !isAlreadyMarked($homework))
+        <div class="col-6">
+            <div class="mb-0 mt-4">
+                <i class="fa fa-newspaper-o"></i> Incarcare tema</div>
+            <hr class="mt-2">
 
+            <form action="{{ url('/upload') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="homework-id" value="{{ $homework->id }}">
+                <br/>
+                <p>Fisiere tema :</p>
 
-        <form action="{{ url('/upload') }}" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="homework-id" value="{{ $homework->id }}">
-            <br/>
-            <p>Fisiere tema :</p>
-
-            <div class="card-columns">
-                <?php $counter = 0; ?>
-                @foreach ($homework->requirements as $requirement)
-                    <div class="card">
-                        <div class="card-header">{{ $requirement->description }}</div>
-                        <div class="card-body">
-                            <div class="custom-file">
-                                <input name="toUpload[{{ $counter }}][upload_file]" type="file" class="custom-file-input">
-                                <input name="toUpload[{{ $counter }}][requirement_id]" type="hidden" value="{{ $requirement->id }}">
-                                <label class="custom-file-label" for="toUpload{{ $counter }}">Incarca</label>
+                <div class="card-columns">
+                    <?php $counter = 0; ?>
+                    @foreach ($homework->requirements as $requirement)
+                        <div class="card">
+                            <div class="card-header">{{ $requirement->description }}</div>
+                            <div class="card-body">
+                                <div class="custom-file">
+                                    <input name="toUpload[{{ $counter }}][upload_file]" type="file" class="custom-file-input">
+                                    <input name="toUpload[{{ $counter }}][requirement_id]" type="hidden" value="{{ $requirement->id }}">
+                                    <label class="custom-file-label" for="toUpload{{ $counter }}">Incarca</label>
+                                </div>
                             </div>
+                            <div class="card-footer">Formatul necesar: {{ $requirement->format->extension_name }}</div>
                         </div>
-                        <div class="card-footer">Formatul necesar: {{ $requirement->format->extension_name }}</div>
-                    </div>
-                    <?php $counter++; ?>
-                @endforeach
-            </div>
-            <button type="submit" class="btn btn-primary" class="form-control">Incarca!</button>
-        </form>
-    </div>
+                        <?php $counter++; ?>
+                    @endforeach
+                </div>
+                <button type="submit" class="btn btn-primary" class="form-control">Incarca!</button>
+            </form>
+        </div>
+    @endif
 </div>
 @endsection

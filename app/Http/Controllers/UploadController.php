@@ -130,7 +130,12 @@ class UploadController extends Controller
         }
 
         foreach ($to_upload as $query) {
-            File::create($query[1]);
+
+            File::updateOrCreate(['user_id' => $query[1]['user_id'], 'homework_id' => $query[1]['homework_id']], [
+                'requirement_id' => $query[1]['requirement_id'],
+                'file_name' => $query[1]['file_name'],
+                'batch_id' => $query[1]['batch_id']
+            ]);
         }
 
         Session::flash('success', 'Fisierele au fost incarcate!');

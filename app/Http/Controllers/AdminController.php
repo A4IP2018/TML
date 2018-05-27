@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\Grade;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use App\Code;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 class AdminController extends Controller
@@ -25,5 +29,25 @@ class AdminController extends Controller
         $teacher_codes = Code::where('rank', \App\Role::$TEACHER_RANK)->get();
         $admin_codes = Code::where('rank', \App\Role::$ADMINISTRATOR_RANK)->get();
         return view('admin')->with(['teacher_codes' => $teacher_codes, 'admin_codes' => $admin_codes]);
+    }
+
+    public function pdfGenerate()
+    {
+        $grades = Grade::with('file', 'file.homework', 'file.homework.course')->where('user_id', Auth::id())->get();
+
+        $myCourses = Course::whereHas('subscriptions', function($query) {
+            return $query->where('user_id', Auth::id());
+        })
+            ->withCount('homeworks')
+            ->with('users', 'users.teacher_information')->get();
+
+        foreach($myCourses as $myCourse) {
+            $myCourse->teacherNames = get_teacher_names($myCourse);
+        }
+
+        $pdf = \PDF::loadView('pdf.pdf-generate', compact('grades', 'myCourses'));
+
+        return $pdf->download('pdf-generate.pdf');
+//        return view('pdf.pdf-generate');
     }
 }

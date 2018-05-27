@@ -53,7 +53,7 @@
     <div class="card-body">
         <form class="form-group" action="{{ URL::to('grade-action') }}" method="POST">
             <div class="row">
-                <input type="hidden" name="homework-id" value="{{ $file->homework->id }}">
+                <input type="hidden" name="homework-id" value="{{ $file->id }}">
                 <input type="hidden" name="user-id" value="{{ $file->user->id }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="col col-6 form-group">
