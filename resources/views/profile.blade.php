@@ -24,44 +24,39 @@
                         <input type="role" class="form-control" id="name" value="{{ get_role() }}" readonly>
                     </div>
 
-                    @if ($user->role->rank == \App\Role::$MEMBER_RANK)
-                        <label for="nr_matricol">Nr. matricol:</label>
-                        <form action="{{ url('/change-nr-matricol') }}" METHOD="POST">
-                            <div class="input-group">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input name="nr-matricol" type="text" class="form-control" id="nr_matr" value="{{ $user->student_information->nr_matricol }}" >
-                                <span class="input-group-append">
-                                    <button data-toggle="collapse" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
-                                </span>
-                            </div>
-                        </form>
-                        <br>
+                    @if (Auth::check() and (is_teacher() or Auth::id() == $user->id))
+                        @if ($user->role->rank == \App\Role::$MEMBER_RANK)
+                            <label for="nr_matricol">Nr. matricol:</label>
+                            @if (Auth::check() and Auth::id() == $user->id)
+                            <form action="{{ url('/change-nr-matricol') }}" METHOD="POST">
+                                <div class="input-group">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input name="nr-matricol" type="text" class="form-control" id="nr_matr" value="{{ $user->student_information->nr_matricol }}" >
+                                    <span class="input-group-append">
+                                        <button data-toggle="collapse" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
+                                    </span>
+                                </div>
+                            </form>
+                            @else
+                                <input name="nr-matricol" type="text" class="form-control" id="nr_matr" value="{{ $user->student_information->nr_matricol }}" readonly>
+                            @endif
+                            <br>
+                        @endif
                     @endif
 
+                    @if (Auth::check() and (is_teacher() or Auth::id() == $user->id))
                     <label for="email">Adresa de mail:</label>
                     <div class="input-group">
                         <input type="email" class="form-control" id="email" value="{{$user->email}}" readonly>
+                        @if (Auth::check() and Auth::id() == $user->id)
                         <span class="input-group-append">
                             <button data-toggle="collapse" data-target="#changeEmail" class="btn btn-primary">Schimba <i class="fa fa-eraser"></i></button>
                         </span>
+                        @endif
                     </div>
-                    <br>
-                    <div id="changeEmail" class="collapse">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="name">Adresa de mail veche:</label>
-                                    <input type="name" class="form-control" id="oldMail" placeholder="Scrie vechea ta adresa de mail">
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">Adresa de mail noua:</label>
-                                    <input type="name" class="form-control" id="newMail" placeholder="Scrie noua ta adresa de mail">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Salveaza</button>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
 
+                    @if (Auth::check() and Auth::id() == $user->id)
                     <div id="changeEmail" class="collapse">
                         <div class="card">
                             <div class="card-body">
@@ -82,7 +77,9 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
+                    @if (Auth::check() and Auth::id() == $user->id)
                     <label for="password">Parola:</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="pass" value="*******" readonly>
@@ -91,6 +88,7 @@
                         </span>
                     </div>
                     <br>
+
                     <div id="changePassword" class="collapse">
                         <div class="card">
                             <div class="card-body">
@@ -109,7 +107,7 @@
                             </div>
                         </div>
                     </div>
-
+                    @endif
                 </div>
             </div>
         </div>
