@@ -138,6 +138,15 @@ if (! function_exists('is_homework_author')) {
     }
 }
 
+if (! function_exists('get_teacher_homeworks')) {
+    function get_teacher_homeworks() {
+        if (Auth::check()) {
+            return App\Homework::all()->filter(function ($object) { return in_array(Auth::id(), $object->course->users->pluck('id')->toArray()); });
+        }
+        return null;
+    }
+}
+
 if (! function_exists('is_subscribed_to_course')) {
     function is_subscribed_to_course($course_id) {
         if (Auth::check()) {
