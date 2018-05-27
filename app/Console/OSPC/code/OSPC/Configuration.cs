@@ -43,6 +43,7 @@ namespace OSPC
             Exclude = new List<string>();
             IncludeDir = new List<string>();
             ExcludeDir = new List<string>();
+            OneAgainstDir = false;
         }
         /// <summary>
         /// Minimum count of matching tokens, including non-matching tokens.
@@ -86,5 +87,7 @@ namespace OSPC
         public List<string> IncludeDir { get; private set; }
         [XmlElement]
         public List<string> ExcludeDir { get; private set; }
+        [XmlIgnore]
+        public bool OneAgainstDir { get; set; }
     }
 }

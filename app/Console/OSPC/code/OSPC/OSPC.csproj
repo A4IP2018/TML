@@ -84,6 +84,7 @@
     <EmbeddedResource Include="Reporter\Html\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporter\Html\style.css" />
   </ItemGroup>

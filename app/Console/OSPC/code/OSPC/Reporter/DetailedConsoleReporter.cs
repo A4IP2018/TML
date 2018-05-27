@@ -29,6 +29,9 @@ namespace OSPC.Reporter
     {
         public void Create(Configuration cfg, OSPCResult r)
         {
+            Console.WriteLine("{");
+            Console.WriteLine("    \"results\": [");
+            var resultCount = 0;
             foreach (var result in r.Results)
             {
                 var aReader = new StreamReader(result.A.FilePath);
@@ -38,27 +41,32 @@ namespace OSPC.Reporter
 
 
 
-                Console.Write("{");
-                Console.Write("\"{0}\":\"{1}\", \"{2}\":\"{3}\", \"{4}\":\"{5}\", \"{6}\":\"{7}\", \"{8}\":{9:n2}, \"{10}\":{11:n2}, \"{12}\" : [{13}], \"{14}\" : [{15}]",
-                    "fileA",
-                    result.A.FilePath,
-                    "fileB",
-                    result.B.FilePath,
-                    "matchCount",
-                    result.MatchCount,
-                    "tokenCount",
-                    result.TokenCount,
-                    "simmA",
-                    100.0 * result.SimilarityA,
-                    "simmB",
-                    100.0 * result.SimilarityB,
-                    "matchesA",
-                    BuildArrayJson(matchesA),
+                Console.WriteLine("        {");
+                Console.WriteLine("            \"{0}\": \"{1}\",", "fileA", result.A.FilePath.Replace('\\', '/'));
+                Console.WriteLine("            \"{0}\": \"{1}\",", "fileB", result.B.FilePath.Replace('\\', '/'));
+                Console.WriteLine("            \"{0}\": {1},", "matchCount", result.MatchCount);
+                Console.WriteLine("            \"{0}\": {1},", "tokenCount", result.TokenCount);
+                Console.WriteLine("            \"{0}\": {1:n2},", "simmA", 100.0 * result.SimilarityA);
+                Console.WriteLine("            \"{0}\": {1:n2},", "simmB", 100.0 * result.SimilarityB);
+                Console.WriteLine("            \"{0}\": [{1}],", "matchesA", BuildArrayJson(matchesA));
+                Console.WriteLine("            \"{0}\": [{1}]", "matchesB", BuildArrayJson(matchesB));
+                if (resultCount == r.Results.Count - 1)
+                {
+                    Console.WriteLine("        }");
+                }
+                else
+                {
+                    Console.WriteLine("        },");
+                }
+                
+
+                /* BuildArrayJson(matchesA),
                     "matchesB",
-                    BuildArrayJson(matchesB)
-                );
-                Console.WriteLine("}");
+                    BuildArrayJson(matchesB)*/
+                resultCount++;
             }
+            Console.WriteLine("    ]");
+            Console.WriteLine("}");
         }
 
 
@@ -103,6 +111,7 @@ namespace OSPC.Reporter
                 {
                     result += ",";
                 }
+                counter++;
             }
             return result;
         }

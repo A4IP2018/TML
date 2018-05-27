@@ -43,17 +43,6 @@ namespace OSPC
                 Reporter.IReporter html = null;
                 Reporter.IReporter console = new Reporter.ConsoleReporter();
                 Tokenizer.ITokenizer tokenizer = new Tokenizer.CLikeTokenizer();
-
-                Console.WriteLine("Open Software Plagiarism Checker");
-                Console.WriteLine("================================");
-                Console.WriteLine("Version {0}", typeof(OSPC.Program).Assembly.GetName().Version);
-                Console.WriteLine();
-                Console.WriteLine("Copyright (C) 2015 Arthur Zaczek at the UAS Technikum Wien, GPL V3");
-                Console.WriteLine("This program comes with ABSOLUTELY NO WARRANTY; see the GPL V3 for details.");
-                Console.WriteLine("This is free software, and you are welcome to redistribute it");
-                Console.WriteLine("under certain conditions; see the GPL V3 for details.");
-                Console.WriteLine();
-
                 var p = new OptionSet()
                 {
                     { "h|?|help", "Prints this help", v => showHelp = true },
@@ -67,7 +56,7 @@ namespace OSPC
                     { "recurse", "Traversals all directories recurse. Use include-dir and exclude-dir to have more control over the selected directories.", v => cfg.Recurse = true },
                     { "include-dir=", "Specifies a regular expression that every file must match. More than one expression is allowed. A file must match any of these expressions.", v => cfg.IncludeDir.Add(v) },
                     { "exclude-dir=", "Specifies a regular expression to exclude files. More than one expression is allowed. If a file must match any of these expressions it will be excluded.", v => cfg.ExcludeDir.Add(v) },
-
+                    { "againstdir", "Compares the files specified as arguments against the directory set with -d", v => cfg.OneAgainstDir = true},
                     { "detailed", "Print a detailed report to the console", v => console = new Reporter.DetailedConsoleReporter() },
                     { "summary", "Print only a summay to the console. Usefull if --html is used.", v => console = new Reporter.SummaryConsoleReporter() },
                     { "html:", "Saves a html report to the specified directory. Defaults to \"report\"", v => html = new Reporter.Html.HtmlReporter(v, progress) },
@@ -76,6 +65,7 @@ namespace OSPC
                     { "min-match-length=", "Minimum count of matching tokens, including non-matching tokens.", v => cfg.MIN_MATCH_LENGTH = int.Parse(v) },
                     { "max-match-distance=", "Maximum distance between tokens to count as a match. 1 = exact match.", v => cfg.MAX_MATCH_DISTANCE = int.Parse(v) },
                     { "min-common-token=", "Percent of token that must match to count as a match. 1 = every token must match.", v => cfg.MIN_COMMON_TOKEN = double.Parse(v, System.Globalization.CultureInfo.InvariantCulture) },
+                    
 
                     { "v|verbose", "Verbose output.", v =>  cfg.Verbose = true },
                 };
@@ -96,28 +86,30 @@ namespace OSPC
                 var friendfinder = new FriendFinder(cfg);
                 var watch = Stopwatch.StartNew();
 
-                Console.WriteLine("Collecting files");
-                var files = CollectFiles(cfg, tokenizer);
-                Console.WriteLine("  finished; time: {0:n2} sec.", watch.Elapsed.TotalSeconds);
-                if (files.Length == 0)
+                
+                if (cfg.OneAgainstDir)
                 {
-                    Console.WriteLine("No files found to compare!");
+                    var dirFiles = CollectFiles(cfg, tokenizer, true, false);
+                    var givenFiles = CollectFiles(cfg, tokenizer, false, true);
+
+                    var compareResult = comparer.Compare(givenFiles, dirFiles);
+                    var result = OSPCResult.Create(compareResult);
+                    friendfinder.Find(result, compareResult);
+                    CreateReports(cfg, html, console, result);
+
                 }
                 else
                 {
-                    Console.Write("Comparing {0} files ", files.Length);
-                    var compareResult = comparer.Compare(files);
-                    Console.WriteLine("  finished; time: {0:n2} sec.", watch.Elapsed.TotalSeconds);
-
-                    Console.WriteLine("Creating statistics");
-                    var result = OSPCResult.Create(compareResult);
-                    friendfinder.Find(result, compareResult);
-                    Console.WriteLine("  finished; time: {0:n2} sec.", watch.Elapsed.TotalSeconds);
-
-                    Console.WriteLine("Creating reports");
-                    CreateReports(cfg, html, console, result);
-                    Console.WriteLine("  finished in total {0:n2} sec.", watch.Elapsed.TotalSeconds);
+                    var files = CollectFiles(cfg, tokenizer);
+                    if (files.Length != 0)
+                    {
+                        var compareResult = comparer.Compare(files);
+                        var result = OSPCResult.Create(compareResult);
+                        friendfinder.Find(result, compareResult);
+                        CreateReports(cfg, html, console, result);
+                    }
                 }
+               
             }
             catch (Exception ex)
             {
@@ -156,7 +148,7 @@ namespace OSPC
             }
         }
 
-        private static Submission[] CollectFiles(Configuration cfg, Tokenizer.ITokenizer tokenizer)
+        private static Submission[] CollectFiles(Configuration cfg, Tokenizer.ITokenizer tokenizer, bool dirs = true, bool extra = true)
         {
             if (cfg.Filter.Count == 0 && cfg.Dirs.Count > 0)
             {
@@ -168,25 +160,32 @@ namespace OSPC
             }
 
             var files = new List<string>();
-            var include = cfg.Include.Select(i => new Regex(i)).ToList();
-            var exclude = cfg.Exclude.Select(i => new Regex(i)).ToList();
-            var includeDir = cfg.IncludeDir.Select(i => new Regex(i)).ToList();
-            var excludeDir = cfg.ExcludeDir.Select(i => new Regex(i)).ToList();
+            if (dirs)
+            {  
+                var include = cfg.Include.Select(i => new Regex(i)).ToList();
+                var exclude = cfg.Exclude.Select(i => new Regex(i)).ToList();
+                var includeDir = cfg.IncludeDir.Select(i => new Regex(i)).ToList();
+                var excludeDir = cfg.ExcludeDir.Select(i => new Regex(i)).ToList();
 
-            CollectFilesRecurse(files, cfg.Dirs, true, include, exclude, includeDir, excludeDir, cfg);
+                CollectFilesRecurse(files, cfg.Dirs, true, include, exclude, includeDir, excludeDir, cfg);
+            }
+            
 
-            files.AddRange(cfg.ExtraFiles.Where(f =>
+            if (extra)
             {
-                if (File.Exists(f))
+                files.AddRange(cfg.ExtraFiles.Where(f =>
                 {
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("  ** Warning, file \"{0}\" not found.", f);
-                    return false;
-                }
-            }));
+                    if (File.Exists(f))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("  ** Warning, file \"{0}\" not found.", f);
+                        return false;
+                    }
+                }));
+            }
 
             if (cfg.Verbose)
             {

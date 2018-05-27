@@ -134,6 +134,48 @@ namespace OSPC
             return compareResult;
         }
 
+        public List<CompareResult> Compare(Submission[] givenFiles, Submission[] dirFiles)
+        {
+            _progress.Start();
+
+            var compareList = new List<Tuple<Submission, Submission>>();
+            for (int a = 0; a < givenFiles.Length; a++)
+            {
+                for (int b = 0; b < dirFiles.Length; b++)
+                {
+                    if (Path.GetExtension(givenFiles[a].FilePath) != Path.GetExtension(dirFiles[b].FilePath)) continue;
+                    compareList.Add(new Tuple<Submission, Submission>(givenFiles[a], dirFiles[b]));
+                }
+            }
+
+
+            object _lock = new object();
+            var compareResult = new List<CompareResult>();
+            int counter = 0;
+            int max = compareList.Count;
+
+#if SINGLE_THREADED
+            foreach(var pair in compareList)
+#else
+            Parallel.ForEach(compareList, pair =>
+#endif
+            {
+                var r = this.Compare(pair.Item1, pair.Item2);
+
+                lock (_lock)
+                {
+                    compareResult.Add(r);
+                    _progress.Progress((double)++counter / (double)max);
+                }
+            }
+#if !SINGLE_THREADED
+            );
+#endif
+            _progress.End();
+
+            return compareResult;
+        }
+
         public CompareResult Compare(Submission a, Submission b)
         {
             CompareResult result = new CompareResult(a, b);
