@@ -69,6 +69,7 @@
                 </div>
 
 
+            <!--
                 <div class="card-group">
 
                     <form action="{{ url('compare-action') }}" method="POST">
@@ -81,7 +82,6 @@
 
                                             <label for="sel1">Student #1</label>
 
-                                            <!--Select student id 2-->
                                             <select name="first-compare-field" class="form-control"
                                                     id="hw-curssel">
 
@@ -92,10 +92,7 @@
 
                                     <div class="card-body text-success">
 
-                                        <!--Homework stud 2 title-->
                                         <h5 class="card-title">Laborator 8</h5>
-
-                                        <!--Homework stud 2 content-->
                                         <p class="card-text">
                                             "Lorem ipsum dolor sit amet, consectetur adipiscing
                                             elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -116,7 +113,6 @@
 
                                             <label for="sel1">Student #2</label>
 
-                                            <!--Select student id 2-->
                                             <select name="second-compare-field" class="form-control"
                                                     id="hw-curssel">
 
@@ -127,10 +123,8 @@
 
                                     <div class="card-body text-success">
 
-                                        <!--Homework stud 2 title-->
                                         <h5 class="card-title">Laborator 8</h5>
 
-                                        <!--Homework stud 2 content-->
                                         <p class="card-text">
                                             "Lorem ipsum dolor sit amet, consectetur adipiscing
                                             elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -152,13 +146,11 @@
                     <div class="card-header bg-transparent border">
                         <div class="card-body text">
 
-                            <!--compare result-->
                             <h5 class="card-title">Rezultat:</h5>
 
 
                             <p class="card-text">Asemanare tema {{ session('procent') }}%</p>
 
-                            <!--result bar depending on compare result-->
                             <div class="progress">
                                 <div class="progress-bar bg-danger" style="width:{{ session('procent') }}%"></div>
                             </div>
@@ -166,17 +158,10 @@
                         </div>
                     </div>
                 </div>
+                -->
             @endif
-            <!--Select All to compare all homework-->
-
-
-            <!--Select Two to compare only the two of them-->
-            {{--<br><a href="#" class="btn btn-primary btn-lg btn-block">Compare cele 2 teme</a><br>--}}
-
         @else
-            <h4 class="text-center">Nu ai creat nicio tem&#259;  <a href="{{ url('/course') }}">cursuri</a>
-
-            </h4>
+            <h4 class="text-center">Nu ai creat nicio tem&#259; :(</h4>
         @endif
     </div>
 </div>
