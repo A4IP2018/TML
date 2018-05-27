@@ -13,8 +13,8 @@
 
 Route::get('/', 'HomeController@main');
 
-Route::get('/compare', 'HomeworkController@compare')->name('compare');
-Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
+Route::get('/compare', 'CompareController@index')->name('compare')->middleware('auth');
+Route::post('/compare', 'CompareController@statsPage')->middleware('auth');
 
 
 Route::resource('homework', 'HomeworkController');

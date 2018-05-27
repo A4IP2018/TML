@@ -71,7 +71,6 @@ class CompareUpload implements ShouldQueue
             $normalized_path_files = str_replace('\\', '/', dirname($current_file_full) . '/');
             $normalized_path_temp = str_replace('\\', '/', $temp_folder_full . '/');
 
-            if (is_null($object)) continue;
             foreach ($object['results'] as $result) {
                 $file_name_1 = config('app.upload_dir') . '/' . str_replace($normalized_path_files, '', $result['fileA']);
                 $file_name_2 = config('app.upload_dir') . '/' . str_replace($normalized_path_temp, '', $result['fileB']);
@@ -79,6 +78,7 @@ class CompareUpload implements ShouldQueue
                 $file_1 = File::where('storage_path', $file_name_1)->first();
                 $file_2 = File::where('storage_path', $file_name_2)->first();
                 if (is_null($file_1) or is_null($file_2)) continue;
+                if ($file_1->user->id == $file_2->user->id) continue;
 
                 $comparison = Comparison::updateOrCreate(
                     [

@@ -327,13 +327,6 @@ class HomeworkController extends Controller
         return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
     }
 
-
-    public function compare()
-    {
-        $files = \App\File::all();
-        return view('compare', compact('files'));
-    }
-
     public function compareAction(Request $request)
     {
 
