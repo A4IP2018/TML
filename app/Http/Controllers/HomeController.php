@@ -9,7 +9,11 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function main() {
-
-        return view('index');
+        if (Auth::check()) {
+            return redirect('/homework');
+        }
+        else {
+            return redirect('/login');
+        }
     }
 }
