@@ -37,13 +37,12 @@ class Grade extends Model
     ];
 
     /**
-     * Report -> Report_type relationship
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-//    public function grades_users() {
-//        return $this->belongsTo('App\User');
-//	 }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 
     /**
      * Grade -> File relationship
