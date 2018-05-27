@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateComparisonsTable extends Migration
+class CreateMatchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateComparisonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comparisons', function (Blueprint $table) {
+        Schema::create('matches', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('file_id_1');
-            $table->integer('file_id_2');
-            $table->integer('match_count');
-            $table->integer('token_count');
-            $table->float('similarityA');
-            $table->float('similarityB');
+            $table->integer('comparison_id');
+            $table->integer('start');
+            $table->integer('length');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -33,6 +30,6 @@ class CreateComparisonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comparisons');
+        Schema::dropIfExists('matches');
     }
 }

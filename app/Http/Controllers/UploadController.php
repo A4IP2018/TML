@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Jobs\CompareUpload;
 use App\User;
 use App\RequiredFormat;
 use App\Homework;
@@ -131,13 +132,16 @@ class UploadController extends Controller
 
         foreach ($to_upload as $query) {
 
-            File::updateOrCreate(['user_id' => $query[1]['user_id'], 'homework_id' => $query[1]['homework_id']], [
+            File::create([
+                'user_id' => $query[1]['user_id'],
+                'homework_id' => $query[1]['homework_id'],
                 'requirement_id' => $query[1]['requirement_id'],
                 'file_name' => $query[1]['file_name'],
                 'batch_id' => $query[1]['batch_id']
             ]);
         }
 
+        $this->dispatch(new CompareUpload($batch_id));
         Session::flash('success', 'Fisierele au fost incarcate!');
         return redirect()->back();
     }
