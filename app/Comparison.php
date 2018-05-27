@@ -21,7 +21,7 @@ class Comparison extends Model
      * @var array
      */
     protected $fillable = [
-        'file_id_1', 'file_id_2', 'match_count', 'token_count', 'similarityA', 'similarityB'
+        'file_id_1', 'file_id_2', 'match_count', 'token_count', 'similarityA', 'similarityB', 'homework_id', 'requirement_id'
     ];
 
     /**

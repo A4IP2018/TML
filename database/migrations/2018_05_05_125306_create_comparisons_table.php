@@ -17,6 +17,8 @@ class CreateComparisonsTable extends Migration
             $table->increments('id');
             $table->integer('file_id_1');
             $table->integer('file_id_2');
+            $table->integer('homework_id');
+            $table->integer('requirement_id');
             $table->integer('match_count');
             $table->integer('token_count');
             $table->float('similarityA');

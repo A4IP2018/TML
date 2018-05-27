@@ -88,6 +88,8 @@ class CompareUpload implements ShouldQueue
                     [
                         'file_id_1' => $file_1->id,
                         'file_id_2' => $file_2->id,
+                        'homework_id' => $homework->id,
+                        'requirement_id' => $requirement->requirement_id,
                         'match_count' => $result['matchCount'],
                         'token_count' => $result['tokenCount'],
                         'similarityA' => $result['simmA'],
