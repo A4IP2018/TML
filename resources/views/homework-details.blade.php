@@ -126,13 +126,13 @@
                         @if ($comment->user->student_information)
                             <h6 class="card-title mb-1"><a
                                         href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a>
-                                <small> $comment->created_at</small>
+                                <small> {{ $comment->created_at }}</small>
                             </h6>
 
                         @else
                             <h6 class="card-title mb-1"><a
                                         href="#">{{ $comment->user->teacher_information->name }}</a>
-                                <small> $comment->created_at</small>
+                                <small> {{ $comment->created_at }}</small>
                             </h6>
 
                         @endif
