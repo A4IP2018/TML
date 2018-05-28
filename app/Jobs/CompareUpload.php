@@ -64,12 +64,15 @@ class CompareUpload implements ShouldQueue
                 $temp_folder_full
             );
 
+
             $result = shell_exec($command);
             $result = trim($result, "\n\r\t.");
 
             $object = json_decode(utf8_encode($result), true);
             $normalized_path_files = str_replace('\\', '/', dirname($current_file_full) . '/');
             $normalized_path_temp = str_replace('\\', '/', $temp_folder_full . '/');
+
+            if (is_null($object)) return;
 
             foreach ($object['results'] as $result) {
                 $file_name_1 = config('app.upload_dir') . '/' . str_replace($normalized_path_files, '', $result['fileA']);

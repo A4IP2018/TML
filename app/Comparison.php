@@ -52,4 +52,8 @@ class Comparison extends Model
     public function matches() {
         return $this->hasMany('App\Match');
     }
+
+    public function homework() {
+        return $this->belongsTo('App\Homework');
+    }
 }

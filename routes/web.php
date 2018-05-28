@@ -15,7 +15,7 @@ Route::get('/', 'HomeController@main');
 
 Route::get('/compare', 'CompareController@index')->name('compare')->middleware('auth');
 Route::post('/compare', 'CompareController@statsPage')->middleware('auth');
-
+Route::get('/compare/{id}', 'CompareController@compareView')->middleware('auth');
 
 Route::resource('homework', 'HomeworkController');
 
