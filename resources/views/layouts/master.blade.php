@@ -32,7 +32,7 @@
         <link href="{{ asset('css/main.css?v='. time()) }}" rel="stylesheet">
 
     </head>
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top" style="margin-left: -100px">
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top" >
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 
@@ -113,6 +113,11 @@
 
                 </ul>
                 <ul class="navbar-nav sidenav-toggler">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" id="sidenavToggler">
+                            <i class="fa fa-fw fa-angle-left"></i>
+                        </a>
+                    </li>
 
                 </ul>
 
