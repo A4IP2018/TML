@@ -46,7 +46,7 @@ class CompareController extends Controller
                 $comparison['user_1'] = File::where('id', $comparison->file_id_1)->first()->user;
                 $comparison['user_2'] = File::where('id', $comparison->file_id_2)->first()->user;
             }
-            $all_comparisons = $all_comparisons->sort(function($item) { return $item['simm']; })->reverse();
+            $all_comparisons = $all_comparisons->sortBy('created_at')->reverse();
 
             $unique_users = File::all()->unique('user_id');
 
@@ -74,8 +74,8 @@ class CompareController extends Controller
             $file_req_2 = File::where('batch_id', $file_2->batch_id)->where('requirement_id', $file_2->requirement_id)->first();
             $requirement['file_1'] = $file_req_1;
             $requirement['file_2'] = $file_req_2;
-            $requirement['file_1_content'] = mb_convert_encoding(Storage::get($file_req_1->storage_path), 'UTF-16LE', 'UTF-8');
-            $requirement['file_2_content'] = mb_convert_encoding(Storage::get($file_req_2->storage_path), 'UTF-16LE', 'UTF-8');
+            $requirement['file_1_content'] = Storage::get($file_req_1->storage_path);
+            $requirement['file_2_content'] = Storage::get($file_req_2->storage_path);
         }
 
         if (is_course_teacher($comparison->homework->course->id) or Auth::id() == $user_1 or Auth::id() == $user_2) {
@@ -85,5 +85,14 @@ class CompareController extends Controller
             Session::flash('error', 'Nu ai acces la aceast&#259; comparare');
             return redirect()->back();
         }
+    }
+
+    public function encapsulateDivs($content) {
+        return $content;
+        $lines = $array = preg_split ('/$\R?^/m', $content);
+        for ($i = 0; $i < count($lines); $i++) {
+            $lines[$i] = mb_convert_encoding('<div>' . $lines[$i] . '</div>', 'UTF-16LE', 'UTF-8');
+        }
+        return implode('', $lines);
     }
 }

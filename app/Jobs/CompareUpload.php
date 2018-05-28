@@ -73,7 +73,7 @@ class CompareUpload implements ShouldQueue
                 $current_file_full,
                 $temp_folder_full
             );
-            
+
             $result = shell_exec($command);
             $result = trim($result, "\n\r\t.");
 

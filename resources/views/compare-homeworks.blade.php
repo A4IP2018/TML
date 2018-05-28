@@ -18,11 +18,11 @@ $homeworks = get_teacher_homeworks();
                     @foreach ($requirements as $requirement)
                         <div class="card">
                             <div class="card-header">
-                                {{ $requirement->description }}
+                                {{ trim($requirement->description) }}
                                 <a href="{{ url('/download/' . basename($requirement['file_1']->storage_path)) }}"><span class="badge badge-secondary badge-pill">descarc&#259;</span></a>
                             </div>
                             <div class="card-body">
-                                <pre><code>{{ $requirement['file_1_content'] }}</code></pre>
+                                <pre><code>{{  $requirement['file_1_content'] }}</code></pre>
                             </div>
                             <div class="card-footer">
                                 <a>&#206;nc&#259;rcat la {{ $requirement['file_1']->created_at }}</a>
@@ -30,7 +30,6 @@ $homeworks = get_teacher_homeworks();
                         </div>
                         <br>
                     @endforeach
-
                 </div>
 
                 <div class="col-6">
@@ -54,9 +53,20 @@ $homeworks = get_teacher_homeworks();
                     @endforeach
 
                 </div>
+            </div>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Semnaleaz&#259; problemele</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Semnaleaz&#259; problemele</button>
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        $(window).on('load', function (){
+            $('.hljs-ln-code').click(function() {
+                $(this).parent().toggleClass('line-selected-red');
+            });
+        })
+    </script>
 @endsection
