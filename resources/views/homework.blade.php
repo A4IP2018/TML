@@ -39,6 +39,7 @@
                                     @endforeach
                                 </select>
 
+
                             </form>
                         @endif
                     </div>
@@ -90,6 +91,7 @@
                         </div>
                         </div>
                     @endforeach
+
                 </div>
             @else
                 <h4 class="text-center">Nicio tem&#259; aici, &#238;ncearca s&#259; te abonezi la c&#226;teva <a

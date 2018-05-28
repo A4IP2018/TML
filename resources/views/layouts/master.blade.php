@@ -32,7 +32,7 @@
         <link href="{{ asset('css/main.css?v='. time()) }}" rel="stylesheet">
 
     </head>
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top" >
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 
@@ -44,7 +44,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
+
                 <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
                         <a class="nav-link" href="{{ url('/profile') }}">
@@ -116,9 +118,12 @@
                             <i class="fa fa-fw fa-angle-left"></i>
                         </a>
                     </li>
+
                 </ul>
+
                 <ul class="navbar-nav ml-auto">
                     @if (Auth::check())
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>

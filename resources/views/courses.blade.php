@@ -119,6 +119,7 @@
             </div>
             <!--pagination-->
 
+
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -127,6 +128,7 @@
                 <li class="page-item"><a class="page-link" href="#">4</a></li>
                 <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
             </ul>
+
 
         </div>
     </div>
