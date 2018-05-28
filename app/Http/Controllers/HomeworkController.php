@@ -55,12 +55,14 @@ class HomeworkController extends Controller
             whereHas('course.subscriptions', function ($query) {
                 $query->where ('users.id', Auth::id());
             })
-            ->withCount('grades')
-            ->withCount('files')
             ->with('user', 'user.subscribed')
             ->orderBy('deadline')
             ->get();
 
+        foreach ($homeworks as $homework) {
+            $homework['checked'] = \App\File::where('homework_id', $homework->id)->whereHas('grade')->get()->groupBy('batch_id')->count();
+            $homework['unchecked'] = \App\File::where('homework_id', $homework->id)->whereDoesntHave('grade')->get()->groupBy('batch_id')->count();
+        }
         return view('homework', compact('homeworks'));
     }
 
@@ -307,7 +309,8 @@ class HomeworkController extends Controller
             ],
             [
                 'grade' => $grade,
-                'teacher_id' => $teacher_id
+                'teacher_id' => $teacher_id,
+                'homework_id' => $homework->id
             ]
         );
 

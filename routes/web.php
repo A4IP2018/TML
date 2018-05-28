@@ -31,8 +31,6 @@ Route::resource('upload', 'UploadController');
 Route::get('/upload/{batch_id}/download', 'UploadController@downloadAll');
 
 Route::get('/uploads/{meta}/{slug}', 'UploadController@showUploadsByFilter');
-
-
 Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
 
 Route::get('/deadlines', 'DeadlineController@index');

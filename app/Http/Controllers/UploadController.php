@@ -49,8 +49,31 @@ class UploadController extends Controller
     {
         if (Auth::check()) {
 
-            $files_grouped = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
+            if ($meta == 'unchecked') {
+                $files_grouped = File::whereHas('homework', function ($element) use ($slug) {
+                    $element->where('slug', $slug);
+                })->whereDoesntHave('grade')->get()->sortByDesc('created_at')->groupBy('batch_id');
+            }
+            else if ($meta == 'checked') {
+                $files_grouped = File::whereHas('homework', function ($element) use ($slug) {
+                    $element->where('slug', $slug);
+                })->whereHas('grade')->get()->sortByDesc('created_at')->groupBy('batch_id');
+            }
+            else {
+                Session::flash('error', 'Criteriu invalid');
+                return redirect('/');
+            }
 
+
+            if ($files_grouped->count() == 0) {
+                Session::flash('error', 'Nu exist&#259; teme &#238;nc&#259;rcate');
+                return redirect()->back();
+            }
+
+            $homework = Homework::where('slug', $slug)->first();
+            $full_name = $homework->course->course_title . ', ' . $homework->name;
+
+            $homeworks_title = 'Teme nerezolvate: '. $full_name;
 //            $files_grouped = File::where('user_id', Auth::id())
 //                ->with('homework')
 //                ->whereHas('homework', function($collection) use($slug) {
@@ -69,7 +92,7 @@ class UploadController extends Controller
 //
 //            dd($files_grouped);
 
-            return view('uploaded-files', compact('files_grouped'));
+            return view('uploaded-files', compact('files_grouped', 'homeworks_title'));
         } else {
             return redirect('/login');
         }
