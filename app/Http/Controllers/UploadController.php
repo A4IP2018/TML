@@ -189,7 +189,7 @@ class UploadController extends Controller
         $files = $request->file('toUpload');
         $to_upload = [];
         foreach ($files as $id => $file) {
-            $req_id = $request->input('toUpload')[$id];
+            $req_id = $request->input('toUpload')[$id]['requirement_id'];
             $result = $this->uploadSingle($file['upload_file'], $homework_id, $req_id, $batch_id);
             if (empty($result[1])) {
                 Session::flash('error', $result[0]);
