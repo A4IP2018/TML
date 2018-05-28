@@ -230,6 +230,8 @@ return [
 
     ],
 
-    'upload_dir' => env('UPLOAD_DIR', 'uploaded_homeworks')
+    'upload_dir' => env('UPLOAD_DIR', 'uploaded_homeworks'),
+
+    'os' => env('OS', 'WINDOWS')
 
 ];

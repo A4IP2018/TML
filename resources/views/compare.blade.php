@@ -61,7 +61,8 @@
                             <li class="list-group-item">
                                 <a href="{{ url('/user/' . $comparison['user_1']->id) }}"> {{ get_name_by_id($comparison['user_1']->id) }}</a> <->
                                 <a href="{{ url('/user/' . $comparison['user_2']->id) }}"> {{ get_name_by_id($comparison['user_2']->id) }}</a>&nbsp
-                                <span class="badge badge-secondary badge-pill">{{ $comparison['simm'] }}% similaritate - vezi temele</span>
+                                <?php $color = ($comparison['simm'] > 50) ? 'danger' : (($comparison['simm'] > 30) ? 'warning' : 'secondary' ); ?>
+                                <a href="{{ url('/compare/' . $comparison->id) }}"><span class="badge badge-{{ $color }} badge-pill">{{ $comparison['simm'] }}% similaritate - vezi temele</span></a>
                             </li>
                         @endforeach
                         </ul>

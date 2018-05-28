@@ -7,6 +7,7 @@ use Auth;
 use App\Homework;
 use App\File;
 use App\Comparison;
+use Storage;
 
 class CompareController extends Controller
 {
@@ -53,5 +54,36 @@ class CompareController extends Controller
         }
 
         return redirect()->back()->withErrors($validator);
+    }
+
+    public function compareView($id) {
+        $comparison = Comparison::where('id', $id)->first();
+        if (is_null($comparison)) {
+            Session::flash('Asa comparare nu exist&#259;');
+            return redirect()->back();
+        }
+
+        $file_1 = File::where('id', $comparison->file_id_1)->first();
+        $file_2 = File::where('id', $comparison->file_id_2)->first();
+        $user_1 = $file_1->user;
+        $user_2 = $file_2->user;
+
+        $requirements = $comparison->homework->requirements;
+        foreach ($requirements as $requirement) {
+            $file_req_1 = File::where('batch_id', $file_1->batch_id)->where('requirement_id', $file_1->requirement_id)->first();
+            $file_req_2 = File::where('batch_id', $file_2->batch_id)->where('requirement_id', $file_2->requirement_id)->first();
+            $requirement['file_1'] = $file_req_1;
+            $requirement['file_2'] = $file_req_2;
+            $requirement['file_1_content'] = mb_convert_encoding(Storage::get($file_req_1->storage_path), 'UTF-16LE', 'UTF-8');
+            $requirement['file_2_content'] = mb_convert_encoding(Storage::get($file_req_2->storage_path), 'UTF-16LE', 'UTF-8');
+        }
+
+        if (is_course_teacher($comparison->homework->course->id) or Auth::id() == $user_1 or Auth::id() == $user_2) {
+            return view('compare-homeworks', compact('comparison','file_1', 'file_2', 'user_1', 'user_2', 'requirements'));
+        }
+        else {
+            Session::flash('error', 'Nu ai acces la aceast&#259; comparare');
+            return redirect()->back();
+        }
     }
 }
