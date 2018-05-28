@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Course;
 use App\Format;
 use App\Homework;
 
@@ -12,6 +13,9 @@ use App\StudentInformation;
 use App\TeacherCourse;
 use App\User;
 use App\Grade;
+use App\HomeworkEvent;
+use App\RequiredFormat;
+use App\Http\Controllers\NotificationController as Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +23,25 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use Session;
 
 class HomeworkController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function createEvent($homework, $attribute, $from, $to) {
+        $user = User::where('id', Auth::id())->first();
+        HomeWorkEvent::create([
+            'homework_id' => $homework->id,
+            'user_id' => Auth::id(),
+            'event' => 'Utilizatorul <span class="badge">' . $user->teacher_information->name .
+                '</span> a modificat <span class="badge">' . $attribute . '</span> de la ' .
+                '<span class="badge">' . $from . '</span> ' .
+                'la <span class="badge">' . $to  . '</span>'
+         ]);
     }
 
     /**
@@ -34,9 +51,15 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        $homeworks = Homework::whereHas('course.subscriptions', function ($query) {
-            $query->where ('users.id', Auth::id());
-        })->with('user', 'user.subscribed')->orWhere('user_id', Auth::id())->get();
+        $homeworks = Homework::
+            whereHas('course.subscriptions', function ($query) {
+                $query->where ('users.id', Auth::id());
+            })
+            ->withCount('grades')
+            ->withCount('files')
+            ->with('user', 'user.subscribed')
+            ->orderBy('deadline')
+            ->get();
 
         return view('homework', compact('homeworks'));
     }
@@ -48,6 +71,10 @@ class HomeworkController extends Controller
      */
     public function create()
     {
+        if (Auth::check() and Auth::user()->courses->count() == 0) {
+            Session::flash('error', 'Trebui&#259; sa creezi un <a href="'. url('/course/create') .'">curs</a>, pentru a ad&#259;uga o tem&#259;');
+            return redirect()->back();
+        }
         $formats = Format::all();
 
         $currentTeacher = User::where('id', Auth::id())->whereHas('role', function ($query) {
@@ -78,7 +105,8 @@ class HomeworkController extends Controller
             'name' => 'required|max:255',
             'description' => 'required|max:255',
             'deadline' => 'required',
-            'format' => 'required',
+            'file.*.file_description' => 'required|max:240',
+            'file.*.file_format' => 'required'
         ]);
 
         $selectedFormats = $request->input('format');
@@ -92,8 +120,6 @@ class HomeworkController extends Controller
 
         $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
 
-        $formats = Format::whereIn('id', $selectedFormats)->get();
-
         $homework = Homework::create([
             'course_id' => $course,
             'name' => $title,
@@ -104,7 +130,21 @@ class HomeworkController extends Controller
             'deadline' => $deadline,
         ]);
 
-        $homework->formats()->sync($formats);
+
+        $files = $request->input('file');
+        foreach($files as $file) {
+            if (Format::where('id', $file['file_format'])->count() > 0) {
+                $format = RequiredFormat::create([
+                    'homework_id' => $homework->id,
+                    'format_id' => $file['file_format'],
+                    'description' => $file['file_description']
+                ]);
+            }
+
+        }
+
+        Session::flash('success', 'Tema a fost creat&#259;!');
+        return redirect('/homework/' . $homework->slug);
 
         return redirect()->back()->withErrors($validator);
 
@@ -124,7 +164,10 @@ class HomeworkController extends Controller
             ->with('user', 'user.student_information')
             ->orderBy('id', 'desc')
             ->get();
-        return view('homework-details', compact('comments', 'homework'));
+
+        $events = $homework->events->all();
+
+        return view('homework-details', compact('comments', 'homework', 'events'));
 
     }
 
@@ -138,18 +181,22 @@ class HomeworkController extends Controller
     {
         $formats = Format::all();
         $homework = Homework::where('slug', $slug)->with('formats')->first();
+        $required_formats = $homework->requirements->all();
 
         $currentTeacher = User::where('id', Auth::id())->whereHas('role', function ($query) {
             $query->where('rank', Role::$TEACHER_RANK);
         })->first();
-
-        if ($currentTeacher) {
-            $teacherCourses = $currentTeacher->courses;
-
-            return view('edit-homework', compact('homework', 'formats', 'currentTeacher', 'teacherCourses'));
+        if (is_null($currentTeacher)) {
+            Session::flash('error', 'Nu esti profesorul acestui curs!');
+            return redirect()->back();
         }
 
+        if (is_course_teacher($homework->course->id)) {
+            $teacherCourses = $currentTeacher->courses;
+            return view('edit-homework', compact('homework', 'formats', 'required_formats', 'teacherCourses'));
+        }
         else {
+            Session::flash('error', 'Trebuie sa fii profesorul cursului ' . $homework->course->course_title . ' pentru a-l edita');
             return redirect()->back();
         }
     }
@@ -164,43 +211,34 @@ class HomeworkController extends Controller
     public function update(Request $request, $slug)
     {
         $validator = $this->validate($request, [
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
             'deadline' => 'required',
-            'course'=>'required',
-            'format' => 'required',
         ]);
 
 
         $currentHomework = Homework::where('slug', $slug)->first();
-      
-        $selectedFormats = $request->input('format');
+
         $deadline = $request->input('deadline');
-        $description = $request->input('description');
-        $course = $request->input('course');
-        $title = $request->input('name');
 
-        $slug = str_slug($title);
-        $count = Homework::where('slug', $slug)->where('id', '!=', $currentHomework->id)->count();
-
-        $slug = $count > 0 ? ($slug . '-' . ($count + 1)) : $slug;
-
-        $formats = Format::whereIn('id', $selectedFormats)->get();
-
+        if ($deadline != $currentHomework->deadline) {
+            if ($deadline < $currentHomework->deadline) {
+                Session::flash('error', 'Termenul limita nu poate fi mic&#x219;orat');
+                return redirect()->back();
+            }
+            $this->createEvent($currentHomework, 'termenul limita', $currentHomework->deadline, $deadline);
+        }
 
         $homework = Homework::updateOrCreate(['id' => $currentHomework->id],  [
-            'course_id' => $course,
-            'name' => $title,
-            'description' => $description,
-            'slug' => $slug,
-            'category_id' => 1,
-            'user_id' => Auth::id(),
             'deadline' => $deadline,
         ]);
 
-        $homework->formats()->sync($formats);
+        Session::flash('success', 'Tema a fost modificat&#259; cu succes');
 
+        $subscribed_users = $currentHomework->course->subscriptions->pluck('id')->toArray();
 
+        send_notification(
+            $subscribed_users,
+            'Tema ' . '<a href="' . url('/homework/' . $currentHomework->slug) . '">' . $currentHomework->name . '</a> a fost modificat&#259;'
+        );
         return redirect()->route('homework.edit', $slug)->withErrors($validator);
     }
 
@@ -255,11 +293,11 @@ class HomeworkController extends Controller
             'grade' => 'required|integer|between:1,10'
         ]);
 
-        $homeworkId = $request->input('homework-id');
+        $fileId = $request->input('homework-id');
         $grade = $request->input('grade');
         $userId = $request->input('user-id');
 
-        Grade::updateOrCreate( ['homework_id' => $homeworkId, 'user_id' => $userId], [
+        Grade::updateOrCreate( ['file_id' => $fileId, 'user_id' => $userId], [
             'grade' => $grade
         ]);
 
@@ -289,21 +327,6 @@ class HomeworkController extends Controller
         return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
     }
 
-
-    public function download($fileName)
-    {
-        $path = public_path() . '/files/';
-
-        return response()->download($path . $fileName);
-    }
-
-    public function compare()
-    {
-        $files = \App\File::all();
-
-        return view('compare', compact('files'));
-    }
-
     public function compareAction(Request $request)
     {
 
@@ -313,14 +336,54 @@ class HomeworkController extends Controller
         $firstFile = \App\File::find($firstFile);
         $secondFile = \App\File::find($secondFile);
 
-        $content1 = File::get(public_path('files/' . $firstFile->file_name));
-        $content2 = File::get(public_path('files/' . $secondFile->file_name));
+        $content1 = Storage::get($firstFile->storage_path);
+        $content2 = Storage::get($secondFile->storage_path);
 
 
         $procent = plagiarism_check($content1, $content2);
 
         return redirect()->back()->with(compact('procent'));
 
+    }
+
+    public function getFilteredHomeworks(Request $request)
+    {
+        $searchedCourse = $request->input('courseFilter') && (int) $request->input('courseFilter') !== -1 ? (int)$request->input('courseFilter') : null;
+        $uncheckedHomework = $request->input('uncheckedHomeworkFilter') ? (int)$request->input('uncheckedHomeworkFilter') : null;
+        $homeworkSearch = $request->input('homeworkSearchFilter') ? $request->input('homeworkSearchFilter') : null;
+
+        $homeworks = Homework::
+            when($searchedCourse, function ($collection) use ($searchedCourse) {
+                return $collection->whereHas('course', function($query) use($searchedCourse) {
+                    return $query->where('course_id', $searchedCourse);
+                });
+            })
+            ->withCount('grades')
+            ->withCount('files')
+            ->when($uncheckedHomework, function ($collection) use ($uncheckedHomework) {
+                return $collection->doesntHave('files.grade');
+            })
+            ->when($homeworkSearch, function ($collection) use ($homeworkSearch) {
+                return $collection->where('name', 'LIKE', '%'.$homeworkSearch.'%');
+            })
+            ->whereHas('course.subscriptions', function ($query) {
+                $query->where('users.id', Auth::id());
+            })
+
+            ->with('user', 'user.subscribed', 'course')
+            ->orderBy('deadline')
+            ->get();
+
+        foreach ($homeworks as $homework) {
+            $homework['course_link'] = url('/course/' .$homework->course->slug);
+            $homework['is_homework_author'] = Auth::check() && is_homework_author($homework);
+            $homework['homework_link'] = url('/homework/' . $homework->slug);
+            $homework['homework_edit'] = url('/homework/' . $homework->slug . '/edit');
+            $homework['unchecked_homework_link'] = url('/uploads/unchecked/' . $homework->slug);
+            $homework['checked_homework_link'] = url('/uploads/checked/' . $homework->slug);
+        }
+
+        return $homeworks;
     }
 
 }

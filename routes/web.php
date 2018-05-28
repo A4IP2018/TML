@@ -11,21 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'HomeController@main');
 
-Route::get('/profile', function () {
-    return view('profile');
-});
-
-Route::get('/course/create', function () {
-    return view('new-course');
-});
-
-Route::get('/compare', 'HomeworkController@compare')->name('compare');
-Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
-
+Route::get('/compare', 'CompareController@index')->name('compare')->middleware('auth');
+Route::post('/compare', 'CompareController@statsPage')->middleware('auth');
+Route::get('/compare/{id}', 'CompareController@compareView')->middleware('auth');
 
 Route::resource('homework', 'HomeworkController');
 
@@ -33,12 +23,12 @@ Route::post('/course/{slug}/subscribe', 'CourseController@subscribe')->middlewar
 Route::resource('course', 'CourseController');
 
 Route::get('filter-courses', 'CourseController@getFilteredCourses');
+Route::get('filter-homework', 'HomeworkController@getFilteredHomeworks');
 
 Route::resource('upload', 'UploadController');
-
-Route::get('/notifications', function() {
-    return view('notifications');
-});
+Route::get('/uploads/checked/{slug}', 'UploadController@getCheckedUploads');
+Route::get('/uploads/unchecked{slug}', 'UploadController@getUncheckedUploads');
+Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
 
 Route::get('/deadlines', 'DeadlineController@index');
 
@@ -77,17 +67,34 @@ Route::post('/login-action', 'LoginController@authenticate')->name('login-action
 Route::get('/logout', 'LoginController@logout')->name('logout');
 
 
-Route::get('register', 'RegisterController@index')->name('register');
-
-Route::post('register-action', 'RegisterController@registerAction')->name('register-action');
-
-Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
-
+Route::get('/register', 'RegisterController@index')->name('register');
+Route::post('/register', 'RegisterController@register')->name('register');
+Route::get('/confirm/{token}', 'RegisterController@confirm');
 
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
 
 
+/* PASSWORD RESET */
+Route::get('/forgot', 'ProfileController@forgot')->name('forgot');
+Route::post('/forgot', 'ProfileController@sendToken')->name('reset-password');
+Route::get('/reset/{user_mail}/{token}', 'ProfileController@newPassword');
+Route::post('/reset', 'ProfileController@setNewPassword');
+/* PASSWORD RESET */
 
-Route::get('/profile', 'ProfileController@index')->name('profile');
+/* PROFILE */
+Route::get('/profile', 'ProfileController@index')->name('profile')->middleware('auth');
+Route::get('/user/{id}', 'ProfileController@user')->name('userProfile')->middleware('auth');
+Route::post('change-password', 'ProfileController@changePassword')->name('reset-password-action')->middleware('auth');
+Route::post('change-email', 'ProfileController@changeEmail')->name('reset-email-action')->middleware('auth');
+Route::post('change-nr-matricol', 'ProfileController@changeNrMatricol')->name('reset-nr-matricol')->middleware('auth');
+/* PROFILE */
+
+/* NOTIFICATIONS */
+Route::get('/notifications', 'NotificationController@index')->middleware('auth');
+Route::post('/notifications/remove', 'NotificationController@remove')->middleware('auth');
+/* NOTIFICATIONS */
 
 
+Route::get('/admin', 'AdminController@index')->middleware('admin');
+
+Route::get('/pdf-generator', 'AdminController@pdfGenerate');

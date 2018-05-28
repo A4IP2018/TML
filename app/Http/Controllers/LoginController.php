@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Session;
 
 class LoginController extends Controller
 {
@@ -49,17 +50,17 @@ class LoginController extends Controller
     protected function authenticate(Request $request)
     {
         $validator = $this->validate($request, [
-                        'email' => 'required|max:255|email|exists:users,email',
-                        'password' => 'required|max:255',
+            'email' => 'required|max:255|email|exists:users,email',
+            'password' => 'required|max:255',
         ]);
 
-        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'is_confirmed' => true])) {
             return Redirect::to($this->redirectTo);
         }
 
-        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-            'approve' => 'Wrong password or this account not approved yet.',
-        ]);
+
+        Session::flash('error', 'Date incorecte sau utilizatorul necesita confirmare prin email');
+        return redirect()->back()->withInput($request->only('email'));
     }
 
 

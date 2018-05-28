@@ -18,8 +18,6 @@ class CreateStudentInformationsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->integer('user_id');
-            $table->integer('year');
-            $table->integer('group_id');
             $table->string('nr_matricol');
             $table->rememberToken();
             $table->timestamps();

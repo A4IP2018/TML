@@ -3,6 +3,10 @@ html {
   min-height: 100%;
 }
 
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -455,6 +459,27 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   max-width: 40rem;
 }
 
+.card-footer .btn {
+  margin-right: 5px;
+}
+
+.dropdown-menu {
+  min-width: 19rem !important;
+}
+
+.dropdown-item  {
+  white-space: unset !important;
+}
+
+.hljs-ln {
+  width: 100%;
+}
+
+.line-selected-red {
+  background: #E23636;
+  color: white;
+}
+
 footer.sticky-footer {
   position: absolute;
   right: 0;
@@ -476,3 +501,5 @@ footer.sticky-footer {
     width: calc(100% - 55px);
   }
 }
+
+

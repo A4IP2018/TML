@@ -21,7 +21,7 @@ class Comparison extends Model
      * @var array
      */
     protected $fillable = [
-        'homework_id_1', 'homework_id_2', 'plagiarism_degree', 'user_id', 'updated_at'
+        'file_id_1', 'file_id_2', 'match_count', 'token_count', 'similarityA', 'similarityB', 'homework_id', 'requirement_id'
     ];
 
     /**
@@ -43,30 +43,17 @@ class Comparison extends Model
         'remember_token'
     ];
 
-//    /**
-//     * Comparison -> Homework relationship for the first Homework used in the Comparison.
-//     *
-//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-//     */
-//    public function homeworks_1() {
-//        return $this->hasMany('App\Homework','homework_id_1',);
-//    }
-//
-//    /**
-//     * Comparison -> Homework relationship for the second Homework used in the Comparison.
-//     *
-//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-//     */
-//    public function homeworks_2() {
-//        return $this->hasMany('App\Homework','homework_id_2',);
-//    }
-//
     /**
      * Comparison -> Users relationship
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function users(){
-        return $this->hasMany('App\User');
+
+    public function matches() {
+        return $this->hasMany('App\Match');
+    }
+
+    public function homework() {
+        return $this->belongsTo('App\Homework');
     }
 }

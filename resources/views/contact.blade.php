@@ -40,35 +40,13 @@
                     </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
+
             </div>
         </div>
-        <br>
+        </div>
     </div>
-        <!-- /.container-fluid-->
-        <!-- /.content-wrapper-->
+</div>
 
 
 

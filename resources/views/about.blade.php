@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <!--ABOUT PAGE-->
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -24,13 +25,6 @@
                     <div class="text-center">
                         <a href="https://www.info.uaic.ro"><img src="images/fii.jpg" class="rounded-circle" width="80px" height="80px" style="margin-top: 20px"></a>
                         <br><br>
-
-
-
-
-
-
-
 
 
                 </div>

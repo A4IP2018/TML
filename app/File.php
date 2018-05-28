@@ -12,7 +12,7 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'homework_id', 'file_name', 'updated_at'
+        'user_id', 'homework_id', 'file_name', 'updated_at', 'batch_id', 'storage_path'
     ];
 
     /**
@@ -50,5 +50,14 @@ class File extends Model
      */
     public function homework(){
         return $this->belongsTo('App\Homework');
+    }
+
+    /**
+     * File -> Grade relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function grade(){
+        return $this->HasOne('App\Grade');
     }
 }

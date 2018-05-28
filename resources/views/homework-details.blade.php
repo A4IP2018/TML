@@ -12,180 +12,165 @@
 
     $wholeDif = $deadline->diffInDays($start);
 
-    $remainingDif = $deadline->diffInDays($now);
+    if ($deadline < \Carbon\Carbon::now()) {
+        $remainingDif = "termenul a expirat";
+    }
+    else {
+        $remainingDif = $deadline->diffForHumans($now);
+    }
 
-    $new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
+    $realDiff = $deadline->diffInDays($now);
+    if ($deadline < $now) {
+        $realDiff = 0;
+    }
+
+
+    //$new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
 
     ?>
 
-    <div class="content-wrapper" style="font-size: 15px">
-        <div class="container-fluid">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Bord</a>
-                </li>
-                <li class="breadcrumb-item active">Tema (postata {{ ($now->diffInDays($start) == 0) ? "azi" : "zile in urma" }})</li>
-            </ol>
-            <div class="errors">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+
+<div class="row">
+    <div class="col-6">
+        <div class="{{ ($realDiff == 0) ? 'bg-secondary' : (($realDiff < 3) ? 'bg-danger' : (($realDiff < 5) ? 'bg-warning' : 'bg-primary')) }} text-white text-center">
+            {{ $remainingDif }}
+        </div>
+        <br>
+        <div class="card-group">
+            <div class="card mb-3 text-center">
+                <div class="card-header">Tema</div>
+                <div class="card-body ">
+                    <h5 class="card-title">{{ $homework->name }}</h5>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="progress">
-                        <!--deadline time left bar-->
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $new_width . '%' ?>;"  aria-valuenow="{{ $wholeDif - $remainingDif }} "
-                             aria-valuemin="0" aria-valuemax="{{ $wholeDif }}">
-                            {{ $remainingDif }} zile ramase
-                        </div>
+
+            @if ($homework->course)
+                <div class="card mb-3 text-center">
+                    <div class="card-header">Curs</div>
+                    <div class="card-body ">
+                        <h5><a href="{{ url('/course/' . $homework->course->slug) }}">{{ $homework->course->course_title }}</a></h5>
+
                     </div>
-                    <br>
-
-                    <div class="card-group">
-                        <div class="card mb-3 text-center">
-                            <div class="card-header">Tema</div>
-                            <div class="card-body">
-                                <h5 class="card-title" style="font-size: 14px">{{ $homework->name }}</h5>
-                            </div>
-                        </div>
-
-                        @if ($homework->course)
-                            <div class="card mb-3 text-center">
-                                <div class="card-header">Curs</div>
-                                <div class="card-body ">
-                                    <h5><a href="{{ url('/course/' . $homework->course->slug) }}" style="font-size: 14px">{{ $homework->course->course_title }}</a></h5>
-                                </div>
-                            </div>
-                        @endif
-
-                        @if ($homework->category)
-                            <div class="card mb-3 text-center">
-                                <div class="card-header">Categorie</div>
-                                <div class="card-body">
-                                    <h5 class="card-title" style="font-size: 14px">{{ $homework->category->name }}</h5>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-
-                    <div class="card text-center">
-                        <div class="card-header">Descriere</div>
-                        <div class="card-body ">
-                            <h5 class="card-title" style="font-size: 14px">{{ $homework->course->description }}</h5>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card text-center">
-                        <div class="card-header">Termen limita</div>
-                        <div class="card-body">
-                            <h5 class="card-title" style="font-size: 14px">{{ $homework->deadline }}</h5>
-                        </div>
-                    </div>
-
-                    @if (!in_array(Auth::id(), $homework->course->subscriptions->pluck('id')->toArray()))
-                        <div class="card text-center">
-                            <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaza-te la curs</a>
-                        </div>
-                    @endif
-
-                    <br>
-                    <div class="card text-center">
-                        <div class="card-header">Adauga un comentariu</div>
-                        <div class="card-body">
-                            <div class="form-group">
-                            <form action="{{ \Illuminate\Support\Facades\URL::to('/comments-action') }}"
-                                  method="POST">
-                                {{ csrf_field() }}
-                                <input name="homework-id" type="hidden" value="{{ $homework->id }}">
-                                <textarea class="form-control" name="comments" id="" rows="2" style="width:100%"></textarea>
-                                <br>
-                                <button type="submit" class="btn btn-primary">Posteaza</button>
-                            </form>
-                            </div>
-
-                        </div>
-                    </div>
-                    <br>
-
-                    <!--COMMENTS TEST-->
-
-                    @if ($comments)
-                        @foreach($comments as $comment)
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h6 class="card-title mb-1"><a href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a> <small> 13:50 </small>
-                                    </h6>
-                                    <p class="card-text small">
-                                    {{ $comment->comment }}
-                                    </p>
-                                </div>
-                                <hr class="my-0">
-                            </div>
-                        @endforeach
-                    @endif
-
-
-                    <br>
-
                 </div>
+            @endif
+        </div>
 
-                <div class="col-6">
-                    <div class="mb-0 mt-4">
-                        <i class="fa fa-newspaper-o"></i> Incarcare tema</div>
-                    <hr class="mt-2">
-
-                    <p class="card-text">Formate acceptate:
-                        @foreach($homework->formats as $format)
-                            <span style="color: blue;">{{ $format->extension_name }}</span>
-                        @endforeach
-                    </p>
-
-                    <form action="{{ url('/upload') }}" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="homework-id" value="{{ $homework->id }}">
-                        <br/>
-                        <p>Fisiere tema :</p>
-
-                        <div class="input-group" style="width: fit-content">
-                            <div class="custom-file">
-                                <input name="fileToUpload" type="file" class="custom-file-input">
-                                <label class="custom-file-label" for="fileToUpload">Incarca</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">Upload</button>
-                            </div>
-                        </div>
-
-                        <br>
-                    </form>
-
-                    @if (Auth::check() and Auth::user()->files->count() > 0)
-                        <div class="card text-center">
-                            <ul class="list-group list-group-flush">
-                            @foreach (Auth::user()->files as $file)
-                                @if ($file->homework->id == $homework->id)
-                         <!--homework uploaded files-->
-                                <li class="list-group-item"><a href="{{ url('/upload/' . $file->file_name) }}">{{ $file->file_name }}</a></li>
-                                @endif
-                            @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-
-                </div>
+        <div class="card text-center">
+            <div class="card-header">Descriere</div>
+            <div class="card-body ">
+                <h5 class="card-title">{{ $homework->description }}</h5>
             </div>
         </div>
+        <br>
+        <div class="card text-center">
+            <div class="card-header">Termen limit&#259;</div>
+            <div class="card-body">
+                <h5 class="{{ ($homework->deadline < Carbon\Carbon::now()) ? 'text-danger' : '' }}">{{ $homework->deadline }}</h5>
+            </div>
+        </div>
+        <br>
+        @if (is_course_teacher($homework->course->id))
+        <div class="card text-center">
+            <div class="card-body">
+                <a class="btn btn-info" href="{{ url('/homework/' . $homework->slug . '/edit') }}">Editeaz&#259;</a>
+            </div>
+        </div>
+        @endif
+
+        @if (can_subscribe($homework->course->id))
+            <div class="card text-center">
+                <a href="{{ url('/course/' . $homework->course->slug) }}" class="btn btn-primary">Aboneaz&#259;-te la curs</a>
+            </div>
+        @endif
+
+        <br>
+
+        <div class="card text-center">
+            <div class="card-header">Evenimente</div>
+            <div class="card-body">
+                <ul class="list-group">
+                @foreach ($events as $event)
+                        <li class="list-group-item">
+                            {!! $event->event !!}
+                        </li>
+                @endforeach
+                </ul>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <div class="card-header">Adauga un comentariu</div>
+            <div class="card-body">
+                <div class="form-group">
+                <form action="{{ \Illuminate\Support\Facades\URL::to('/comments-action') }}"
+                      method="POST">
+                    {{ csrf_field() }}
+                    <input name="homework-id" type="hidden" value="{{ $homework->id }}">
+                    <textarea class="form-control" name="comments" id="" rows="2" style="width:100%"></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Posteaza</button>
+                </form>
+                </div>
+
+            </div>
+        </div>
+        <br>
+
+
+        <!--COMMENTS TEST-->
+
+        @if ($comments)
+            @foreach($comments as $comment)
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title mb-1"><a href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a> <small> 13:50 </small>
+                        </h6>
+                        <p class="card-text small">
+                        {{ $comment->comment }}
+                        </p>
+                    </div>
+                    <hr class="my-0">
+                </div>
+            @endforeach
+        @endif
+
+
+        <br>
+
     </div>
 
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
+    @if($homework->deadline <= Carbon\Carbon::now() || !isAlreadyMarked($homework))
+        <div class="col-6">
+            <div class="mb-0 mt-4">
+                <i class="fa fa-newspaper-o"></i> Incarcare tema</div>
+            <hr class="mt-2">
+
+            <form action="{{ url('/upload') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="homework-id" value="{{ $homework->id }}">
+                <br/>
+                <p>Fisiere tema :</p>
+
+                <div class="card-columns">
+                    <?php $counter = 0; ?>
+                    @foreach ($homework->requirements as $requirement)
+                        <div class="card">
+                            <div class="card-header">{{ $requirement->description }}</div>
+                            <div class="card-body">
+                                <div class="custom-file">
+                                    <input name="toUpload[{{ $counter }}][upload_file]" type="file" class="custom-file-input">
+                                    <input name="toUpload[{{ $counter }}][requirement_id]" type="hidden" value="{{ $requirement->id }}">
+                                    <label class="custom-file-label" for="toUpload{{ $counter }}">Incarca</label>
+                                </div>
+                            </div>
+                            <div class="card-footer">Formatul necesar: {{ $requirement->format->extension_name }}</div>
+                        </div>
+                        <?php $counter++; ?>
+                    @endforeach
+                </div>
+                <button type="submit" class="btn btn-primary" class="form-control">Incarca!</button>
+            </form>
+        </div>
+    @endif
+</div>
 @endsection

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nr_matricol', 'email', 'password','role_id', 'updated_at'
+        'nr_matricol', 'email', 'password','role_id', 'updated_at', 'reset_token', 'register_token', 'is_confirmed'
     ];
     /**
      * The attributes that are not mass assignable.
@@ -109,5 +109,10 @@ class User extends Authenticatable
     public function published_homeworks() {
         return $this->hasMany('App\Homework');
     }
+
+    public function notifications() {
+        return $this->hasMany('App\Notification')->orderBy('created_at', 'DESC');
+    }
+
 
 }

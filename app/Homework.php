@@ -36,14 +36,15 @@ class Homework extends Model
         'remember_token'
     ];
 
+
     /**
-     * Homework -> Grade relationship
+     * Homework -> Grades relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function grades()
     {
-        return $this->hasMany('App\Grade');
+        return $this->hasManyThrough('App\Grade', 'App\File');
     }
 
     /**
@@ -80,7 +81,7 @@ class Homework extends Model
     /**
      * Homework -> Files relationship
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function files(){
         return $this->hasMany('App\File');
@@ -110,5 +111,13 @@ class Homework extends Model
      */
     public function course() {
         return $this->belongsTo('App\Course');
+    }
+
+    public function requirements() {
+        return $this->hasMany('App\RequiredFormat');
+    }
+
+    public function events() {
+        return $this->hasMany('App\HomeworkEvent')->orderBy('created_at', 'DESC');
     }
 }
