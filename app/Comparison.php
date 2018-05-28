@@ -64,4 +64,8 @@ class Comparison extends Model
     public function file_2() {
         return $this->hasOne('App\File', 'id','file_id_2');
     }
+
+    public function requirement() {
+        return $this->hasOne('App\RequiredFormat', 'id', 'requirement_id');
+    }
 }

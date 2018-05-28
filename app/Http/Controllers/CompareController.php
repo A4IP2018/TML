@@ -131,4 +131,10 @@ class CompareController extends Controller
         }
         return implode('', $lines);
     }
+
+    public function deleteCompare($id) {
+        Comparison::where('id', $id)->delete();
+        Session::flash('success', 'Comparare &#x219;tears&#259;');
+        return redirect()->back();
+    }
 }
