@@ -14,9 +14,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File as FileSystem;
 use Session;
 use Carbon\Carbon;
+use Zipper;
 
 class UploadController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -214,12 +221,22 @@ class UploadController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($batch_id)
     {
-        $file = \App\File::where('storage_path', config('app.upload_dir') . '/' . $slug)->with('grade')->first();
-        $content = Storage::get($file->storage_path);
+        $files = File::where('batch_id', $batch_id)->get();
+        if ($files->count() == 0) {
+            Session::flash('error', 'A&#x219;a tem&#259; &#238;nc&#259;rcat&#259; nu exist&#259;');
+            return redirect()->back();
+        }
+        $batch_info = [
+            'homework' => $files[0]->homework,
+            'created_at' => $files[0]->created_at,
+            'count' => $files->count(),
+            'user' => $files[0]->user,
+            'batch_id' => $files[0]->batch_id
+        ];
 
-        return view('uploaded-file-details', compact('file', 'content'));
+        return view('uploaded-file-details', compact('files' , 'batch_info'));
     }
 
     /**
@@ -261,7 +278,7 @@ class UploadController extends Controller
     {
         $file = File::where('storage_path', config('app.upload_dir') . '/' . $storage_name)->first();
         if (is_null($file)) {
-            Session::flash('Fi&#x219;ierul nu exist&#259;');
+            Session::flash('error', 'Fi&#x219;ierul nu exist&#259;');
             return redirect()->back();
         }
 
@@ -271,7 +288,25 @@ class UploadController extends Controller
 
         Session::flash('error', 'Nu ai acces la acest fisier');
         return redirect()->back();
+    }
 
+    public function downloadAll($batch_id) {
+        $zipper = new \Chumper\Zipper\Zipper;
+        $files = File::where('batch_id', $batch_id)->get();
+        if ($files->count() == 0) {
+            Session::flash('error', 'Fi&#x219;ierele nu exist&#259;');
+            return redirect()->back();
+        }
+
+        $zip_path = public_path( 'downloads/'. $batch_id . '.zip');
+        $zip = $zipper->make($zip_path);
+        foreach ($files as $file) {
+            $full_path = storage_path('app/' . $file->storage_path);
+            $zip->add($full_path, $file->file_name);
+        };
+
+        $zip->close();
+        return response()->download($zip_path, 'homework.zip')->deleteFileAfterSend(true);
     }
 
 }

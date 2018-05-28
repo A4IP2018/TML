@@ -95,13 +95,6 @@
                         </a>
                     </li>
 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
-                        <a class="nav-link" href="{{ url('/about') }}">
-                            <i class="fa fa-fw fa-connectdevelop"></i>
-                            <span class="nav-link-text">Despre</span>
-                        </a>
-                    </li>
-
                     @if(Auth::check())
                        <li class="nav-item" data-toggle="tooltip" data-placement="right">
                             <a class="nav-link" href="{{ url('/pdf-generator') }}">
@@ -216,7 +209,10 @@
         <footer class="sticky-footer">
             <div class="container">
                 <div class="text-center">
-                    <small>Copyright © TeMeLe-A4IP 2018</small>
+                    <small>
+                        Copyright © TeMeLe-A4IP 2018,
+                        <a href="{{ url('/about') }}"> <span class="nav-link-text">despre facultate</span></a>
+                    </small>
                 </div>
             </div>
         </footer>

@@ -12,7 +12,12 @@ $homeworks = get_teacher_homeworks();
             <hr>
             <div class="row">
                 <div class="col-6">
-                    <h4 class="text-center"><a href="{{ url('/user/' . $user_1->id) }}">{{ get_name_by_id($user_1->id) }}</a></h4>
+                    <h4 class="text-center">
+                        <a href="{{ url('/user/' . $user_1->id) }}">{{ get_name_by_id($user_1->id) }}</a>
+                        <span class="badge badge-light badge-pill">
+                           <a href="{{ url('/upload/' . $comparison->file_1->up) }}" vezi tema
+                        </span>
+                    </h4>
                     <hr>
 
                     @foreach ($requirements as $requirement)
@@ -33,7 +38,9 @@ $homeworks = get_teacher_homeworks();
                 </div>
 
                 <div class="col-6">
-                    <h4 class="text-center"><a href="{{ url('/user/' . $user_2->id) }}">{{ get_name_by_id($user_2->id) }}</a></h4>
+                    <h4 class="text-center">
+                        <a href="{{ url('/user/' . $user_2->id) }}">{{ get_name_by_id($user_2->id) }}</a>
+                    </h4>
                     <hr>
 
                     @foreach ($requirements as $requirement)
