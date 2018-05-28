@@ -13,9 +13,10 @@
 
 Route::get('/', 'HomeController@main');
 
-Route::get('/compare', 'CompareController@index')->name('compare')->middleware('auth');
-Route::post('/compare', 'CompareController@statsPage')->middleware('auth');
+Route::get('/compare', 'CompareController@index')->name('compare')->middleware('teacher');
+Route::post('/compare', 'CompareController@statsPage')->middleware('teacher');
 Route::get('/compare/{id}', 'CompareController@compareView')->middleware('auth');
+Route::post('/compare/feedback', 'CompareController@registerFeedback')->middleware('auth');
 
 Route::resource('homework', 'HomeworkController');
 
@@ -32,11 +33,6 @@ Route::get('/uploads/{meta}/{slug}', 'UploadController@showUploadsByFilter');
 Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
 
 Route::get('/deadlines', 'DeadlineController@index');
-
-Route::get('/settings', function() {
-    return view('settings');
-});
-
 
 Route::get('/contact', function () {
     return view('contact');
