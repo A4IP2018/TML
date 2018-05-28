@@ -1,0 +1,3 @@
+[submodule "public/public/vendor/highlightjs-line-numbers.js"]
+	path = public/public/vendor/highlightjs-line-numbers.js
+	url = https://github.com/A4IP2018/highlightjs-line-numbers.js.git
