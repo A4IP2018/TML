@@ -25,7 +25,7 @@
                                 <option value="{{ $homework->id }}">{{ $homework->course->course_title . ', ' . $homework->name }}</option>
                             @endforeach
                         </select>
-                        <button type="sumbit" class="btn btn-primary ml-3">Caut&#259;</button>
+                        <button type="sumbit" class="btn btn-primary ml-md-3">Caut&#259;</button>
                     </div>
                 </form>
             </div>

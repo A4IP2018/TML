@@ -38,8 +38,8 @@ class CompareUpload implements ShouldQueue
     {
         $user_files = File::where('batch_id', $this->batch_id)->groupBy('requirement_id')->get();
         if (is_null($user_files)) return;
+        $homework = $user_files[0]->homework;
 
-        $homework = $user_files[0]->first()->homework;
         $upload_dir = config('app.upload_dir');
 
         foreach ($user_files as $requirement) {
@@ -80,7 +80,7 @@ class CompareUpload implements ShouldQueue
             $object = json_decode(utf8_encode($result), true);
             $normalized_path_files = str_replace('\\', '/', dirname($current_file_full) . '/');
             $normalized_path_temp = str_replace('\\', '/', $temp_folder_full . '/');
-
+            
             if (is_null($object)) return;
 
             foreach ($object['results'] as $result) {
@@ -91,6 +91,7 @@ class CompareUpload implements ShouldQueue
                 $file_2 = File::where('storage_path', $file_name_2)->first();
                 if (is_null($file_1) or is_null($file_2)) continue;
                 if ($file_1->user->id == $file_2->user->id) continue;
+
 
                 $comparison = Comparison::updateOrCreate(
                     [
