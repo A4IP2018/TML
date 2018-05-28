@@ -27,10 +27,9 @@
         <!-- Bootstrap core CSS-->
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Custom fonts for this template-->
-        <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css?v='. time()) }}" rel="stylesheet" type="text/css">
         <!-- Custom styles for this template-->
-        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-
+        <link href="{{ asset('css/main.css?v='. time()) }}" rel="stylesheet">
 
     </head>
     <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -264,7 +263,20 @@
 
         <link rel="stylesheet" href="{{ asset('vendor/highlight/styles/default.css') }}">
         <script src="{{ asset('vendor/highlight/highlight.pack.js') }}"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="{{ asset('vendor/highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+
+                $('pre code').each(function(i, block) {
+                    hljs.lineNumbersBlock(block);
+                });
+            });
+        </script>
+
 
         <script>
             $("input.custom-file-input").change(function () {

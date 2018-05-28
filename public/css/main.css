@@ -471,6 +471,15 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   white-space: unset !important;
 }
 
+.hljs-ln {
+  width: 100%;
+}
+
+.line-selected-red {
+  background: #E23636;
+  color: white;
+}
+
 footer.sticky-footer {
   position: absolute;
   right: 0;
@@ -492,3 +501,5 @@ footer.sticky-footer {
     width: calc(100% - 55px);
   }
 }
+
+

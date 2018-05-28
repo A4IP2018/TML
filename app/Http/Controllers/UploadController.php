@@ -158,7 +158,7 @@ class UploadController extends Controller
     public function show($slug)
     {
         $file = \App\File::where('storage_path', config('app.upload_dir') . '/' . $slug)->with('grade')->first();
-        $content = mb_convert_encoding(Storage::get($file->storage_path), 'UTF-16LE', 'UTF-8');
+        $content = Storage::get($file->storage_path);
 
         return view('uploaded-file-details', compact('file', 'content'));
     }
