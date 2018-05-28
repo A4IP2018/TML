@@ -152,6 +152,8 @@
                     </li>
                     @endif
 
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/help') }}">Ajutor</a></li>
+
                     @if (Auth::check() and Auth::user()->role->rank == \App\Role::$ADMINISTRATOR_RANK)
                         <li class="nav-item"><a class="nav-link" href="{{ url('/admin') }}">Administrare</a></li>
                     @endif

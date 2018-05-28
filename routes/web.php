@@ -48,6 +48,10 @@ Route::get('/grades-history', function () {
     return view('grades-history');
 });
 
+Route::get('/help', function () {
+    return view('help');
+});
+
 Route::get('/download/{path}', 'UploadController@download')->name('download');
 
 Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
