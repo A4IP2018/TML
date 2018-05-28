@@ -293,58 +293,33 @@ class HomeworkController extends Controller
             'grade' => 'required|integer|between:1,10'
         ]);
 
-        $fileId = $request->input('homework-id');
         $grade = $request->input('grade');
-        $userId = $request->input('user-id');
+        $teacher_id = $request->input('user-id');
+        $batch_id = $request->input('batch-id');
+        $file = \App\File::where('batch_id', $batch_id)->first();
+        $user_id = $file->user->id;
+        $homework = $file->homework;
 
-        Grade::updateOrCreate( ['file_id' => $fileId, 'user_id' => $userId], [
-            'grade' => $grade
-        ]);
+        Grade::updateOrCreate(
+            [
+                'batch_id' => $batch_id,
+                'user_id' => $user_id
+            ],
+            [
+                'grade' => $grade,
+                'teacher_id' => $teacher_id
+            ]
+        );
 
+        send_notification(
+            [ $user_id ],
+            'Ai primit not&#259; la tema <a href="' . url('/upload/' . $batch_id) . '">' . $homework->name .'</a>'
+        );
+
+        Session::flash('success', 'Tema a fost punctat&#259; cu succes');
         return redirect()->back()->withErrors($validator);
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function studentUploadsView()
-    {
-        $files = \App\File::with('user', 'homework', 'user.student_information')->orderBy('id', 'desc')->get();
-        return view('stud-uploads', compact('files'));
-    }
-
-    /**
-     * @param $userId
-     * @param $slug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function studentUploadView($userId, $slug)
-    {
-        $user = User::find($userId);
-        $homework = Homework::with('course', 'file')->where('slug', $slug)->first();
-        $grade = Grade::where('user_id', $user->id)->where('homework_id', $homework->id)->first();
-
-        return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
-    }
-
-    public function compareAction(Request $request)
-    {
-
-        $firstFile = $request->input('first-compare-field');
-        $secondFile = $request->input('second-compare-field');
-
-        $firstFile = \App\File::find($firstFile);
-        $secondFile = \App\File::find($secondFile);
-
-        $content1 = Storage::get($firstFile->storage_path);
-        $content2 = Storage::get($secondFile->storage_path);
-
-
-        $procent = plagiarism_check($content1, $content2);
-
-        return redirect()->back()->with(compact('procent'));
-
-    }
 
     public function getFilteredHomeworks(Request $request)
     {

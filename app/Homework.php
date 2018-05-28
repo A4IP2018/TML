@@ -44,7 +44,7 @@ class Homework extends Model
      */
     public function grades()
     {
-        return $this->hasManyThrough('App\Grade', 'App\File');
+        return $this->hasManyThrough('App\Grade', 'App\File', 'homework_id', 'batch_id');
     }
 
     /**

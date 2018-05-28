@@ -34,26 +34,44 @@
         <div class="card-header">Nota</div>
         <div class="card-body">
             <div class="grade">
-
+                {{ ($batch_info['grade'] == -1) ? 'Far&#259; not&#259;' : $batch_info['grade'] }}
             </div>
         </div>
     </div>
 </div>
+<br>
+<h3 class="text-center">Fi&#x219;iere</h3>
+@foreach ($files as $file)
+    <div class="card ">
+        <div class="card-header">
+            <a href="{{ url('/download/' . $file->storage_path) }}"><span class="badge badge-secondary badge-pill">descarc&#259;</span></a>
+            {{ $file->requirement->description }}
+        </div>
+        <div class="card-body">
+            <pre><code>{{ $file['content'] }}</code></pre>
+        </div>
+        <div class="card-footer">
+            <a>&#206;nc&#259;rcat la {{ $file->created_at }}</a>
+        </div>
+    </div>
+    <br>
+@endforeach
 
 <div class="card">
     <div class="card-header">Nota</div>
     <div class="card-body">
-        <form class="form-group" action="{{ URL::to('grade-action') }}" method="POST">
+        <form class="form-group" action="{{ url('/grade') }}" method="POST">
             <div class="row">
-                <input type="hidden" name="homework-id" value="">
-                <input type="hidden" name="user-id" value="">
+                <input type="hidden" name="homework-id" value="{{ $batch_info['homework']->id }}">
+                <input type="hidden" name="user-id" value="{{ Auth::id() }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="batch-id" value="{{ $batch_info['batch_id'] }}">
                 <div class="col col-6 form-group">
                     <input class="form-control" type="number" name="grade"
                            placeholder="Introducere nota">
                 </div>
                 <div class="col col-6 form-group">
-                    <button type="submit" class="btn btn-primary form-control">Noteaza</button>
+                    <button type="submit" class="btn btn-primary form-control">Noteaz&#259;</button>
                 </div>
             </div>
         </form>
