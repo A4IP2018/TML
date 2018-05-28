@@ -55,7 +55,7 @@ Route::get('/help', function () {
 
 Route::get('/download/{path}', 'UploadController@download')->name('download');
 
-Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
+Route::post('/grade', 'HomeworkController@updateGrade')->name('grade');
 
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/login-action', 'LoginController@authenticate')->name('login-action');

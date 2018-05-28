@@ -58,7 +58,7 @@ class File extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function grade(){
-        return $this->HasOne('App\Grade');
+        return $this->hasOne('App\Grade', 'batch_id', 'batch_id');
     }
 
     /**

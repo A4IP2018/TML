@@ -10,6 +10,7 @@ use App\Comparison;
 use Storage;
 use App\CompareFeedback;
 use Session;
+use App\Course;
 
 class CompareController extends Controller
 {

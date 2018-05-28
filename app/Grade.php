@@ -15,7 +15,7 @@ class Grade extends Model
      * @var array
      */
     protected $fillable = [
-        'grade', 'user_id','file_id', 'updated_at'
+        'grade', 'user_id', 'batch_id', 'updated_at', 'teacher_id'
     ];
 
     /**

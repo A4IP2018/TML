@@ -233,8 +233,13 @@ class UploadController extends Controller
             'created_at' => $files[0]->created_at,
             'count' => $files->count(),
             'user' => $files[0]->user,
-            'batch_id' => $files[0]->batch_id
+            'batch_id' => $files[0]->batch_id,
+            'grade' => ($files[0]->grade) ? $files[0]->grade->grade : -1
         ];
+
+        foreach ($files as $file) {
+            $file['content'] = Storage::get($file->storage_path);
+        }
 
         return view('uploaded-file-details', compact('files' , 'batch_info'));
     }
