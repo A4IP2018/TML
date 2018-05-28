@@ -69,4 +69,40 @@
 </div>
 @endif
 
+<div class="card text-center">
+    <div class="card-header">Adauga un comentariu</div>
+    <div class="card-body">
+        <div class="form-group">
+            <form action="{{ \Illuminate\Support\Facades\URL::to('/file-comments-action') }}"
+                  method="POST">
+                {{ csrf_field() }}
+                <input name="file-id" type="hidden" value="{{ $file->id }}">
+                <textarea class="form-control" name="comments" id="" rows="2" style="width:100%"></textarea>
+                <br>
+                <button type="submit" class="btn btn-primary">Posteaza</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+<br>
+
+
+<!--COMMENTS TEST-->
+
+@if ($file->comments && (is_file_author($file) || is_homework_author($file->homework)))
+    @foreach($file->comments as $comment)
+        <div class="card mb-3">
+            <div class="card-body">
+                <h6 class="card-title mb-1"><a href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a> <small> 13:50 </small>
+                </h6>
+                <p class="card-text small">
+                    {{ $comment->comment }}
+                </p>
+            </div>
+            <hr class="my-0">
+        </div>
+    @endforeach
+@endif
+
 @endsection
