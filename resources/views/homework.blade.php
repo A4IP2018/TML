@@ -80,11 +80,11 @@
                                     </a>
 
                                     <a class="btn btn-primary" href="{{ url('/uploads/unchecked/' . $homework->slug) }}">
-                                        <span>Necorectate</span> <span class="badge badge-light">{{ $homework->files_count - $homework->grades_count }}</span>
+                                        <span>Necorectate</span> <span class="badge badge-light">{{ $homework['unchecked'] }}</span>
                                     </a>
 
                                     <a class="btn btn-primary" href="{{ url('/uploads/checked/' . $homework->slug) }}">
-                                        <span>Corectate</span> <span class="badge badge-light">{{ $homework->grades_count }}</span>
+                                        <span>Corectate</span> <span class="badge badge-light">{{ $homework['checked'] }}</span>
                                     </a>
                                 @endif
                             </div>

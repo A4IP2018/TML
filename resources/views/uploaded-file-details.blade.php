@@ -78,7 +78,8 @@
         </form>
     </div>
 </div>
-@endif 
+@endif
+
 <div class="card text-center">
     <div class="card-header">Adauga un comentariu</div>
     <div class="card-body">
