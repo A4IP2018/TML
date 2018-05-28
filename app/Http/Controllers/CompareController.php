@@ -108,7 +108,18 @@ class CompareController extends Controller
             'comment' => $text,
             'user_id' => Auth::id()
         ]);
+
+        $user_ids = [$compare->file_1->user_id, $compare->file_2->user_id];
+        $user_ids = array_merge($user_ids, $compare->homework->course->users->pluck('id')->toArray());
+
         Session::flash('success', 'Comentariu ad&#259;ugat');
+
+        send_notification(
+            $user_ids,
+            'Un r&#259;spuns a fost ad&#259;ugat la <a href="' . url('/compare/' . $compare->id) . '">o comparare</a> la tema <a href="'.
+            url('/homework/' . $compare->homework->slug) . '">'. $compare->homework->name .'</a>'
+        );
+        
         return redirect()->back()->withErrors($validator);
     }
 

@@ -136,7 +136,7 @@
                             </span>
                             @endif
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="alertsDropdown" style="margin-left:-50px">
+                        <div class="dropdown-menu" aria-labelledby="alertsDropdown">
                             @if (!is_null($notifications))
                                 <h6 class="dropdown-header">Notific&#259;ri noi:</h6>
                                 <div class="dropdown-divider"></div>
