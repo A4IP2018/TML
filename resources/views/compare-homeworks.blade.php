@@ -4,7 +4,9 @@
 @section('content')
 
 <?php
-$homeworks = get_teacher_homeworks();
+    $homeworks = get_teacher_homeworks();
+    $requirement_counter_1 = 0;
+    $requirement_counter_2 = 0;
 ?>
 <div class="row">
     <div class="col-12">
@@ -14,17 +16,19 @@ $homeworks = get_teacher_homeworks();
                 <div class="col-6">
                     <h4 class="text-center">
                         <a href="{{ url('/user/' . $user_1->id) }}">{{ get_name_by_id($user_1->id) }}</a>
-                        <span class="badge badge-light badge-pill">
-                           <a href="{{ url('/upload/' . $comparison->file_1->up) }}" vezi tema
-                        </span>
+                        <a href="{{ url('/upload/' . $comparison->file_1->batch_id) }}" >
+                            <span class="badge badge-light badge-pill">
+                           vezi tema
+                            </span>
+                        </a>
                     </h4>
                     <hr>
 
                     @foreach ($requirements as $requirement)
-                        <div class="card">
+                        <div class="req-{{ $requirement_counter_1++ }} card ">
                             <div class="card-header">
-                                {{ trim($requirement->description) }}
                                 <a href="{{ url('/download/' . basename($requirement['file_1']->storage_path)) }}"><span class="badge badge-secondary badge-pill">descarc&#259;</span></a>
+                                {{ $requirement->description }}
                             </div>
                             <div class="card-body">
                                 <pre><code>{{  $requirement['file_1_content'] }}</code></pre>
@@ -40,14 +44,19 @@ $homeworks = get_teacher_homeworks();
                 <div class="col-6">
                     <h4 class="text-center">
                         <a href="{{ url('/user/' . $user_2->id) }}">{{ get_name_by_id($user_2->id) }}</a>
+                        <a href="{{ url('/upload/' . $comparison->file_2->batch_id) }}" >
+                            <span class="badge badge-light badge-pill">
+                           vezi tema
+                            </span>
+                        </a>
                     </h4>
                     <hr>
 
                     @foreach ($requirements as $requirement)
-                        <div class="card">
+                        <div class="req-{{ $requirement_counter_2++ }} card ">
                             <div class="card-header">
-                                {{ $requirement->description }}
                                 <a href="{{ url('/download/' . basename($requirement['file_2']->storage_path)) }}"><span class="badge badge-secondary badge-pill">descarc&#259;</span></a>
+                                {{ $requirement->description }}
                             </div>
                             <div class="card-body">
                                 <pre><code>{{ $requirement['file_2_content'] }}</code></pre>
@@ -94,10 +103,23 @@ $homeworks = get_teacher_homeworks();
 
 @section('scripts')
     <script type="text/javascript">
+
+
         $(window).on('load', function (){
             $('.hljs-ln-code').click(function() {
                 $(this).parent().toggleClass('line-selected-red');
             });
+
+            for (var i = 0; i < <?php echo $requirement_counter_1;  ?>; i++) {
+                var elements = $('div[class^=req-' + i.toString() +']');
+                var maxHeight = Math.max(elements[0].clientHeight, elements[1].clientHeight);
+                var ddd = maxHeight + 200;
+                elements[0].style.height = maxHeight.toString() + "px";
+                elements[1].style.height = maxHeight.toString() + 'px';
+            }
+
         })
+
+
     </script>
 @endsection

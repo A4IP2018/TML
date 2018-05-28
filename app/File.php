@@ -69,4 +69,8 @@ class File extends Model
     public function comments() {
         return $this->hasMany('App\FileComment');
     }
+
+    public function requirement() {
+        return $this->belongsTo('App\RequiredFormat', 'requirement_id', 'id');
+    }
 }
