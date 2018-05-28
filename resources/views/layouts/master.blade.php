@@ -158,21 +158,16 @@
                         </div>
                     </li>
                     @endif
-                    {{--<li class="nav-item">--}}
-                        {{--<a class="nav-link mr-lg-2" id="changeThemeColor" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                            {{--<i class="fa fa-fw fa-moon-o"></i>--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
+
+                    @if (Auth::check() and Auth::user()->role->rank == \App\Role::$ADMINISTRATOR_RANK)
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/admin') }}">Administrare</a></li>
+                    @endif
 
                     @if (Auth::check())
                         <li class="nav-item"><a class="nav-link" href="{{ url('/logout') }}"><i class="fa fa-fw fa-sign-out"></i>Deconectare</a></li>
                     @else
                         <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">&#206;nregistrare</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Logare</a></li>
-                    @endif
-
-                    @if (Auth::check() and Auth::user()->role->rank == \App\Role::$ADMINISTRATOR_RANK)
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/admin') }}">Administrare</a></li>
                     @endif
 
                 </ul>

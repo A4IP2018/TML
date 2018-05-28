@@ -8,6 +8,8 @@ use App\Homework;
 use App\File;
 use App\Comparison;
 use Storage;
+use App\CompareFeedback;
+use Session;
 
 class CompareController extends Controller
 {
@@ -62,29 +64,52 @@ class CompareController extends Controller
             Session::flash('Asa comparare nu exist&#259;');
             return redirect()->back();
         }
-
         $file_1 = File::where('id', $comparison->file_id_1)->first();
         $file_2 = File::where('id', $comparison->file_id_2)->first();
         $user_1 = $file_1->user;
         $user_2 = $file_2->user;
 
-        $requirements = $comparison->homework->requirements;
-        foreach ($requirements as $requirement) {
-            $file_req_1 = File::where('batch_id', $file_1->batch_id)->where('requirement_id', $file_1->requirement_id)->first();
-            $file_req_2 = File::where('batch_id', $file_2->batch_id)->where('requirement_id', $file_2->requirement_id)->first();
-            $requirement['file_1'] = $file_req_1;
-            $requirement['file_2'] = $file_req_2;
-            $requirement['file_1_content'] = Storage::get($file_req_1->storage_path);
-            $requirement['file_2_content'] = Storage::get($file_req_2->storage_path);
-        }
-
         if (is_course_teacher($comparison->homework->course->id) or Auth::id() == $user_1 or Auth::id() == $user_2) {
-            return view('compare-homeworks', compact('comparison','file_1', 'file_2', 'user_1', 'user_2', 'requirements'));
+            $requirements = $comparison->homework->requirements;
+            foreach ($requirements as $requirement) {
+                $file_req_1 = File::where('batch_id', $file_1->batch_id)->where('requirement_id', $file_1->requirement_id)->first();
+                $file_req_2 = File::where('batch_id', $file_2->batch_id)->where('requirement_id', $file_2->requirement_id)->first();
+                $requirement['file_1'] = $file_req_1;
+                $requirement['file_2'] = $file_req_2;
+                $requirement['file_1_content'] = Storage::get($file_req_1->storage_path);
+                $requirement['file_2_content'] = Storage::get($file_req_2->storage_path);
+            }
+
+            $comments = CompareFeedback::where('comparison_id', $comparison->id)->orderBy('created_at', 'DESC')->get();
+
+            return view('compare-homeworks', compact('comparison','file_1', 'file_2', 'user_1', 'user_2', 'requirements', 'comments'));
         }
         else {
             Session::flash('error', 'Nu ai acces la aceast&#259; comparare');
             return redirect()->back();
         }
+    }
+
+    public function registerFeedback(Request $request) {
+        $validator = $this->validate($request, [
+            '_id' => 'required',
+            'feedback-text' => 'required'
+        ]);
+
+        $text = $request->input('feedback-text');
+        $compare = Comparison::where('id', $request->input('_id'))->first();
+        if (is_null($compare)) {
+            Session::flash('error', 'Aceast&#259; comparare nu exist&#259;');
+            return redirect()->back();
+        }
+
+        CompareFeedback::create([
+            'comparison_id' => $compare->id,
+            'comment' => $text,
+            'user_id' => Auth::id()
+        ]);
+        Session::flash('success', 'Comentariu ad&#259;ugat');
+        return redirect()->back()->withErrors($validator);
     }
 
     public function encapsulateDivs($content) {

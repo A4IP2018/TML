@@ -55,7 +55,31 @@ $homeworks = get_teacher_homeworks();
                 </div>
             </div>
 
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Semnaleaz&#259; problemele</button>
+            <div class="form-group">
+                <h4 class="text-center">Feedback teme</h4>
+                @if ($comments)
+                    @foreach($comments as $comment)
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <a href="{{ url('/user/' . $comment->user_id) }}">{{ get_name_by_id($comment->user_id) }}</a>
+                                <span class="badge badge-light badge-pill smaller">{{ $comment->created_at }}</span>
+                            </div>
+                            <div class="card-body">
+                                {{ $comment->comment }}
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+
+                <form action="{{ url('/compare/feedback') }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_id" value="{{ $comparison->id }}">
+                    <textarea name="feedback-text" class="form-control" placeholder="Introdu descrierea problemei"></textarea>
+                    <br>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block form-control">Semnaleaz&#259; problemele</button>
+                </form>
+            </div>
+
     </div>
 </div>
 

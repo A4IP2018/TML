@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFileCommentsTable extends Migration
+class CreateCompareFeedbackTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateFileCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('file_comments', function (Blueprint $table) {
+        Schema::create('compare_feedback', function (Blueprint $table) {
             $table->increments('id');
             $table->text('comment');
-            $table->string('file_id');
+            $table->string('comparison_id');
             $table->integer('user_id');
             $table->rememberToken();
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateFileCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('file_comments');
+        Schema::dropIfExists('compare_feedback');
     }
 }

@@ -130,7 +130,7 @@ return [
         'course descr' => 'de descriere a cursului',
         'name' => 'nume',
         'new-password' => 'parola noua',
-
+        'feedback-text' => 'descrierea problemei'
     ],
 
 ];
