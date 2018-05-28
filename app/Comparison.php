@@ -56,4 +56,12 @@ class Comparison extends Model
     public function homework() {
         return $this->belongsTo('App\Homework');
     }
+
+    public function file_1() {
+        return $this->hasOne('App\File', 'id', 'file_id_1');
+    }
+
+    public function file_2() {
+        return $this->hasOne('App\File', 'id','file_id_2');
+    }
 }

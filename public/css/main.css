@@ -465,6 +465,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 
 .dropdown-menu {
   min-width: 19rem !important;
+
 }
 
 .dropdown-item  {
@@ -494,6 +495,9 @@ footer.sticky-footer {
   footer.sticky-footer {
     width: calc(100% - 250px);
   }
+  .dropdown-menu {
+    margin-left: -100px;
+  }
 }
 
 @media (min-width: 992px) {
@@ -501,5 +505,6 @@ footer.sticky-footer {
     width: calc(100% - 55px);
   }
 }
+
 
 
