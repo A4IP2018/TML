@@ -89,11 +89,13 @@
             <div class="card-header">Evenimente</div>
             <div class="card-body">
                 <ul class="list-group">
-                @foreach ($events as $event)
-                        <li class="list-group-item">
-                            {!! $event->event !!}
-                        </li>
-                @endforeach
+                    @if ($events)
+                        @foreach ($events as $event)
+                                <li class="list-group-item">
+                                    {!! $event->event !!}
+                                </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
         </div>
