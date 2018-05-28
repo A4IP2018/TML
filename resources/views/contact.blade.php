@@ -4,14 +4,7 @@
 
     <!--CONTACT PAGE-->
 
-    <div class="content-wrapper">
-        <div class="container-fluid">
-            <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Contact</a>
-                </li>
-            </ol>
+
 
 
             <div class="row">

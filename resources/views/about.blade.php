@@ -4,7 +4,7 @@
 
 
     <!--ABOUT PAGE-->
-    <div class="content-wrapper">
+
         <div class="container-fluid">
             <!-- Breadcrumbs-->
 
@@ -28,7 +28,8 @@
 
 
                 </div>
-            </div>
+
+
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
 
