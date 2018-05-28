@@ -56,7 +56,6 @@ class CompareUpload implements ShouldQueue
                 FileSys::makeDirectory($temp_folder_full);
                 foreach ($all_homework_files as $file) {
                     $name = basename($file->storage_path);
-                    dd(storage_path('app/' . $file->storage_path), $temp_folder_full . '/' . $name);
                     if (!FileSys::exists($temp_folder_full . '/' . $name)) {
                         FileSys::copy(storage_path('app/' . $file->storage_path), $temp_folder_full . '/' . $name);
                     }
@@ -74,8 +73,7 @@ class CompareUpload implements ShouldQueue
                 $current_file_full,
                 $temp_folder_full
             );
-
-
+            
             $result = shell_exec($command);
             $result = trim($result, "\n\r\t.");
 
