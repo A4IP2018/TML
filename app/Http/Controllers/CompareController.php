@@ -119,7 +119,7 @@ class CompareController extends Controller
             'Un r&#259;spuns a fost ad&#259;ugat la <a href="' . url('/compare/' . $compare->id) . '">o comparare</a> la tema <a href="'.
             url('/homework/' . $compare->homework->slug) . '">'. $compare->homework->name .'</a>'
         );
-
+        
         return redirect()->back()->withErrors($validator);
     }
 
