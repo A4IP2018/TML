@@ -47,15 +47,26 @@ class CompareUpload implements ShouldQueue
             $all_homework_files = $homework->files->where('requirement_id', $requirement->requirement_id);
 
             $temp_folder = 'app/comparisons/' . $requirement_dir_name;
+            $temp_dir = 'comparisons/' . $requirement_dir_name;
             $temp_folder_full = storage_path($temp_folder);
             $current_file_full = storage_path('app/' . $requirement->storage_path);
 
-            if (!Storage::exists($temp_folder))
+            if (!is_dir($temp_folder_full))
             {
+                FileSys::makeDirectory($temp_folder_full);
                 foreach ($all_homework_files as $file) {
                     $name = basename($file->storage_path);
-                    Storage::copy($file->storage_path, $temp_folder . '/' . $name);
+                    dd(storage_path('app/' . $file->storage_path), $temp_folder_full . '/' . $name);
+                    if (!FileSys::exists($temp_folder_full . '/' . $name)) {
+                        FileSys::copy(storage_path('app/' . $file->storage_path), $temp_folder_full . '/' . $name);
+                    }
                 }
+            }
+            else {
+                if (!FileSys::exists($temp_folder_full . '/' . basename($requirement->storage_path))) {
+                    FileSys::copy(storage_path('app/' . $requirement->storage_path), $temp_folder_full . '/' . basename($requirement->storage_path));
+                }
+
             }
 
             $command = sprintf("\"%s\" \"%s\"  --detailed --againstdir -d=\"%s\" ",
