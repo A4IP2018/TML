@@ -24,6 +24,7 @@
         $realDiff = 0;
     }
 
+
     //$new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
 
     ?>
@@ -48,6 +49,7 @@
                     <div class="card-header">Curs</div>
                     <div class="card-body ">
                         <h5><a href="{{ url('/course/' . $homework->course->slug) }}">{{ $homework->course->course_title }}</a></h5>
+
                     </div>
                 </div>
             @endif
@@ -87,11 +89,13 @@
             <div class="card-header">Evenimente</div>
             <div class="card-body">
                 <ul class="list-group">
-                @foreach ($events as $event)
-                        <li class="list-group-item">
-                            {!! $event->event !!}
-                        </li>
-                @endforeach
+                    @if ($events)
+                        @foreach ($events as $event)
+                                <li class="list-group-item">
+                                    {!! $event->event !!}
+                                </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
         </div>
@@ -121,8 +125,19 @@
             @foreach($comments as $comment)
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h6 class="card-title mb-1"><a href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a> <small> 13:50 </small>
-                        </h6>
+                        @if ($comment->user->student_information)
+                            <h6 class="card-title mb-1"><a
+                                        href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a>
+                                <small> {{ $comment->created_at }}</small>
+                            </h6>
+
+                        @else
+                            <h6 class="card-title mb-1"><a
+                                        href="#">{{ $comment->user->teacher_information->name }}</a>
+                                <small> {{ $comment->created_at }}</small>
+                            </h6>
+
+                        @endif
                         <p class="card-text small">
                         {{ $comment->comment }}
                         </p>

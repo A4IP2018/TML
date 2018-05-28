@@ -110,6 +110,7 @@
 </div> <!--/.row-->
 <!-- Card Columns Example Social Feed-->
 
+
 {{--NOUTATI--}}
 <div class="row">
 <div class="mb-0 mt-4 ml-4">
@@ -127,9 +128,12 @@
         <div class="media-body">
           <strong>Ultima tema postata</strong>
           <div class="text-muted smaller">Adaugata acum 5m</div>
+
         </div>
       </div>
     </a>
+
+
 
   </div>
   <div class="card-footer small text-muted">Ultima modificare 11:59 PM</div>

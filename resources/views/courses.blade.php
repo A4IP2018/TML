@@ -87,29 +87,26 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="card mb-3">
                         <div class="card-body text">
-                            <!--Course title-->
                             <h5 class="card-title">{{ $course->course_title }}</h5>
-                            <!--Course year-->
                             <p class="card-text">An: {{ $course->year }}</p>
-                            <!--Course semester-->
                             <p class="card-text">Semestru: {{ $course->semester }}</p>
 
-                            <p class="card-text">Description: {{ $course->description }}</p>
+                            <p class="card-text">Descriere: {{ $course->description }}</p>
                         </div>
-                        <div class="card-footer bg-transparent border">
+                        <div class="card-footer bg-transparent">
                             <div class="btn-group">
                                 <!--press to be sent to the course page-->
                                 <a href="{{ url('/course/' . $course->slug) }}" class="btn btn-info">Detalii</a>
 
                                 <!--press to follow course-->
                                 @if (can_subscribe($course->id))
-                                    <button type="submit" class="btn btn-primary">Aboneaza-te
+                                    <button type="submit" class="btn btn-primary">Aboneaz&#259;-te
                                     </button>
                                 @endif
 
                                 @if (is_course_teacher($course->id))
                                     <a href="{{ url('/course/' . $course->slug . '/edit') }}"
-                                       class="btn btn-secondary">Editeaza</a>
+                                       class="btn btn-secondary">Editeaz&#259;</a>
                                 @endif
                             </div>
                         </div>
@@ -119,6 +116,7 @@
             </div>
             <!--pagination-->
 
+
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="#">Inapoi</a></li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -127,6 +125,7 @@
                 <li class="page-item"><a class="page-link" href="#">4</a></li>
                 <li class="page-item"><a class="page-link" href="#">Inainte</a></li>
             </ul>
+
 
         </div>
     </div>

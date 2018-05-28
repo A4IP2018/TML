@@ -15,11 +15,14 @@ class CreateComparisonsTable extends Migration
     {
         Schema::create('comparisons', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('homework_id_1');
-            $table->integer('homework_id_2');
-            $table->integer('plagiarism_degree');
-            $table->integer('user_id');
-            $table->enum('type',['manual','automatic']);
+            $table->integer('file_id_1');
+            $table->integer('file_id_2');
+            $table->integer('homework_id');
+            $table->integer('requirement_id');
+            $table->integer('match_count');
+            $table->integer('token_count');
+            $table->float('similarityA');
+            $table->float('similarityB');
             $table->rememberToken();
             $table->timestamps();
         });

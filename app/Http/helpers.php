@@ -30,6 +30,19 @@ if (! function_exists('is_teacher')) {
     }
 }
 
+
+if (! function_exists('is_teacher_id')) {
+    function is_teacher_id($id) {
+        if (Auth::check()) {
+            return User::where('id', $id)
+                    ->first()
+                    ->role->rank == Role::$TEACHER_RANK;
+        }
+        return false;
+    }
+}
+
+
 if (! function_exists('get_teacher_names')) {
     function get_teacher_names($course)
     {
@@ -60,7 +73,7 @@ if (! function_exists('is_student')) {
         if (Auth::check()) {
             return User::where('id', Auth::id())
                     ->first()
-                    ->role->rank == Role::$TEACHER_RANK;
+                    ->role->rank == Role::$MEMBER_RANK;
         }
         return false;
     }
@@ -122,6 +135,25 @@ if (! function_exists('is_homework_author')) {
         }
 
         return false;
+    }
+}
+
+if (! function_exists('is_file_author')) {
+    function is_file_author($file) {
+        if (Auth::check()) {
+            return Auth::id() === $file->user->id;
+        }
+
+        return false;
+    }
+}
+
+if (! function_exists('get_teacher_homeworks')) {
+    function get_teacher_homeworks() {
+        if (Auth::check()) {
+            return App\Homework::all()->filter(function ($object) { return in_array(Auth::id(), $object->course->users->pluck('id')->toArray()); });
+        }
+        return null;
     }
 }
 
@@ -200,7 +232,7 @@ if (! function_exists('get_role')) {
 if (! function_exists('send_notification'))
 {
     function send_notification($user_ids, $message) {
-        foreach ($user_ids as $user_id) {
+        foreach (array_unique($user_ids) as $user_id) {
             Notification::create([
                 'user_id' => $user_id,
                 'message' => $message,
@@ -211,5 +243,37 @@ if (! function_exists('send_notification'))
 }
 
 
+if (! function_exists('get_name'))
+{
+    function get_name() {
+        if (Auth::check())
+        {
+            if (is_teacher()) {
+                return Auth::user()->teacher_information->name;
+            }
+            else {
+                return Auth::user()->student_information->first_name . ' ' . Auth::user()->student_information->last_name;
+            }
+        }
+        return '';
+    }
+}
+
+
+if (! function_exists('get_name_by_id'))
+{
+    function get_name_by_id($id) {
+        if (Auth::check())
+        {
+            if (is_teacher_id($id)) {
+                return User::where('id', $id)->first()->teacher_information->name;
+            }
+            else {
+                return User::where('id', $id)->first()->student_information->first_name . ' ' . User::where('id', $id)->first()->student_information->last_name;
+            }
+        }
+        return '';
+    }
+}
 
 

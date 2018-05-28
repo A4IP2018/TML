@@ -27,13 +27,12 @@
         <!-- Bootstrap core CSS-->
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <!-- Custom fonts for this template-->
-        <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('vendor/font-awesome/css/font-awesome.min.css?v='. time()) }}" rel="stylesheet" type="text/css">
         <!-- Custom styles for this template-->
-        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-
+        <link href="{{ asset('css/main.css?v='. time()) }}" rel="stylesheet">
 
     </head>
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top" >
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
 
@@ -45,19 +44,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
+
                 <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                        <a class="nav-link" href="{{ url('/') }}">
-                            <i class="fa fa-fw fa-dashboard"></i>
-                            <span class="nav-link-text">Bord</span>
-                        </a>
-                    </li>
+
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
-                    <a class="nav-link" href="{{ url('/profile') }}">
-                    <i class="fa fa-fw fa-link"></i>
-                    <span class="nav-link-text">Profil</span>
-                    </a>
+                        <a class="nav-link" href="{{ url('/profile') }}">
+                            <i class="fa fa-fw fa-link"></i>
+                            <span class="nav-link-text">Profil</span>
+                        </a>
                     </li>
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
@@ -70,17 +65,28 @@
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                         <a class="nav-link" href="{{ url('/homework') }}">
                             <i class="fa fa-fw fa-table"></i>
-                            <span class="nav-link-text">Teme disponibile</span>
+                            <span class="nav-link-text">Teme</span>
                         </a>
                     </li>
 
+                    @if (!is_teacher())
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <!--student uploads for this homework <TEACHER>-->
                         <a class="nav-link" href="{{ url('/upload') }}">
                             <i class="fa fa-fw fa-upload"></i>
-                            <span class="nav-link-text">Teme incarcate</span>
+                            <span class="nav-link-text">Teme &#238;nc&#259;rcate</span>
                         </a>
                     </li>
+                    @endif
+
+                    @if (is_teacher())
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                        <a class="nav-link" href="{{ url('/compare') }}">
+                            <i class="fa fa-fw fa-book"></i>
+                            <span class="nav-link-text">Compar&#259;</span>
+                        </a>
+                    </li>
+                    @endif
 
                     <li class="nav-item" data-toggle="tooltip" data-placement="right">
                         <a class="nav-link" href="{{ url('/contact') }}">
@@ -89,20 +95,14 @@
                         </a>
                     </li>
 
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right">
-                        <a class="nav-link" href="{{ url('/about') }}">
-                            <i class="fa fa-fw fa-connectdevelop"></i>
-                            <span class="nav-link-text">Despre</span>
-                        </a>
-                    </li>
-
-                   <li class="nav-item" data-toggle="tooltip" data-placement="right">
-                        <a class="nav-link" href="{{ url('/pdf-generator') }}">
-                            <i class="fa fa-fw fa-connectdevelop"></i>
-                            <span class="nav-link-text">Generare statistici</span>
-                        </a>
-                    </li>
-
+                    @if(Auth::check())
+                       <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                            <a class="nav-link" href="{{ url('/pdf-generator') }}">
+                                <i class="fa fa-fw fa-connectdevelop"></i>
+                                <span class="nav-link-text">Generare statistici</span>
+                            </a>
+                        </li>
+                    @endif
 
                 </ul>
                 <ul class="navbar-nav sidenav-toggler">
@@ -111,9 +111,12 @@
                             <i class="fa fa-fw fa-angle-left"></i>
                         </a>
                     </li>
+
                 </ul>
+
                 <ul class="navbar-nav ml-auto">
                     @if (Auth::check())
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
@@ -126,7 +129,7 @@
                             </span>
                             @endif
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="alertsDropdown" style="margin-left:-50px">
+                        <div class="dropdown-menu" aria-labelledby="alertsDropdown">
                             @if (!is_null($notifications))
                                 <h6 class="dropdown-header">Notific&#259;ri noi:</h6>
                                 <div class="dropdown-divider"></div>
@@ -148,21 +151,16 @@
                         </div>
                     </li>
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link mr-lg-2" id="changeThemeColor" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-fw fa-moon-o"></i>
-                        </a>
-                    </li>
+
+                    @if (Auth::check() and Auth::user()->role->rank == \App\Role::$ADMINISTRATOR_RANK)
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/admin') }}">Administrare</a></li>
+                    @endif
 
                     @if (Auth::check())
                         <li class="nav-item"><a class="nav-link" href="{{ url('/logout') }}"><i class="fa fa-fw fa-sign-out"></i>Deconectare</a></li>
                     @else
                         <li class="nav-item"><a class="nav-link" href="{{ url('/register') }}">&#206;nregistrare</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Logare</a></li>
-                    @endif
-
-                    @if (Auth::check() and Auth::user()->role->rank == \App\Role::$ADMINISTRATOR_RANK)
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/admin') }}">Administrare</a></li>
                     @endif
 
                 </ul>
@@ -211,7 +209,10 @@
         <footer class="sticky-footer">
             <div class="container">
                 <div class="text-center">
-                    <small>Copyright © TeMeLe-A4IP 2018</small>
+                    <small>
+                        Copyright © TeMeLe-A4IP 2018,
+                        <a href="{{ url('/about') }}"> <span class="nav-link-text">despre facultate</span></a>
+                    </small>
                 </div>
             </div>
         </footer>
@@ -258,7 +259,20 @@
 
         <link rel="stylesheet" href="{{ asset('vendor/highlight/styles/default.css') }}">
         <script src="{{ asset('vendor/highlight/highlight.pack.js') }}"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="{{ asset('vendor/highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });
+
+                $('pre code').each(function(i, block) {
+                    hljs.lineNumbersBlock(block);
+                });
+            });
+        </script>
+
 
         <script>
             $("input.custom-file-input").change(function () {

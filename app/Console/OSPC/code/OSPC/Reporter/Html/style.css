@@ -1,0 +1,147 @@
+﻿/* Common */
+
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	padding: 0;
+	margin: 1em;
+}
+
+table {
+    border-collapse: collapse;
+}    
+
+table, th, td {
+    border: 1px solid #CCCCCC;
+    border-collapse: collapse;
+}    
+
+td {
+    padding: 0.2em;
+}
+
+.right {
+    text-align: right;
+}
+
+/* Menu */
+ul#menu {
+	list-style-type: none;
+    margin: -1em;
+	margin-bottom: 1em;
+    padding: 0.5em;
+	background-color: black;
+}
+
+li.menu-item {
+    display: inline;
+}
+
+a.menu-link {
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	margin-right: 1em;
+}
+
+/* Summary page */
+#summary-info {
+}
+
+#summary-table {
+    float: left;
+}
+
+#summary-table-header {
+
+}
+
+.summary-table-row {
+
+}
+
+#summary-graph-pane {
+    float: left;
+    margin-left: 1em;
+}
+
+/* Detail page */
+#detail-summary {
+
+}
+
+.detail-submission-summary {
+
+}
+
+.detail-col {
+    float:left;
+    width:50%;
+}
+
+.detail-code {
+    font-family: monospace;
+    white-space: pre;
+}
+
+/* Friend Finder page */
+.friend-table {
+}
+
+.friend-table-header {
+}
+
+.friend-table-group-row {
+	background-color: #EEEEEE;
+}
+
+.friend-table-detail-row {
+}
+
+.friend-group-col {
+}
+
+.friend-detail-col {
+}
+
+/* Highlight */
+.highlight {
+    font-weight: bold;
+}
+
+.color-AA0000 {
+    color: #AA0000;
+}
+.color-00AA00 {
+    color: #00AA00;
+}
+.color-0000AA {
+    color: #0000AA;
+}
+.color-00AAAA {
+    color: #00AAAA;
+}
+.color-AA00AA {
+    color: #AA00AA;
+}
+.color-AAAA00 {
+    color: #AAAA00;
+}
+.color-880000 {
+    color: #880000;
+}
+.color-008800 {
+    color: #008800;
+}
+.color-000088 {
+    color: #000088;
+}
+.color-008888 {
+    color: #008888;
+}
+.color-880088 {
+    color: #880088;
+}
+.color-888800 {
+    color: #888800;
+}
+

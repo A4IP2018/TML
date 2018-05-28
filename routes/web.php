@@ -13,9 +13,10 @@
 
 Route::get('/', 'HomeController@main');
 
-Route::get('/compare', 'HomeworkController@compare')->name('compare');
-Route::post('/compare-action', 'HomeworkController@compareAction')->name('compare');
-
+Route::get('/compare', 'CompareController@index')->name('compare')->middleware('teacher');
+Route::post('/compare', 'CompareController@statsPage')->middleware('teacher');
+Route::get('/compare/{id}', 'CompareController@compareView')->middleware('auth');
+Route::post('/compare/feedback', 'CompareController@registerFeedback')->middleware('auth');
 
 Route::resource('homework', 'HomeworkController');
 
@@ -26,16 +27,14 @@ Route::get('filter-courses', 'CourseController@getFilteredCourses');
 Route::get('filter-homework', 'HomeworkController@getFilteredHomeworks');
 
 Route::resource('upload', 'UploadController');
-Route::get('/uploads/checked/{slug}', 'UploadController@getCheckedUploads');
-Route::get('/uploads/unchecked{slug}', 'UploadController@getUncheckedUploads');
+Route::get('/upload/{batch_id}/download', 'UploadController@downloadAll');
+
+Route::get('/uploads/{meta}/{slug}', 'UploadController@showUploadsByFilter');
+
+
 Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
 
 Route::get('/deadlines', 'DeadlineController@index');
-
-Route::get('/settings', function() {
-    return view('settings');
-});
-
 
 Route::get('/contact', 'ContactController@index')->name('contact');
 
@@ -52,14 +51,6 @@ Route::get('/grades-history', function () {
 
 Route::get('/download/{path}', 'UploadController@download')->name('download');
 
-Route::post('/upload-action', 'HomeworkController@uploadHomework')->name('upload-action')->middleware('auth');
-
-Route::get('/upload/{slug}', 'HomeworkController@uploadView');
-
-Route::get('/stud-uploads', 'HomeworkController@studentUploadsView');
-
-Route::get('/stud-uploads/{user_id}/{slug}', 'HomeworkController@studentUploadView');
-
 Route::post('grade-action', 'HomeworkController@updateGrade')->name('grade-action');
 
 Route::get('/login', 'LoginController@index')->name('login');
@@ -73,6 +64,7 @@ Route::post('/register', 'RegisterController@register')->name('register');
 Route::get('/confirm/{token}', 'RegisterController@confirm');
 
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
+Route::post('file-comments-action', 'UploadController@uploadComment')->middleware('auth');
 
 
 /* PASSWORD RESET */
@@ -84,6 +76,7 @@ Route::post('/reset', 'ProfileController@setNewPassword');
 
 /* PROFILE */
 Route::get('/profile', 'ProfileController@index')->name('profile')->middleware('auth');
+Route::get('/user/{id}', 'ProfileController@user')->name('userProfile')->middleware('auth');
 Route::post('change-password', 'ProfileController@changePassword')->name('reset-password-action')->middleware('auth');
 Route::post('change-email', 'ProfileController@changeEmail')->name('reset-email-action')->middleware('auth');
 Route::post('change-nr-matricol', 'ProfileController@changeNrMatricol')->name('reset-nr-matricol')->middleware('auth');

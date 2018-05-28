@@ -10,26 +10,26 @@
         <div class="card">
             <div class="card-body">
         <!--<form action="/action_page.php">-->
-        <form method="POST" action="{{ url('/contact') }}">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group">
-                <label for="prenumeInput">Prenume:</label>
-                <input name="first_name" class="form-control" placeholder="Introdu numele t&#259;u" id="prenumeInput">
-            </div>
-            <div class="form-group">
-                <label for="numeInput">Nume:</label>
-                <input name="last_name" class="form-control" placeholder="Introdu prenumele t&#259;u" id="numeInput">
-            </div>
-            <div class="form-group">
-                <label for="emailInput">Email:</label>
-                <input name="email" class="form-control" placeholder="Introdu adresa de mail" id="emailInput" required>
-            </div>
-            <div class="form-group">
-                <label for="pwd">Mesaj:</label>
-                <textarea id="form_message" name="message" class="form-control" placeholder="Mesajul dorit" rows="4" required="required" data-error="Please,leave us a message."></textarea>
-            </div>
-            <button type="send-message" class="btn btn-primary">Trimite</button>
-        </form>
+              <form method="POST" action="{{ url('/contact') }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <div class="form-group">
+                      <label for="prenumeInput">Prenume:</label>
+                      <input name="first_name" class="form-control" placeholder="Introdu numele t&#259;u" id="prenumeInput">
+                  </div>
+                  <div class="form-group">
+                      <label for="numeInput">Nume:</label>
+                      <input name="last_name" class="form-control" placeholder="Introdu prenumele t&#259;u" id="numeInput">
+                  </div>
+                  <div class="form-group">
+                      <label for="emailInput">Email:</label>
+                      <input name="email" class="form-control" placeholder="Introdu adresa de mail" id="emailInput" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="pwd">Mesaj:</label>
+                      <textarea id="form_message" name="message" class="form-control" placeholder="Mesajul dorit" rows="4" required="required" data-error="Please,leave us a message."></textarea>
+                  </div>
+                  <button type="send-message" class="btn btn-primary">Trimite</button>
+              </form>
             </div>
         </div>
         </div>

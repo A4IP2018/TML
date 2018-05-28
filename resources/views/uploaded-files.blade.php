@@ -16,12 +16,12 @@
                 $real_name = substr($real_name, $pos + 1);
             }
           ?>
-          <span class="badge badge-secondary p-2"><a class="text-white" href="{{ url('upload/' . $file->file_name) }}">{{ $real_name }}</a></span>
+          <span class="badge badge-secondary p-2"><a class="text-white" href="{{ url('/upload/' . basename($file->storage_path) ) }}">{{ $real_name }}</a></span>
         @endforeach
         </div>
 
         <div class="card-footer bg-transparent border">
-          <a href="{{ url('/upload/' . $file->file_name ) }}" class="btn btn-info">Detalii</a>
+          <a href="{{ url('/upload/' . $file->batch_id) }}" class="btn btn-info">Detalii</a>
         </div>
 
 

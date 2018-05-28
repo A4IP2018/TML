@@ -39,6 +39,7 @@
                                     @endforeach
                                 </select>
 
+
                             </form>
                         @endif
                     </div>
@@ -48,7 +49,6 @@
             <br>
             @if (Auth::check() and is_teacher() and Auth::user()->courses->count() > 0)
                 <a href="{{ url('/homework/create') }}" class="btn btn-primary btn-lg btn-block">Tema noua</a>
-                <a href="{{ url('/compare') }}" class="btn btn-secondary btn-lg btn-block">Compara</a>
                 <hr class="mt-2">
             @endif
 
@@ -91,6 +91,7 @@
                         </div>
                         </div>
                     @endforeach
+
                 </div>
             @else
                 <h4 class="text-center">Nicio tem&#259; aici, &#238;ncearca s&#259; te abonezi la c&#226;teva <a

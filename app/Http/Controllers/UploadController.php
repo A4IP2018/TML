@@ -3,17 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\FileComment;
+use App\Jobs\CompareUpload;
 use App\User;
 use App\RequiredFormat;
+use Storage;
 use App\Homework;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File as FileSystem;
 use Session;
 use Carbon\Carbon;
+use Zipper;
 
 class UploadController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -23,10 +33,44 @@ class UploadController extends Controller
     {
         if (Auth::check()) {
 
-            $files_grouped  = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
+            $files_grouped = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
             return view('uploaded-files', compact('files_grouped'));
+        } else {
+            return redirect('/login');
         }
-        else {
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showUploadsByFilter($meta, $slug)
+    {
+        if (Auth::check()) {
+
+            $files_grouped = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
+
+//            $files_grouped = File::where('user_id', Auth::id())
+//                ->with('homework')
+//                ->whereHas('homework', function($collection) use($slug) {
+//                    $collection->where('slug', $slug);
+//                })
+//                ->when($meta === 'unchecked', function ($collection) {
+//                    $collection->doesntHave('grade');
+//                })
+//                ->when($meta === 'checked', function ($collection) {
+//                    $collection->has('grade');
+//                })
+//
+//                ->orderByDesc('created_at')
+//                ->get();
+//
+//
+//            dd($files_grouped);
+
+            return view('uploaded-files', compact('files_grouped'));
+        } else {
             return redirect('/login');
         }
     }
@@ -41,11 +85,34 @@ class UploadController extends Controller
         //
     }
 
+    /**
+     * Upload comment
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadComment(Request $request)
+    {
+        $validator = $this->validate($request, [
+            'comments' => 'required|min:5|max:60000',
+        ]);
+        $comment = $request->input('comments');
+        $fileId = $request->input('file-id');
+
+        FileComment::create([
+            'comment' => $comment,
+            'file_id' => $fileId,
+            'user_id' => Auth::id()
+        ]);
+
+        return redirect()->back();
+
+    }
+
 
     public function uploadSingle($file_data, $homework_id, $requirement_id, $batch_id)
     {
-        $path = public_path() . '/files/';
-        $filename = time() . '_' . str_random(5) . '.' . str_replace(' ', '', $file_data->getClientOriginalName());
+        $filename = $file_data->getClientOriginalName();
         $fileType = $file_data->getClientOriginalExtension();
         $fileExtension = $file_data->guessExtension();
 
@@ -62,18 +129,20 @@ class UploadController extends Controller
             return ['Fisierul este prea mare.', []];
         }
 
-        if ($file_data->move($path, $filename)) {
+        $path = $file_data->store(config('app.upload_dir'));
+        if (!is_null($path) and $path != '') {
             return
-            [
-                'Fisier ' . $file_data->getClientOriginalName() . ' a fost incarcat cu succes!',
                 [
-                    'user_id' => $user_id,
-                    'homework_id' => $homework_id,
-                    'requirement_id' => $requirement_id,
-                    'file_name' => $filename,
-                    'batch_id' => $batch_id
-                ]
-            ];
+                    'Fisier ' . $file_data->getClientOriginalName() . ' a fost incarcat cu succes!',
+                    [
+                        'user_id' => $user_id,
+                        'homework_id' => $homework_id,
+                        'requirement_id' => $requirement_id,
+                        'file_name' => $filename,
+                        'storage_path' => $storage_path = $path,
+                        'batch_id' => $batch_id
+                    ]
+                ];
         }
         return ['Eroare la incarcarea fisierului ' . $file_data->getClientOriginalName(), []];
     }
@@ -81,7 +150,7 @@ class UploadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -120,7 +189,7 @@ class UploadController extends Controller
         $files = $request->file('toUpload');
         $to_upload = [];
         foreach ($files as $id => $file) {
-            $req_id = $request->input('toUpload')[$id];
+            $req_id = $request->input('toUpload')[$id]['requirement_id'];
             $result = $this->uploadSingle($file['upload_file'], $homework_id, $req_id, $batch_id);
             if (empty($result[1])) {
                 Session::flash('error', $result[0]);
@@ -131,13 +200,17 @@ class UploadController extends Controller
 
         foreach ($to_upload as $query) {
 
-            File::updateOrCreate(['user_id' => $query[1]['user_id'], 'homework_id' => $query[1]['homework_id']], [
+            File::create([
+                'user_id' => $query[1]['user_id'],
+                'homework_id' => $query[1]['homework_id'],
                 'requirement_id' => $query[1]['requirement_id'],
                 'file_name' => $query[1]['file_name'],
-                'batch_id' => $query[1]['batch_id']
+                'batch_id' => $query[1]['batch_id'],
+                'storage_path' => $query[1]['storage_path']
             ]);
         }
 
+        $this->dispatch(new CompareUpload($batch_id));
         Session::flash('success', 'Fisierele au fost incarcate!');
         return redirect()->back();
     }
@@ -145,21 +218,31 @@ class UploadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($batch_id)
     {
-        $file = \App\File::where('file_name', $slug)->with('grade')->first();
-        $content = mb_convert_encoding(FileSystem::get(public_path() . '/files/' . $file->file_name), 'UTF-16LE', 'UTF-8');
+        $files = File::where('batch_id', $batch_id)->get();
+        if ($files->count() == 0) {
+            Session::flash('error', 'A&#x219;a tem&#259; &#238;nc&#259;rcat&#259; nu exist&#259;');
+            return redirect()->back();
+        }
+        $batch_info = [
+            'homework' => $files[0]->homework,
+            'created_at' => $files[0]->created_at,
+            'count' => $files->count(),
+            'user' => $files[0]->user,
+            'batch_id' => $files[0]->batch_id
+        ];
 
-        return view('uploaded-file-details', compact('file', 'content'));
+        return view('uploaded-file-details', compact('files' , 'batch_info'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -170,8 +253,8 @@ class UploadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -182,7 +265,7 @@ class UploadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -191,26 +274,39 @@ class UploadController extends Controller
     }
 
 
-    public function download($fileName)
+    public function download($storage_name)
     {
-        $path = public_path() . '/files/';
-        return response()->download($path . $fileName);
+        $file = File::where('storage_path', config('app.upload_dir') . '/' . $storage_name)->first();
+        if (is_null($file)) {
+            Session::flash('error', 'Fi&#x219;ierul nu exist&#259;');
+            return redirect()->back();
+        }
+
+        if (Auth::check() and (Auth::id() == $file->user_id or is_course_teacher($file->homework->course->id))) {
+            return response()->download(storage_path('app' . '/' . $file->storage_path), $file->file_name);
+        }
+
+        Session::flash('error', 'Nu ai acces la acest fisier');
+        return redirect()->back();
     }
 
-    public function getCheckedUploads($slug) {
-        if (Auth::check()) {
-            $current_user = Auth::id();
-            $homework = Homework::where('slug', $slug)->first();
-            $homework->count();
-            if (!is_null($homework) && is_homework_author($homework)) {
-                // TODO more stuff here
-            }
-            else {
-                return redirect('/homework');
-            }
+    public function downloadAll($batch_id) {
+        $zipper = new \Chumper\Zipper\Zipper;
+        $files = File::where('batch_id', $batch_id)->get();
+        if ($files->count() == 0) {
+            Session::flash('error', 'Fi&#x219;ierele nu exist&#259;');
+            return redirect()->back();
         }
-        else {
-            return redirect('/login');
-        }
+
+        $zip_path = public_path( 'downloads/'. $batch_id . '.zip');
+        $zip = $zipper->make($zip_path);
+        foreach ($files as $file) {
+            $full_path = storage_path('app/' . $file->storage_path);
+            $zip->add($full_path, $file->file_name);
+        };
+
+        $zip->close();
+        return response()->download($zip_path, 'homework.zip')->deleteFileAfterSend(true);
     }
+
 }

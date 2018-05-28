@@ -40,6 +40,24 @@ class ProfileController extends Controller
         }
     }
 
+    public function user($id) {
+        $user = User::where('id', $id)->first();
+        if (is_null($user)) {
+            Session::flash('error', 'Utilizator inexistent');
+            return redirect()->back();
+        }
+
+        if($user->role->rank == Role::$TEACHER_RANK) {
+
+            $userInfo = \App\TeacherInformation::where('user_id', $id)->first();
+        }
+        else {
+            $userInfo = \App\StudentInformation::where('user_id', $id)->first();
+        }
+
+        return view('profile', compact('user', 'userInfo'));
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector

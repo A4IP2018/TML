@@ -327,20 +327,6 @@ class HomeworkController extends Controller
         return view('stud-uploads-sg', compact('homework', 'user', 'grade'));
     }
 
-
-    public function download($fileName)
-    {
-        $path = public_path() . '/files/';
-
-        return response()->download($path . $fileName);
-    }
-
-    public function compare()
-    {
-        $files = \App\File::all();
-        return view('compare', compact('files'));
-    }
-
     public function compareAction(Request $request)
     {
 
@@ -350,8 +336,8 @@ class HomeworkController extends Controller
         $firstFile = \App\File::find($firstFile);
         $secondFile = \App\File::find($secondFile);
 
-        $content1 = File::get(public_path('files/' . $firstFile->file_name));
-        $content2 = File::get(public_path('files/' . $secondFile->file_name));
+        $content1 = Storage::get($firstFile->storage_path);
+        $content2 = Storage::get($secondFile->storage_path);
 
 
         $procent = plagiarism_check($content1, $content2);

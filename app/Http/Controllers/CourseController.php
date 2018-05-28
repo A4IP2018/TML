@@ -82,7 +82,7 @@ class CourseController extends Controller
     public function show($slug) {
         $course = Course::where('slug', $slug)->first();
         $elapsed_time = Carbon::parse($course->created_at);
-        return view('course-details')->with(['course' => $course, 'elapsed_time' => $elapsed_time->diffForHumans(), 'teachers_string' => $this->get_teacher_names($course)]);
+        return view('course-details')->with(['course' => $course, 'elapsed_time' => $elapsed_time->diffForHumans(), 'teachers_string' => get_teacher_names($course)]);
     }
 
     /**
