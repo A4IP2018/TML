@@ -106,13 +106,6 @@ class RegisterController extends Controller
             'password.same' => 'Campurile parola si confirmarea parolei trebuie sa fie asemanatoare',
         ]);
 
-        if (!$request->input('code')) {
-            $validator = $this->validate($request, [
-                'student-identifier' => 'required',
-                ], [
-                    'student-identifier.required' => 'Numarul matricol sau codul unic este necesar pentru a continua'
-            ]);
-        }
 
         $password = Hash::make($request->input('password'));
         $code = $request->input('code');
@@ -122,6 +115,12 @@ class RegisterController extends Controller
             if (!is_null($found_code)) {
                 $rank = $found_code->rank;
                 $found_code->delete();
+            } else {
+                $validator = $this->validate($request, [
+                    'student-identifier' => 'required',
+                ], [
+                    'student-identifier.required' => 'Numarul matricol sau codul unic valid este necesar pentru a continua'
+                ]);
             }
         }
 
