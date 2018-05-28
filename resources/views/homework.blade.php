@@ -53,7 +53,7 @@
             @endif
 
             @if ($homeworks->count() > 0)
-                <div class="card-columns">
+                <div class="card-columns" style="column-count: 3">
                     @foreach ($homeworks as $homework)
                         <div class="">
                         <div class="card mb-3">

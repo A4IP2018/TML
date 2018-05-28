@@ -80,7 +80,7 @@
         <!--Multiple Courses-->
         <div class="mb-0 mt-4">
 
-            <div class="card-columns">
+            <div class="card-columns" style="column-count: 3">
             @foreach ($courses as $course)
                 <!-- Example Course Card-->
                 <form action="{{ url("/course/" . $course->slug . "/subscribe") }}" method="POST">
