@@ -221,7 +221,7 @@ body.fixed-nav {
     margin-top: calc(100vh - 56px);
   }
   #mainNav.fixed-top .sidenav-toggler > .nav-item {
-    width: 250px;
+    width: 150px;
     padding: 0;
   }
   #mainNav.fixed-top .sidenav-toggler > .nav-item > .nav-link {
@@ -492,7 +492,7 @@ footer.sticky-footer {
 
 @media (min-width: 992px) {
   footer.sticky-footer {
-    width: calc(100% - 250px);
+    width: calc(100% - 150px);
   }
 }
 

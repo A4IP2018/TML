@@ -24,6 +24,7 @@
         $realDiff = 0;
     }
 
+
     //$new_width = (($wholeDif - $remainingDif) / 100) * $wholeDif;
 
     ?>
@@ -48,6 +49,7 @@
                     <div class="card-header">Curs</div>
                     <div class="card-body ">
                         <h5><a href="{{ url('/course/' . $homework->course->slug) }}">{{ $homework->course->course_title }}</a></h5>
+
                     </div>
                 </div>
             @endif
