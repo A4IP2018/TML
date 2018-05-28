@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\FileComment;
 use App\Jobs\CompareUpload;
 use App\User;
 use App\RequiredFormat;
@@ -25,10 +26,44 @@ class UploadController extends Controller
     {
         if (Auth::check()) {
 
-            $files_grouped  = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
+            $files_grouped = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
             return view('uploaded-files', compact('files_grouped'));
+        } else {
+            return redirect('/login');
         }
-        else {
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showUploadsByFilter($meta, $slug)
+    {
+        if (Auth::check()) {
+
+            $files_grouped = Auth::user()->files->sortByDesc('created_at')->groupBy('batch_id');
+
+//            $files_grouped = File::where('user_id', Auth::id())
+//                ->with('homework')
+//                ->whereHas('homework', function($collection) use($slug) {
+//                    $collection->where('slug', $slug);
+//                })
+//                ->when($meta === 'unchecked', function ($collection) {
+//                    $collection->doesntHave('grade');
+//                })
+//                ->when($meta === 'checked', function ($collection) {
+//                    $collection->has('grade');
+//                })
+//
+//                ->orderByDesc('created_at')
+//                ->get();
+//
+//
+//            dd($files_grouped);
+
+            return view('uploaded-files', compact('files_grouped'));
+        } else {
             return redirect('/login');
         }
     }
@@ -41,6 +76,30 @@ class UploadController extends Controller
     public function create()
     {
         //
+    }
+
+    /**
+     * Upload comment
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadComment(Request $request)
+    {
+        $validator = $this->validate($request, [
+            'comments' => 'required|min:5|max:60000',
+        ]);
+        $comment = $request->input('comments');
+        $fileId = $request->input('file-id');
+
+        FileComment::create([
+            'comment' => $comment,
+            'file_id' => $fileId,
+            'user_id' => Auth::id()
+        ]);
+
+        return redirect()->back();
+
     }
 
 
@@ -66,17 +125,17 @@ class UploadController extends Controller
         $path = $file_data->store(config('app.upload_dir'));
         if (!is_null($path) and $path != '') {
             return
-            [
-                'Fisier ' . $file_data->getClientOriginalName() . ' a fost incarcat cu succes!',
                 [
-                    'user_id' => $user_id,
-                    'homework_id' => $homework_id,
-                    'requirement_id' => $requirement_id,
-                    'file_name' => $filename,
-                    'storage_path' => $storage_path = $path,
-                    'batch_id' => $batch_id
-                ]
-            ];
+                    'Fisier ' . $file_data->getClientOriginalName() . ' a fost incarcat cu succes!',
+                    [
+                        'user_id' => $user_id,
+                        'homework_id' => $homework_id,
+                        'requirement_id' => $requirement_id,
+                        'file_name' => $filename,
+                        'storage_path' => $storage_path = $path,
+                        'batch_id' => $batch_id
+                    ]
+                ];
         }
         return ['Eroare la incarcarea fisierului ' . $file_data->getClientOriginalName(), []];
     }
@@ -84,7 +143,7 @@ class UploadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -152,7 +211,7 @@ class UploadController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -166,7 +225,7 @@ class UploadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -177,8 +236,8 @@ class UploadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -189,7 +248,7 @@ class UploadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -206,8 +265,7 @@ class UploadController extends Controller
             return redirect()->back();
         }
 
-        if (Auth::check() and (Auth::id() == $file->user_id or is_course_teacher($file->homework->course->id)))
-        {
+        if (Auth::check() and (Auth::id() == $file->user_id or is_course_teacher($file->homework->course->id))) {
             return response()->download(storage_path('app' . '/' . $file->storage_path), $file->file_name);
         }
 
@@ -216,20 +274,4 @@ class UploadController extends Controller
 
     }
 
-    public function getCheckedUploads($slug) {
-        if (Auth::check()) {
-            $current_user = Auth::id();
-            $homework = Homework::where('slug', $slug)->first();
-            $homework->count();
-            if (!is_null($homework) && is_homework_author($homework)) {
-                // TODO more stuff here
-            }
-            else {
-                return redirect('/homework');
-            }
-        }
-        else {
-            return redirect('/login');
-        }
-    }
 }

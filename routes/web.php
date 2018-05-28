@@ -26,8 +26,9 @@ Route::get('filter-courses', 'CourseController@getFilteredCourses');
 Route::get('filter-homework', 'HomeworkController@getFilteredHomeworks');
 
 Route::resource('upload', 'UploadController');
-Route::get('/uploads/checked/{slug}', 'UploadController@getCheckedUploads');
-Route::get('/uploads/unchecked{slug}', 'UploadController@getUncheckedUploads');
+Route::get('/uploads/{meta}/{slug}', 'UploadController@showUploadsByFilter');
+
+
 Route::get('/uploads/new/{slug}', 'UploadController@getNewUploads');
 
 Route::get('/deadlines', 'DeadlineController@index');
@@ -72,6 +73,7 @@ Route::post('/register', 'RegisterController@register')->name('register');
 Route::get('/confirm/{token}', 'RegisterController@confirm');
 
 Route::post('comments-action', 'HomeworkController@uploadComment')->middleware('auth');
+Route::post('file-comments-action', 'UploadController@uploadComment')->middleware('auth');
 
 
 /* PASSWORD RESET */

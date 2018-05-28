@@ -138,6 +138,16 @@ if (! function_exists('is_homework_author')) {
     }
 }
 
+if (! function_exists('is_file_author')) {
+    function is_file_author($file) {
+        if (Auth::check()) {
+            return Auth::id() === $file->user->id;
+        }
+
+        return false;
+    }
+}
+
 if (! function_exists('get_teacher_homeworks')) {
     function get_teacher_homeworks() {
         if (Auth::check()) {

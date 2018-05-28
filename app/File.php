@@ -60,4 +60,13 @@ class File extends Model
     public function grade(){
         return $this->HasOne('App\Grade');
     }
+
+    /**
+     * File -> File Comment relationship
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments() {
+        return $this->hasMany('App\FileComment');
+    }
 }
