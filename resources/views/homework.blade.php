@@ -169,11 +169,11 @@
                                         '</a>'+
 
                                         '<a class="btn btn-primary" href="'+ item.unchecked_homework_link +'">'+
-                                            '<span>Necorectate</span> <span class="badge badge-light">'+ (item.files_count - item.grades_count) +'</span>'+
+                                            '<span>Necorectate</span> <span class="badge badge-light">'+ (item.unchecked) +'</span>'+
                                         '</a>'+
 
                                         '<a class="btn btn-primary" href="'+ item.checked_homework_link +'">'+
-                                            '<span>Corectate</span> <span class="badge badge-light">'+ item.grades_count +'</span>'+
+                                            '<span>Corectate</span> <span class="badge badge-light">'+ item.checked +'</span>'+
                                         '</a>';
                                     }
 

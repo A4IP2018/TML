@@ -336,8 +336,6 @@ class HomeworkController extends Controller
                     return $query->where('course_id', $searchedCourse);
                 });
             })
-            ->withCount('grades')
-            ->withCount('files')
             ->when($uncheckedHomework, function ($collection) use ($uncheckedHomework) {
                 return $collection->doesntHave('files.grade');
             })
@@ -359,6 +357,8 @@ class HomeworkController extends Controller
             $homework['homework_edit'] = url('/homework/' . $homework->slug . '/edit');
             $homework['unchecked_homework_link'] = url('/uploads/unchecked/' . $homework->slug);
             $homework['checked_homework_link'] = url('/uploads/checked/' . $homework->slug);
+            $homework['checked'] = \App\File::where('homework_id', $homework->id)->whereHas('grade')->get()->groupBy('batch_id')->count();
+            $homework['unchecked'] = \App\File::where('homework_id', $homework->id)->whereDoesntHave('grade')->get()->groupBy('batch_id')->count();
         }
 
         return $homeworks;
