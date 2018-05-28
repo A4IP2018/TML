@@ -14,11 +14,11 @@
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <div class="form-group">
                       <label for="prenumeInput">Prenume:</label>
-                      <input name="first_name" class="form-control" placeholder="Introdu numele t&#259;u" id="prenumeInput">
+                      <input name="first-name" class="form-control" placeholder="Introdu numele t&#259;u" id="prenumeInput" required>
                   </div>
                   <div class="form-group">
                       <label for="numeInput">Nume:</label>
-                      <input name="last_name" class="form-control" placeholder="Introdu prenumele t&#259;u" id="numeInput">
+                      <input name="last-name" class="form-control" placeholder="Introdu prenumele t&#259;u" id="numeInput" required>
                   </div>
                   <div class="form-group">
                       <label for="emailInput">Email:</label>
@@ -26,7 +26,7 @@
                   </div>
                   <div class="form-group">
                       <label for="pwd">Mesaj:</label>
-                      <textarea id="form_message" name="message" class="form-control" placeholder="Mesajul dorit" rows="4" required="required" data-error="Please,leave us a message."></textarea>
+                      <textarea id="form_message" name="message" class="form-control" placeholder="Introdu mesajul dorit (minim 3 caractere)" rows="4" required="required" data-error="Please,leave us a message."></textarea>
                   </div>
                   <button type="send-message" class="btn btn-primary">Trimite</button>
               </form>

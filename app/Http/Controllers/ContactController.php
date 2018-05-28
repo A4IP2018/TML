@@ -48,19 +48,19 @@ class ContactController extends Controller
     protected function sendMessage(Request $request)
     {
         $validator = $this->validate($request, [
-            'first_name' => 'required|max:50|min:3',
-            'last_name' => 'required|max:50|min:3',
+            'first-name' => 'required|max:50|min:3',
+            'last-name' => 'required|max:50|min:3',
             'email' => 'required|max:100|email|exists:users,email',
             'message' => 'required|max:250|min:3',
         ]);
 
-        Contact::create(['first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
+        Contact::create(['first-name' => $request->input('first-name'),
+                    'last-name' => $request->input('last-name'),
                     'email' => $request->input('email'),
                     'message' => $request->input('message')
                 ]);
 
-        Session::flash('success', 'Multumim pentru ca ne-ai contactat. Iti vom raspunde intr-un timp cat mai scurt posibil.');
+        Session::flash('success', 'Mul&#355;umim pentru c&#259; ne-ai contactat. &#206;&#355;i vom r&#259;spunde &#238;ntr-un timp c&#226;t mai scurt posibil.');
 
         return redirect()->back();
     }
