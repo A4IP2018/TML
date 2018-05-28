@@ -69,7 +69,7 @@ class CompareController extends Controller
         $user_1 = $file_1->user;
         $user_2 = $file_2->user;
 
-        if (is_course_teacher($comparison->homework->course->id) or Auth::id() == $user_1 or Auth::id() == $user_2) {
+        if (is_course_teacher($comparison->homework->course->id) or Auth::id() == $user_1->id or Auth::id() == $user_2->id) {
             $requirements = $comparison->homework->requirements;
             foreach ($requirements as $requirement) {
                 $file_req_1 = File::where('batch_id', $file_1->batch_id)->where('requirement_id', $file_1->requirement_id)->first();
