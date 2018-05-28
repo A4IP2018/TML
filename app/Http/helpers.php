@@ -232,7 +232,7 @@ if (! function_exists('get_role')) {
 if (! function_exists('send_notification'))
 {
     function send_notification($user_ids, $message) {
-        foreach ($user_ids as $user_id) {
+        foreach (array_unique($user_ids) as $user_id) {
             Notification::create([
                 'user_id' => $user_id,
                 'message' => $message,
