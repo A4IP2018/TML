@@ -72,8 +72,8 @@ class CompareController extends Controller
         if (is_course_teacher($comparison->homework->course->id) or Auth::id() == $user_1->id or Auth::id() == $user_2->id) {
             $requirements = $comparison->homework->requirements;
             foreach ($requirements as $requirement) {
-                $file_req_1 = File::where('batch_id', $file_1->batch_id)->where('requirement_id', $file_1->requirement_id)->first();
-                $file_req_2 = File::where('batch_id', $file_2->batch_id)->where('requirement_id', $file_2->requirement_id)->first();
+                $file_req_1 = File::where('batch_id', $file_1->batch_id)->where('requirement_id', $requirement->id)->first();
+                $file_req_2 = File::where('batch_id', $file_2->batch_id)->where('requirement_id', $requirement->id)->first();
                 $requirement['file_1'] = $file_req_1;
                 $requirement['file_2'] = $file_req_2;
                 $requirement['file_1_content'] = Storage::get($file_req_1->storage_path);
