@@ -57,6 +57,7 @@
     <br>
 @endforeach
 
+@if (is_course_teacher($batch_info['homework']->course->id))
 <div class="card">
     <div class="card-header">Nota</div>
     <div class="card-body">
@@ -77,7 +78,7 @@
         </form>
     </div>
 </div>
-
+@endif 
 <div class="card text-center">
     <div class="card-header">Adauga un comentariu</div>
     <div class="card-body">
