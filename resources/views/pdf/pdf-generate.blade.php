@@ -118,8 +118,8 @@
                 @else
                     <td>{{ $grade->user->teacher_information->name }}</td>
                 @endif
-                <td>{{ $grade->file->homework->course->course_title }}</td>
-                <td>{{ $grade->file->homework->name }}</td>
+                <td>{{ $grade->homework->course->course_title }}</td>
+                <td>{{ $grade->homework->name }}</td>
                 <td>{{ $grade->grade }}</td>
             </tr>
         @endforeach
