@@ -18,7 +18,7 @@
         </div>
         <div class="card-body">
         @foreach($group as $file)
-          <span class="badge badge-secondary p-2"><a class="text-white" href="{{ url('/upload/' . basename($file->storage_path) ) }}">{{ $file->requirement->description }}</a></span>
+          <span class="badge badge-secondary p-2"><a class="text-white" href="{{ url('/download/' . basename($file->storage_path) ) }}">{{ $file->requirement->description }}</a></span>
         @endforeach
         </div>
 
