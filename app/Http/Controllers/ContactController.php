@@ -54,11 +54,12 @@ class ContactController extends Controller
             'message' => 'required|max:250|min:3',
         ]);
 
-        Contact::create(['first-name' => $request->input('first-name'),
-                    'last-name' => $request->input('last-name'),
-                    'email' => $request->input('email'),
-                    'message' => $request->input('message')
-                ]);
+        Contact::create([
+            'first_name' => $request->input('first-name'),
+            'last_name' => $request->input('last-name'),
+            'email' => $request->input('email'),
+            'message' => $request->input('message')
+        ]);
 
         Session::flash('success', 'Mul&#355;umim pentru c&#259; ne-ai contactat. &#206;&#355;i vom r&#259;spunde &#238;ntr-un timp c&#226;t mai scurt posibil.');
 
