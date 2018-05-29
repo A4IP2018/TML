@@ -212,8 +212,10 @@
             <div class="container">
                 <div class="text-center">
                     <small>
+                        <img src="{{URL::asset('favicon.ico')}}" style="max-width: 4%; max-height: 4%;">
                         Copyright © TeMeLe-A4IP 2018,
                         <a href="{{ url('/about') }}"> <span class="nav-link-text">despre facultate</span></a>
+                        <img src="{{URL::asset('images/fii.jpg')}}" style="max-width: 3%; max-height: 3%;">
                     </small>
                 </div>
             </div>
