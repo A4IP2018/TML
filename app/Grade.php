@@ -15,7 +15,7 @@ class Grade extends Model
      * @var array
      */
     protected $fillable = [
-        'grade', 'user_id', 'batch_id', 'updated_at', 'teacher_id'
+        'grade', 'user_id', 'batch_id', 'updated_at', 'teacher_id', 'homework_id'
     ];
 
     /**
@@ -49,8 +49,12 @@ class Grade extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-	 public function file() {
-        return $this->belongsTo('App\File');
+    public function file() {
+        return $this->hasOne('App\File', 'batch_id', 'batch_id');
+    }
+
+    public function homework() {
+	     return $this->belongsTo('App\Homework');
     }
 
 
