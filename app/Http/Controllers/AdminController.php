@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Code;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use App\Contact;
 
 class AdminController extends Controller
 {
@@ -29,7 +30,8 @@ class AdminController extends Controller
 
         $teacher_codes = Code::where('rank', \App\Role::$TEACHER_RANK)->get();
         $admin_codes = Code::where('rank', \App\Role::$ADMINISTRATOR_RANK)->get();
-        return view('admin')->with(['teacher_codes' => $teacher_codes, 'admin_codes' => $admin_codes]);
+        $contacts = Contact::orderBy('created_at', 'DESC')->get();
+        return view('admin')->with(['teacher_codes' => $teacher_codes, 'admin_codes' => $admin_codes, 'contacts' => $contacts]);
     }
 
     public function studentsPassedStatistics($course, $meta)

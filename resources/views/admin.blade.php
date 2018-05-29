@@ -34,4 +34,24 @@
 </div>
 
 
+<h3 class="text-center mt-5">Contact</h3>
+@foreach ($contacts as $contact)
+<div class="card">
+  <div class="card-header">
+    {{ $contact->first_name . ' ' . $contact->last_name }}
+
+      <a href="mailto:{{ $contact->email }}">
+        <span class="badge badge-secondary badge-pill">{{ $contact->email }}</span>
+      </a>
+
+  </div>
+  <div class="card-body">
+    {{ $contact->message }}
+  </div>
+  <div class="card-footer">
+    {{ $contact->created_at }}
+  </div>
+</div>
+@endforeach
+
 @endsection
