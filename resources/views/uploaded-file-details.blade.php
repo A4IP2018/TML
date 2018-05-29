@@ -44,7 +44,7 @@
 @foreach ($files as $file)
     <div class="card ">
         <div class="card-header">
-            <a href="{{ url('/download/' . $file->storage_path) }}"><span class="badge badge-secondary badge-pill">descarc&#259;</span></a>
+            <a href="{{ url('/download/' . basename($file->storage_path)) }}"><span class="badge badge-secondary badge-pill">descarc&#259;</span></a>
             {{ $file->requirement->description }}
         </div>
         <div class="card-body">
