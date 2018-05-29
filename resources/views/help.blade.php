@@ -70,6 +70,9 @@
 
                 @endif
 
+            <h4 style="text-align: justify">Pentru a vedea toate functionalitatile aplicatiei, va rugam sa vizualizati <a href="{{URL::asset('manual/manualUtilizare.pdf')}}" target="_blank">Manualul de Utilizare</a> </h4> <br>
+            <h4 style="text-align: justify">Va multumim si va uram distractie placuta!</h4>
+
 
         </div>
     </div>
