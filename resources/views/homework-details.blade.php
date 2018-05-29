@@ -123,6 +123,7 @@
 
         @if ($comments)
             @foreach($comments as $comment)
+                @if ((is_student() and is_teacher_id($comment->user->id)) or (is_teacher()))
                 <div class="card mb-3">
                     <div class="card-body">
                         @if ($comment->user->student_information)
