@@ -2,39 +2,34 @@
 
 @section('content')
 
-    <!--CONTACT PAGE-->
-
-
-
-
-            <div class="row">
-                <div class="col-12">
-                    <br>
-                    <p class="text-center" style="font-size: 23px">Ai nelămuriri? Intreabă-ne!</p>
-                    <div class="card card-register mx-auto mt-3">
-                    <div class="card">
-                        <div class="card-body">
-                    <form action="/action_page.php">
-                        <div class="form-group">
-                            <label for="name">Nume:</label>
-                            <input type="name" class="form-control" placeholder="Introduceți numele" id="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Adresa de e-mail:</label>
-                            <input type="email" class="form-control" placeholder="Introduceți adresa de e-mail" id="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd">Mesajul:</label>
-                            <textarea id="form_message" name="message" class="form-control" placeholder="Introduceți mesajul" rows="4" required="required" data-error="Please,leave us a message."></textarea>
-                        </div>
-                        <button type="send-message" class="btn btn-primary">Trimite mesajul</button>
-                    </form>
-                        </div>
-                    </div>
-                    </div>
-
-                </div>
-
+<div class="row">
+    <div class="col-12">
+        <br>
+        <p class="text-center" style="font-size: 30px">Ai nel&#259;muriri? &#206;ntreab&#259;-ne!</p>
+        <div class="card card-register mx-auto mt-5">
+        <div class="card">
+            <div class="card-body">
+        <!--<form action="/action_page.php">-->
+              <form method="POST" action="{{ url('/contact') }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <div class="form-group">
+                      <label for="prenumeInput">Prenume:</label>
+                      <input name="first-name" class="form-control" placeholder="Introdu numele t&#259;u" id="prenumeInput" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="numeInput">Nume:</label>
+                      <input name="last-name" class="form-control" placeholder="Introdu prenumele t&#259;u" id="numeInput" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="emailInput">Email:</label>
+                      <input name="email" class="form-control" placeholder="Introdu adresa de mail" id="emailInput" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="pwd">Mesaj:</label>
+                      <textarea id="form_message" name="message" class="form-control" placeholder="Introdu mesajul dorit (minim 3 caractere)" rows="4" required="required" data-error="Please,leave us a message."></textarea>
+                  </div>
+                  <button type="send-message" class="btn btn-primary">Trimite</button>
+              </form>
             </div>
         </div>
         </div>
