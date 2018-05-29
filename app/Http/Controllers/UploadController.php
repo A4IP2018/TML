@@ -120,14 +120,15 @@ class UploadController extends Controller
             'comments' => 'required|min:5|max:60000',
         ]);
         $comment = $request->input('comments');
-        $fileId = $request->input('file-id');
+        $fileId = $request->input('batch_id');
 
         FileComment::create([
             'comment' => $comment,
-            'file_id' => $fileId,
+            'batch_id' => $fileId,
             'user_id' => Auth::id()
         ]);
 
+        Session::flash('success', 'Comentariu ad&#259;ugat!');
         return redirect()->back();
 
     }
@@ -264,7 +265,9 @@ class UploadController extends Controller
             $file['content'] = Storage::get($file->storage_path);
         }
 
-        return view('uploaded-file-details', compact('files' , 'batch_info'));
+        $comments = FileComment::where('batch_id', $batch_id)->get();
+
+        return view('uploaded-file-details', compact('files' , 'batch_info', 'comments'));
     }
 
     /**

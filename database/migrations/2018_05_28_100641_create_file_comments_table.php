@@ -16,7 +16,7 @@ class CreateFileCommentsTable extends Migration
         Schema::create('file_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->text('comment');
-            $table->string('file_id');
+            $table->string('batch_id');
             $table->integer('user_id');
             $table->rememberToken();
             $table->timestamps();
