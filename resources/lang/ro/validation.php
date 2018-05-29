@@ -131,7 +131,8 @@ return [
         'name' => 'nume',
         'new-password' => 'parola noua',
         'feedback-text' => 'descrierea problemei',
-        'grade' => 'nota'
+        'grade' => 'nota',
+        'batch_id' => 'tema'
     ],
 
 ];

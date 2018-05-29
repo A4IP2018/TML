@@ -87,7 +87,7 @@
             <form action="{{ \Illuminate\Support\Facades\URL::to('/file-comments-action') }}"
                   method="POST">
                 {{ csrf_field() }}
-                <input name="file-id" type="hidden" value="">
+                <input name="batch_id" type="hidden" value="{{ $batch_info['batch_id'] }}">
                 <textarea class="form-control" name="comments" id="" rows="2" style="width:100%"></textarea>
                 <br>
                 <button type="submit" class="btn btn-primary">Posteaza</button>
@@ -98,14 +98,11 @@
 </div>
 <br>
 
-
-<!--COMMENTS TEST-->
-{{--
-@if ($file->comments && (is_file_author($file) || is_homework_author($file->homework)))
-    @foreach($file->comments as $comment)
+@if ($comments)
+    @foreach($comments as $comment)
         <div class="card mb-3">
             <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">{{ $comment->user->student_information->last_name }} {{ $comment->user->student_information->first_name }}</a> <small> 13:50 </small>
+                <h6 class="card-title mb-1"><a href="#">{{ get_name_by_id($comment->user->id)  }}</a> <small> 13:50 </small>
                 </h6>
                 <p class="card-text small">
                     {{ $comment->comment }}
@@ -115,5 +112,4 @@
         </div>
     @endforeach
 @endif
---}}
 @endsection

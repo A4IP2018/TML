@@ -11,7 +11,10 @@ class FileComment extends Model
      *
      * @return array
      */
-    protected $fillable = ['comment','file_id','user_id'];
+
+    protected $table = 'file_comments';
+
+    protected $fillable = ['comment','batch_id','user_id'];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     /**
@@ -46,6 +49,6 @@ class FileComment extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function file() {
-        return $this->belongsTo('App\File');
+        return $this->belongsTo('App\File', 'batch_id', 'batch_id');
     }
 }
