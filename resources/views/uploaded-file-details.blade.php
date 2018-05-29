@@ -48,7 +48,7 @@
             {{ $file->requirement->description }}
         </div>
         <div class="card-body">
-            <pre><code>{{ $file['content'] }}</code></pre>
+            <pre><code>{{ mb_convert_encoding($file['content'], 'UTF-8') }}</code></pre>
         </div>
         <div class="card-footer">
             <a>&#206;nc&#259;rcat la {{ $file->created_at }}</a>
