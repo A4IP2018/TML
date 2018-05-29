@@ -118,7 +118,6 @@
                 @else
                     <td>{{ $grade->user->teacher_information->name }}</td>
                 @endif
-                {{ dd($grade) }}
                 <td>{{ $grade->homework->course->course_title }}</td>
                 <td>{{ $grade->homework->name }}</td>
                 <td>{{ $grade->grade }}</td>
