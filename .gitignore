@@ -12,3 +12,5 @@ yarn-error.log
 .env
 /public/files
 /public/compare
+/storage/fonts/dompdf_font_family_cache.php
+Next
