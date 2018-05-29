@@ -145,6 +145,7 @@
                     </div>
                     <hr class="my-0">
                 </div>
+                @endif
             @endforeach
         @endif
 
